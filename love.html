@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Little Love Surprise 💗</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 25px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(145deg, #fff0f5, #f5c6d8, #fceaf0);
+  font-family: Georgia, serif;
+  color: #793b54;
+  text-align: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px 20px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 12px 35px #9b5d7525;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+p {
+  line-height: 1.8;
+}
+
+.envelope {
+  font-size: 85px;
+  cursor: pointer;
+  margin: 20px 0;
+  animation: float 2s infinite ease-in-out;
+}
+
+button {
+  border: none;
+  border-radius: 30px;
+  padding: 13px 20px;
+  margin: 8px 4px;
+  background: #b85f80;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#surprise {
+  display: none;
+  margin-top: 24px;
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.photos img {
+  width: 100%;
+  height: 145px;
+  object-fit: cover;
+  border-radius: 15px;
+  background: #f8dce7;
+}
+
+.photos img:last-child {
+  grid-column: 1 / -1;
+  height: 180px;
+}
+
+.love-note {
+  background: #fff0f5;
+  padding: 18px;
+  border-radius: 18px;
+  line-height: 1.9;
+}
+
+footer {
+  margin-top: 25px;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+
+@keyframes float {
+  50% { transform: translateY(-8px); }
+}
+</style>
+</head>
+
+<body>
+<div class="card">
+
+  <div style="font-size:35px">♡</div>
+  <h1>A Little Surprise For You</h1>
+  <p>Someone made something special just for you… ✨</p>
+
+  <div class="envelope" onclick="openLetter()" role="button"
+       aria-label="Open your love letter">💌</div>
+
+  <button onclick="openLetter()">Open Your Letter ♡</button>
+
+  <div id="surprise">
+    <h2>To Someone Special 💗</h2>
+
+    <div class="love-note">
+      If I could give you one thing in life,
+      I would give you the ability to see yourself
+      through my eyes. Then you would know how
+      special you truly are. ♡
+      <br><br>
+      You make ordinary moments magical,
+      and my favourite memories are the ones
+      that have you in them. ✨
+      <br><br>
+      Always remember, you are someone’s
+      beautiful reason to smile. 💕
+    </div>
+
+    <h3>Our Little Memories 📸</h3>
+
+    <div class="photos">
+      <img src="photo1.jpg" alt="Memory photo one">
+      <img src="photo2.jpg" alt="Memory photo two">
+      <img src="photo3.jpg" alt="Memory photo three">
+    </div>
+
+    <button onclick="toggleMusic()" id="musicButton">
+      ▶ Play Our Music 🎵
+    </button>
+
+    <p style="font-size:12px">
+      Replace this message and photos with your own special memories. ♡
+    </p>
+  </div>
+
+  <footer>MADE WITH LOVE ♡ SURPRISESTORY</footer>
+</div>
+
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<script>
+function openLetter() {
+  document.getElementById("surprise").style.display = "block";
+}
+
+function toggleMusic() {
+  const music = document.getElementById("bgMusic");
+  const button = document.getElementById("musicButton");
+
+  if (music.paused) {
+    music.play().then(() => {
+      button.textContent = "❚❚ Pause Our Music 🎵";
+    }).catch(() => {
+      alert("Buddy, add a music file named music.mp3 to this project first! 💗");
+    });
+  } else {
+    music.pause();
+    button.textContent = "▶ Play Our Music 🎵";
+  }
+}
+</script>
+</body>
+  </html>
+  
