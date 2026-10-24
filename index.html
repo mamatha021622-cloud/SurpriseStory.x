@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +37,6 @@ body {
 }
 
 h1 { font-size: 36px; margin: 12px 0; }
-
 p { font-size: 17px; line-height: 1.8; }
 
 button {
@@ -47,6 +47,7 @@ button {
   background: #b85f80;
   color: white;
   font-size: 16px;
+  cursor: pointer;
 }
 
 #message {
@@ -70,7 +71,8 @@ footer {
 </style>
 </head>
 <body>
-< class="card">
+
+<div class="card">
   <div class="heart">♡</div>
   <h1>SurpriseStory</h1>
   <p>Every love story deserves<br>a little magic. ✨</p>
@@ -82,14 +84,17 @@ footer {
 
   <div id="message">
     <span id="personalGreeting"></span><br><br>
-Every heartbeat has a story,<br>
-and maybe this one is about you. ♡
-<br><br>
-You make ordinary moments magical. ✨
+    Every heartbeat has a story,<br>
+    and maybe this one is about you. ♡
+    <br><br>
+    You make ordinary moments magical. ✨
+  </div>
 
-<<div id="message"></main>
+  <footer>MADE WITH LOVE ♡</footer>
+</div>
 
-<function openSurprise() {
+<script>
+function openSurprise() {
   const params = new URLSearchParams(window.location.search);
   const name = params.get("name");
   const greeting = document.getElementById("personalGreeting");
@@ -99,6 +104,8 @@ You make ordinary moments magical. ✨
   }
 
   document.getElementById("message").style.display = "block";
+}
+</script>
 
 </body>
 </html>
