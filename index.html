@@ -94,7 +94,12 @@ footer {
 </div>
 
 <script>
+
 function openSurprise() {
+  alert("SurpriseStory button is working! 💗");
+  document.getElementById("message").style.display = "block";
+}
+  {
   const params = new URLSearchParams(window.location.search);
   const name = params.get("name");
   const greeting = document.getElementById("personalGreeting");
