@@ -1,4 +1,4 @@
-DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -70,7 +70,7 @@ footer {
 </style>
 </head>
 <body>
-<main class="card">
+< class="card">
   <div class="heart">♡</div>
   <h1>SurpriseStory</h1>
   <p>Every love story deserves<br>a little magic. ✨</p>
@@ -81,20 +81,24 @@ footer {
   </button>
 
   <div id="message">
-    Every heartbeat has a story,<br>
-    and maybe this one is about you. ♡
-    <br><br>
-    You make ordinary moments magical. ✨
-  </div>
+    <span id="personalGreeting"></span><br><br>
+Every heartbeat has a story,<br>
+and maybe this one is about you. ♡
+<br><br>
+You make ordinary moments magical. ✨
 
-  <footer>MADE WITH LOVE ♡</footer>
-</main>
+<<div id="message"></main>
 
-<script>
-function openSurprise() {
+<function openSurprise() {
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get("name");
+  const greeting = document.getElementById("personalGreeting");
+
+  if (name && greeting) {
+    greeting.textContent = "A little surprise for " + name + " 💗";
+  }
+
   document.getElementById("message").style.display = "block";
-}
-</script>
+
 </body>
 </html>
-
