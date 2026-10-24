@@ -1,1 +1,100 @@
+DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SurpriseStory ♡</title>
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: linear-gradient(145deg,#fff5f8,#f5d6e3,#fcecf2);
+  color: #793b54;
+  font-family: Georgia, serif;
+  text-align: center;
+}
+
+.card {
+  max-width: 390px;
+  width: 100%;
+  padding: 35px 24px;
+  background: rgba(255,255,255,.78);
+  border: 1px solid white;
+  border-radius: 28px;
+  box-shadow: 0 15px 40px #9b5d751c;
+}
+
+.heart {
+  font-size: 55px;
+  animation: float 2s ease-in-out infinite;
+}
+
+h1 { font-size: 36px; margin: 12px 0; }
+
+p { font-size: 17px; line-height: 1.8; }
+
+button {
+  margin-top: 16px;
+  padding: 15px 24px;
+  border: none;
+  border-radius: 30px;
+  background: #b85f80;
+  color: white;
+  font-size: 16px;
+}
+
+#message {
+  display: none;
+  margin-top: 22px;
+  padding: 18px;
+  border-radius: 18px;
+  background: #fff0f5;
+  line-height: 1.8;
+}
+
+footer {
+  margin-top: 28px;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+@keyframes float {
+  50% { transform: translateY(-8px); }
+}
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="heart">♡</div>
+  <h1>SurpriseStory</h1>
+  <p>Every love story deserves<br>a little magic. ✨</p>
+  <p>Some feelings deserve more<br>than just “I love you.”</p>
+
+  <button onclick="openSurprise()">
+    Open Your Surprise 💌
+  </button>
+
+  <div id="message">
+    Every heartbeat has a story,<br>
+    and maybe this one is about you. ♡
+    <br><br>
+    You make ordinary moments magical. ✨
+  </div>
+
+  <footer>MADE WITH LOVE ♡</footer>
+</main>
+
+<script>
+function openSurprise() {
+  document.getElementById("message").style.display = "block";
+}
+</script>
+</body>
+</html>
 
