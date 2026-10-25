@@ -1,0 +1,479 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff4f7">
+  <title>SurpriseStory 💌</title>
+  <style>
+    :root {
+      --page: #fff4f7;
+      --paper: #fffdfd;
+      --ink: #843b57;
+      --muted: #a87991;
+      --rose: #c05b82;
+      --rose-dark: #9b4268;
+      --shadow: 0 12px 32px rgba(113, 50, 77, .12);
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 15% 5%, rgba(255,255,255,.95), transparent 42rem),
+        var(--page);
+      font-family: var(--serif);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+    body.viewer-open { overflow: hidden; }
+    button { font: inherit; }
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid #c05b82;
+      outline-offset: 4px;
+    }
+    .page-shell { width: min(100% - 32px, 850px); margin-inline: auto; }
+    .hero {
+      min-height: 88svh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 76px 0 64px;
+      position: relative;
+      isolation: isolate;
+    }
+    .hero::before, .hero::after {
+      content: "♡";
+      position: absolute;
+      color: rgba(192, 91, 130, .24);
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      z-index: -1;
+      animation: float 6s ease-in-out infinite;
+    }
+    .hero::before { top: 17%; left: 8%; }
+    .hero::after { right: 9%; bottom: 18%; animation-delay: -3s; }
+    .eyebrow {
+      font-family: var(--sans);
+      font-size: .75rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      font-size: clamp(2.7rem, 9vw, 5rem);
+      line-height: 1.08;
+      font-weight: 400;
+      letter-spacing: -.035em;
+      margin: 16px 0 22px;
+    }
+    .hero-copy { max-width: 34rem; margin: 0 auto 30px; font-size: clamp(1rem, 2.5vw, 1.2rem); }
+    .soft-button {
+      border: 1px solid rgba(192,91,130,.35);
+      color: #fffafc;
+      background: var(--rose);
+      border-radius: 999px;
+      padding: 13px 24px;
+      min-height: 48px;
+      box-shadow: 0 7px 18px rgba(192,91,130,.18);
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .soft-button:hover { background: var(--rose-dark); box-shadow: 0 10px 24px rgba(192,91,130,.24); }
+    .soft-button:active { transform: scale(.97); }
+    .scroll-note { margin-top: 26px; font-family: var(--sans); font-size: .8rem; color: var(--muted); }
+    .section { padding: 58px 0; }
+    .section-heading { text-align: center; font-size: clamp(2rem, 6vw, 3rem); font-weight: 400; margin-bottom: 12px; }
+    .section-intro { max-width: 36rem; text-align: center; margin: 0 auto 54px; color: #95647b; }
+    .stage { margin: 62px 0 72px; }
+    .stage-heading {
+      text-align: center;
+      font-weight: 400;
+      font-size: clamp(1.35rem, 4vw, 1.7rem);
+      margin-bottom: 8px;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .stage-heart {
+      display: block;
+      margin: 0 auto 24px;
+      text-align: center;
+      color: var(--rose);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1;
+      opacity: 0;
+      filter: drop-shadow(0 0 7px rgba(192,91,130,.18));
+    }
+    .memory-list { display: grid; gap: 42px; }
+    .memory {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(10px);
+      max-width: 690px;
+      width: 100%;
+      margin-inline: auto;
+    }
+    .memory:nth-child(even) { direction: rtl; }
+    .memory:nth-child(even) > * { direction: ltr; }
+    .memory-photo-wrap { display: flex; justify-content: center; }
+    .polaroid {
+      width: min(100%, 290px);
+      background: #fff;
+      padding: 11px 11px 18px;
+      box-shadow: 0 9px 23px rgba(76, 36, 53, .14);
+      border: 1px solid rgba(120, 80, 95, .07);
+      transform: rotate(-1.4deg);
+      transition: transform .25s ease, box-shadow .25s ease;
+      cursor: zoom-in;
+      text-align: left;
+    }
+    .memory:nth-child(even) .polaroid { transform: rotate(1.4deg); }
+    .polaroid:hover { transform: rotate(0) translateY(-3px); box-shadow: var(--shadow); }
+    .polaroid img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; background: #f5e8ed; }
+    .photo-caption {
+      color: #765264;
+      font: 1rem/1.35 var(--serif);
+      padding: 13px 4px 0;
+      min-height: 34px;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+    .memory-copy { padding: 0 8px; }
+    .memory-date {
+      color: var(--muted);
+      font-size: .98rem;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 8px;
+      opacity: 0;
+    }
+    .memory-text { margin: 0; font-size: 1.06rem; line-height: 1.9; text-align: left; }
+    .next-wrap { text-align: center; padding: 22px 0 70px; }
+    .letter-section { padding: 48px 0 100px; }
+    .letter-paper {
+      width: min(100%, 690px);
+      margin: 0 auto;
+      padding: clamp(25px, 6vw, 54px);
+      background: rgba(255, 250, 252, .88);
+      border: 1px solid rgba(192,91,130,.13);
+      border-radius: 4px;
+      box-shadow: 0 14px 42px rgba(123, 62, 87, .07);
+    }
+    .letter-title { text-align: center; font-size: clamp(1.9rem, 5vw, 2.7rem); font-weight: 400; margin-bottom: 36px; }
+    .letter-paragraph {
+      margin: 0 0 20px;
+      font-size: 1.06rem;
+      line-height: 2;
+      text-align: center;
+      opacity: 0;
+    }
+    .letter-controls { display: flex; justify-content: center; margin-top: 28px; }
+    .signature {
+      text-align: right;
+      font-style: italic;
+      font-size: 1.4rem;
+      margin: 34px 0 0;
+      opacity: 0;
+    }
+    .hidden { display: none !important; }
+    .fade-in { animation: fadeIn .4s ease-in both; }
+    .rise-in { animation: riseIn .35s ease-out both; }
+    .glow { animation: breathing 5s ease-in-out infinite; }
+    .heart-glow { animation: heartBreathing 5s ease-in-out infinite; }
+    .revealed { opacity: 1 !important; transform: none !important; }
+    footer { padding: 30px 0 48px; text-align: center; color: var(--muted); font: .8rem var(--sans); }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes riseIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-12px) rotate(5deg); } }
+    @keyframes breathing {
+      0%,100% { text-shadow: 0 0 3px rgba(192,91,130,.08); }
+      50% { text-shadow: 0 0 12px rgba(192,91,130,.22); }
+    }
+    @keyframes heartBreathing {
+      0%,100% { filter: drop-shadow(0 0 3px rgba(192,91,130,.16)); }
+      50% { filter: drop-shadow(0 0 9px rgba(192,91,130,.42)); }
+    }
+
+    /* Enlarged photo viewer */
+    .photo-viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      align-items: center;
+      justify-items: center;
+      padding: max(18px, env(safe-area-inset-top)) 16px max(18px, env(safe-area-inset-bottom));
+      background: rgba(37, 18, 29, .84);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      opacity: 0;
+      animation: fadeIn .3s ease forwards;
+    }
+    .viewer-top { width: min(100%, 900px); display: flex; justify-content: flex-end; }
+    .viewer-close {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.55);
+      color: #fff; background: rgba(255,255,255,.12);
+      cursor: pointer; font: 1.8rem/1 var(--sans);
+    }
+    .viewer-content {
+      width: min(100%, 850px);
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) 48px;
+      align-items: center;
+      gap: clamp(5px, 2vw, 18px);
+    }
+    .viewer-image-frame {
+      margin: 0 auto;
+      padding: clamp(10px, 2.5vw, 18px) clamp(10px, 2.5vw, 18px) 24px;
+      width: fit-content;
+      max-width: 100%;
+      max-height: min(72svh, 780px);
+      background: #fff;
+      box-shadow: 0 16px 60px rgba(0,0,0,.3);
+    }
+    .viewer-image { display: block; width: auto; height: auto; max-width: 100%; max-height: calc(min(72svh, 780px) - 65px); object-fit: contain; }
+    .viewer-caption { text-align: center; color: #765264; padding-top: 12px; font-size: .95rem; line-height: 1.3; }
+    .viewer-arrow {
+      width: 44px; height: 54px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.45);
+      color: #fff; background: rgba(255,255,255,.12);
+      cursor: pointer; font: 1.8rem/1 var(--sans);
+    }
+    .viewer-arrow:hover, .viewer-close:hover { background: rgba(255,255,255,.24); }
+    .viewer-count { color: rgba(255,255,255,.78); font: .85rem var(--sans); padding-top: 14px; text-align: center; }
+    @media (min-width: 640px) {
+      .memory { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 30px; }
+      .memory:nth-child(even) { direction: ltr; }
+      .memory:nth-child(even) .memory-photo-wrap { order: 2; }
+      .memory:nth-child(even) .memory-copy { order: 1; }
+      .memory:nth-child(odd) .memory-photo-wrap { order: 1; }
+      .memory:nth-child(odd) .memory-copy { order: 2; }
+      .memory:nth-child(even) .memory-copy { text-align: left; }
+      .memory:nth-child(odd) .memory-copy { text-align: left; }
+      .polaroid { width: min(100%, 270px); }
+    }
+    @media (max-width: 420px) {
+      .page-shell { width: min(100% - 24px, 850px); }
+      .viewer-content { grid-template-columns: 36px minmax(0, 1fr) 36px; gap: 4px; }
+      .viewer-arrow { width: 36px; height: 46px; font-size: 1.4rem; }
+      .viewer-close { width: 44px; height: 44px; }
+      .viewer-image-frame { padding: 9px 9px 19px; }
+      .viewer-image { max-height: 66svh; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+      .stage-heading, .stage-heart, .memory, .memory-date, .letter-paragraph, .signature { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero page-shell">
+    <div>
+      <div class="eyebrow">A little place for our memories</div>
+      <h1>Our story,<br>one memory at a time.</h1>
+      <p class="hero-copy">Some moments are too special to leave in the past. This little space keeps them close. 💗</p>
+      <button class="soft-button" id="beginButton" type="button">Open our story ♡</button>
+      <div class="scroll-note">Made of little moments and a lot of love</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section page-shell" id="memories">
+      <h2 class="section-heading">Our Memories</h2>
+      <p class="section-intro">Every photo holds a feeling, and every date brings a moment back.</p>
+
+      <!-- Replace the sample dates, captions, and memory text with your own words.
+           Keep your image files in the same folder as this HTML file, or update each src. -->
+      <section class="stage" aria-labelledby="playfulHeading">
+        <h3 class="stage-heading">The Little Beginnings</h3>
+        <span class="stage-heart" aria-hidden="true">♡</span>
+        <div class="memory-list">
+          <article class="memory">
+            <div class="memory-photo-wrap">
+              <button class="polaroid" type="button" data-photo="0" aria-label="Enlarge photo: Our first memory">
+                <img src="afad05b2284819cc778d368f2a2e4e68.jpg" alt="Replace with a description of the first memory photo" loading="lazy">
+                <span class="photo-caption">Our first little memory</span>
+              </button>
+            </div>
+            <div class="memory-copy">
+              <div class="memory-date">A date to remember</div>
+              <p class="memory-text">Replace this with your own memory. A small moment, a shared laugh, or the beginning of something meaningful.</p>
+            </div>
+          </article>
+          <article class="memory">
+            <div class="memory-photo-wrap">
+              <button class="polaroid" type="button" data-photo="1" aria-label="Enlarge photo: A favorite moment">
+                <img src="927256f3b5fabac7e8d293b9cc8dbac6.jpg" alt="Replace with a description of the second memory photo" loading="lazy">
+                <span class="photo-caption">A favorite moment</span>
+              </button>
+            </div>
+            <div class="memory-copy">
+              <div class="memory-date">Another meaningful date</div>
+              <p class="memory-text">Add the story behind this photo in your own words. Keep it honest and personal, just as you want it to feel.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="stage" aria-labelledby="heartfeltHeading">
+        <h3 class="stage-heading">The Moments That Matter</h3>
+        <span class="stage-heart" aria-hidden="true">♡</span>
+        <div class="memory-list">
+          <article class="memory">
+            <div class="memory-photo-wrap">
+              <button class="polaroid" type="button" data-photo="2" aria-label="Enlarge photo: A memory close to my heart">
+                <img src="5435bd09e80e96120d583fe81c5e212d.jpg" alt="Replace with a description of the third memory photo" loading="lazy">
+                <span class="photo-caption">A memory close to my heart</span>
+              </button>
+            </div>
+            <div class="memory-copy">
+              <div class="memory-date">A day worth keeping</div>
+              <p class="memory-text">Replace this with a memory that means something to you. You can make this paragraph as short or as detailed as feels right.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="stage" aria-labelledby="romanticHeading">
+        <h3 class="stage-heading">And Still, My Favorite</h3>
+        <span class="stage-heart" aria-hidden="true">♡</span>
+        <div class="memory-list">
+          <article class="memory">
+            <div class="memory-photo-wrap">
+              <button class="polaroid" type="button" data-photo="3" aria-label="Enlarge photo: A memory I will always keep">
+                <img src="8b8cb5317fa2753aff9ff9ed60b859be.jpg" alt="Replace with a description of the fourth memory photo" loading="lazy">
+                <span class="photo-caption">A memory I will always keep</span>
+              </button>
+            </div>
+            <div class="memory-copy">
+              <div class="memory-date">A moment that stays</div>
+              <p class="memory-text">Add your final memory here. Let it lead naturally into the next part of your story.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div class="next-wrap">
+        <button class="soft-button" id="nextButton" type="button">What's Next? ✨</button>
+      </div>
+    </section>
+
+    <section class="letter-section page-shell hidden" id="letterSection" aria-labelledby="letterHeading">
+      <div class="letter-paper">
+        <h2 class="letter-title" id="letterHeading">A Letter For You 💌</h2>
+        <!-- These are placeholders, not a written personal letter. Replace them with your own paragraphs. -->
+        <p class="letter-paragraph">[Add your first paragraph here.]</p>
+        <p class="letter-paragraph">[Add your second paragraph here.]</p>
+        <p class="letter-paragraph">[Add your third paragraph here.]</p>
+        <p class="signature">[Your signature]</p>
+        <div class="letter-controls">
+          <button class="soft-button" id="revealLetterButton" type="button">Unfold the letter 💗</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Made with care, one memory at a time ♡</footer>
+
+  <div class="photo-viewer hidden" id="photoViewer" role="dialog" aria-modal="true" aria-label="Enlarged memory photo">
+    <div class="viewer-top">
+      <button class="viewer-close" id="viewerClose" type="button" aria-label="Close photo viewer">×</button>
+    </div>
+    <div class="viewer-content">
+      <button class="viewer-arrow" id="viewerPrevious" type="button" aria-label="Previous photo">‹</button>
+      <figure class="viewer-image-frame">
+        <img class="viewer-image" id="viewerImage" src="" alt="">
+        <figcaption class="viewer-caption" id="viewerCaption"></figcaption>
+      </figure>
+      <button class="viewer-arrow" id="viewerNext" type="button" aria-label="Next photo">›</button>
+    </div>
+    <div class="viewer-count" id="viewerCount" aria-live="polite"></div>
+  </div>
+
+  <audio id="bgMusic" src="Humnava Mere Instrumental - Instagram Trending.mp3" loop preload="none"></audio>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const viewer = document.getElementById("photoViewer");
+      const viewerImage = document.getElementById("viewerImage");
+      const viewerCaption = document.getElementById("viewerCaption");
+      const viewerCount = document.getElementById("viewerCount");
+      const closeButton = document.getElementById("viewerClose");
+      const previousButton = document.getElementById("viewerPrevious");
+      const nextPhotoButton = document.getElementById("viewerNext");
+      const photoButtons = [...document.querySelectorAll("[data-photo]")];
+      const photos = photoButtons.map((button) => {
+        const image = button.querySelector("img");
+        return {
+          src: image.getAttribute("src"),
+          alt: image.getAttribute("alt") || "Memory photo",
+          caption: button.querySelector(".photo-caption")?.textContent.trim() || "A memory"
+        };
+      });
+
+      let currentPhoto = 0;
+      let lastFocusedElement = null;
+      let letterIndex = 0;
+      let letterStarted = false;
+
+      function showPhoto(index) {
+        currentPhoto = (index + photos.length) % photos.length;
+        const photo = photos[currentPhoto];
+        viewerImage.src = photo.src;
+        viewerImage.alt = photo.alt;
+        viewerCaption.textContent = photo.caption;
+        viewerCount.textContent = `Photo ${currentPhoto + 1} of ${photos.length}`;
+      }
+
+      function openViewer(index) {
+        lastFocusedElement = document.activeElement;
+        showPhoto(index);
+        viewer.classList.remove("hidden");
+        document.body.classList.add("viewer-open");
+        closeButton.focus();
+      }
+
+      function closeViewer() {
+        viewer.classList.add("hidden");
+        document.body.classList.remove("viewer-open");
+        viewerImage.removeAttribute("src");
+        if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+          lastFocusedElement.focus();
+        }
+      }
+
+      photoButtons.forEach((button) => {
+        button.addEventListener("click", () => openViewer(Number(button.dataset.photo)));
+      });
+      closeButton.addEventListener("click", closeViewer);
+      previousButton.addEventListener("click", () => showPhoto(currentPhoto - 1));
+      nextPhotoButton.addEventListener("click", () => showPhoto(currentPhoto + 1));
+
+      // Tapping the dimmed backdrop closes the viewer; tapping the photo/control area does not.
+      viewer.addEventListener("click", (event) => {
+        if (event.target === viewer) closeViewer();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (viewer.classList.contains("hidden")) return;
+        if (event.key === "Escape") closeViewer();
+        if (event.key === "ArrowLeft") showPhoto(currentPhoto - 1);
+        if (event.key === "ArrowRight") showPhoto(currentPhoto + 1);
+        if (event
