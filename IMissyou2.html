@@ -3,185 +3,242 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#fff0f5">
-<title>I Miss You | SurpriseStory ♡</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080D20">
+<title>A Letter Beneath the Stars | SurpriseStory</title>
 
 <style>
 :root {
-  --rose: #d982a0;
-  --deep: #8e4966;
-  --ink: #684b59;
-  --paper: #fffaf8;
+  --night: #080d20;
+  --navy: #111a35;
+  --pink: #e6a2c1;
+  --rose: #c878a0;
+  --lavender: #c9b8f2;
+  --white: #f8eff8;
+  --muted: #c2bfd8;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   min-height: 100vh;
   font-family: Georgia, "Times New Roman", serif;
-  color: var(--ink);
+  color: var(--white);
   background:
-    radial-gradient(circle at 15% 15%, #fff, transparent 30%),
-    linear-gradient(145deg, #fff4f7, #f9e2ec, #eee6f7);
+    radial-gradient(ellipse at 50% 0%, #202d54 0%, transparent 48%),
+    linear-gradient(180deg, #080d20, #10152d 55%, #17132c);
+  overflow-x: hidden;
 }
 
-button { font: inherit; }
+button {
+  font: inherit;
+}
+
+.sky {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  color: #fff4fa;
+  animation: twinkle 3s infinite ease-in-out alternate;
+}
+
+.moon {
+  position: fixed;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  background: #fff0cc;
+  box-shadow: 0 0 35px #f7dba655, 0 0 90px #d6b6ff20;
+  top: 48px;
+  right: 25px;
+  opacity: .9;
+  pointer-events: none;
+}
+
+.moon::after {
+  content: "";
+  position: absolute;
+  width: 69px;
+  height: 69px;
+  border-radius: 50%;
+  background: #111a35;
+  top: -9px;
+  left: 19px;
+}
+
+.music {
+  position: fixed;
+  z-index: 20;
+  top: 14px;
+  left: 14px;
+  padding: 10px 13px;
+  border: 1px solid #c9b8f255;
+  border-radius: 30px;
+  color: #f7eaf8;
+  background: #111a35eF;
+  font-size: 12px;
+  cursor: pointer;
+}
 
 .page {
   display: none;
+  position: relative;
+  z-index: 1;
   min-height: 100vh;
-  padding: 30px 18px;
+  padding: 90px 18px 35px;
   align-items: center;
   justify-content: center;
 }
 
 .page.active {
   display: flex;
-  animation: appear .7s ease both;
+  animation: fadeIn .8s ease both;
 }
 
 .card {
   width: 100%;
-  max-width: 430px;
-  padding: 28px 22px;
+  max-width: 440px;
+  padding: 27px 22px;
+  border-radius: 24px;
   text-align: center;
-  border: 1px solid #ffffffcc;
-  border-radius: 25px;
-  background: #fffaf8ed;
-  box-shadow: 0 16px 55px #b77c9620;
+  background: linear-gradient(150deg,
+    #18203aee, #11152bea);
+  border: 1px solid #d5c5f326;
+  box-shadow: 0 20px 70px #00000040;
+  backdrop-filter: blur(8px);
 }
 
 .progress {
   height: 3px;
-  margin-bottom: 26px;
-  background: #f0dce5;
-  border-radius: 10px;
+  margin-bottom: 28px;
+  border-radius: 5px;
+  background: #ffffff14;
   overflow: hidden;
 }
 
 .bar {
   height: 100%;
   width: 0;
-  background: var(--rose);
+  background: linear-gradient(90deg, var(--rose), var(--lavender));
   transition: width .5s ease;
 }
 
 .eyebrow {
-  color: var(--rose);
   font-family: Arial, sans-serif;
-  text-transform: uppercase;
   font-size: 10px;
   letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--lavender);
 }
 
 h1 {
-  color: var(--deep);
-  font-size: clamp(29px, 8vw, 38px);
-  line-height: 1.3;
+  font-size: clamp(29px, 8vw, 39px);
   font-weight: normal;
-  margin: 22px 0;
+  line-height: 1.35;
+  color: #f8dfea;
+  margin: 24px 0;
 }
 
 p {
   font-size: 16px;
   line-height: 1.9;
+  color: var(--muted);
 }
 
 .small {
   font-size: 13px;
-  line-height: 1.8;
+  line-height: 1.9;
 }
 
 .heart {
-  color: var(--rose);
-  font-size: 43px;
+  font-size: 40px;
+  color: var(--pink);
   margin: 22px 0;
+  text-shadow: 0 0 22px #e6a2c155;
 }
 
 .stars {
-  color: #d79ab3;
+  color: var(--lavender);
   letter-spacing: 8px;
-  margin: 20px 0;
+  margin: 22px 0;
 }
 
 .action {
   width: 100%;
   padding: 15px 12px;
   margin-top: 18px;
-  border: none;
+  border: 1px solid #ffffff12;
   border-radius: 30px;
-  color: white;
-  background: linear-gradient(120deg, #d982a0, #b96d91);
-  box-shadow: 0 7px 20px #d982a033;
+  color: #fff8fc;
+  background: linear-gradient(110deg, #a85f88, #785eab);
+  box-shadow: 0 7px 28px #00000025;
   cursor: pointer;
+  transition: transform .2s ease, opacity .2s ease;
 }
 
-.action:active { transform: scale(.98); }
+.action:active {
+  transform: scale(.98);
+}
 
 .action:disabled {
-  opacity: .45;
+  opacity: .4;
   cursor: not-allowed;
 }
 
 .secondary {
-  color: var(--deep);
+  color: #e5d9fa;
   background: transparent;
-  border: 1px solid #e6b8ca;
+  border: 1px solid #c9b8f255;
   box-shadow: none;
 }
 
-.music {
-  position: fixed;
-  z-index: 10;
-  right: 12px;
-  top: 12px;
-  padding: 10px 13px;
-  border: 1px solid #e8bfd0;
-  border-radius: 25px;
-  color: var(--deep);
-  background: #fffaf8f2;
-  font-size: 12px;
-}
-
 .envelope-wrap {
-  width: 180px;
-  height: 125px;
+  width: 190px;
+  height: 130px;
   position: relative;
-  margin: 36px auto;
+  margin: 38px auto;
+  perspective: 600px;
   cursor: pointer;
-  perspective: 500px;
+  filter: drop-shadow(0 10px 20px #00000035);
 }
 
 .envelope {
   position: absolute;
   inset: 0;
-  background: #e9a9bf;
-  border-radius: 5px;
   overflow: hidden;
+  border-radius: 5px;
+  background: #bd7199;
 }
 
 .envelope::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: #f6cad8;
-  clip-path: polygon(0 0, 100% 0, 50% 57%);
   z-index: 2;
+  background: linear-gradient(135deg, #f0bad3, #cb85ad);
+  clip-path: polygon(0 0, 100% 0, 50% 60%);
   transform-origin: top;
-  transition: transform .65s ease;
+  transition: transform .7s ease;
 }
 
 .envelope::after {
   content: "♡";
   position: absolute;
-  z-index: 3;
+  top: 45px;
   left: 0;
   right: 0;
-  top: 45px;
-  color: #a95d7d;
-  font-size: 29px;
+  z-index: 3;
+  color: #7e365f;
+  font-size: 30px;
 }
 
 .envelope.open::before {
@@ -190,32 +247,46 @@ p {
 
 .memory {
   text-align: left;
-  border-left: 2px solid #e6b1c5;
+  border-left: 2px solid #c88bb4;
   padding: 5px 0 5px 15px;
   margin: 20px 0;
   font-size: 15px;
-  line-height: 1.8;
+  line-height: 1.9;
+  color: #ded8ed;
 }
 
 .letter {
-  padding: 20px 17px;
-  border: 1px solid #f1d6e0;
-  border-radius: 12px;
-  background: var(--paper);
+  padding: 22px 17px;
+  border: 1px solid #d6b7df30;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #171e39, #11152c);
+  color: #e9e1f0;
   text-align: left;
-  line-height: 1.9;
+  line-height: 1.95;
   font-size: 15px;
   white-space: pre-line;
 }
 
 .signature {
-  color: var(--deep);
-  font-size: 21px;
+  color: #e9b5d0;
   font-style: italic;
+  font-size: 21px;
   margin-top: 25px;
 }
 
-@keyframes appear {
+.footer {
+  color: #9995b7;
+  font-size: 11px;
+  line-height: 1.8;
+  margin-top: 24px;
+}
+
+@keyframes twinkle {
+  from { opacity: .25; transform: scale(.8); }
+  to { opacity: 1; transform: scale(1.15); }
+}
+
+@keyframes fadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
@@ -231,10 +302,12 @@ p {
 
 <body>
 
-<!-- Background song -->
+<div class="sky" id="sky" aria-hidden="true"></div>
+<div class="moon" aria-hidden="true"></div>
+
 <audio id="music" loop preload="none">
   <source
-    src="./_Oohale_Oohale_Jaanu_Ringtone_(by%20Fringster.com).mp3"
+    src="./_Oohale_Oohale_Jaanu_Ringtone_%28by%20Fringster.com%29.mp3"
     type="audio/mpeg">
 </audio>
 
@@ -242,57 +315,64 @@ p {
   ♫ Music off
 </button>
 
-<!-- SCREEN 1 -->
+<!-- SCREEN 1: THE NIGHT -->
 <section class="page active" id="screen1">
   <div class="card">
     <div class="progress"><div class="bar"></div></div>
 
-    <div class="eyebrow">SurpriseStory ♡</div>
-    <div class="stars">✧ · ♡ · ✧</div>
+    <div class="eyebrow">SurpriseStory presents</div>
+    <div class="stars">✧ · ☾ · ✧</div>
 
-    <h1>Some feelings<br>stay silent…</h1>
+    <h1>Under the same sky,<br>I still miss you.</h1>
 
     <p>
-      Some people leave our conversations,
-      but never completely leave our hearts.
+      Some people become memories,
+      but the feelings they leave behind
+      take a little longer to fade.
     </p>
 
     <p class="small">
-      A little story about missing someone,
-      remembering what was beautiful,
+      A quiet little story about missing someone,
+      loving them from a distance,
       and learning to let go.
     </p>
 
     <div class="heart">♡</div>
 
     <button class="action" onclick="goTo(2)">
-      A little something from my heart
+      There's something in this little letter
     </button>
+
+    <div class="footer">A little piece of my heart · ♡</div>
   </div>
 </section>
 
-<!-- SCREEN 2 -->
+<!-- SCREEN 2: ENVELOPE -->
 <section class="page" id="screen2">
   <div class="card">
     <div class="progress"><div class="bar"></div></div>
 
-    <div class="eyebrow">Words left unspoken</div>
+    <div class="eyebrow">Words beneath the stars</div>
 
     <h1>A letter<br>never sent 💌</h1>
 
     <p>
-      There are a few things I never knew
-      how to say. Some feelings are too
-      delicate to speak aloud.
+      Some words stay in the heart
+      because we don't always know
+      when or how to say them.
     </p>
 
-    <div class="envelope-wrap" id="envelopeWrap"
-         role="button" tabindex="0"
-         aria-label="Open envelope">
+    <div class="envelope-wrap"
+         id="envelopeWrap"
+         role="button"
+         tabindex="0"
+         aria-label="Open the envelope">
       <div class="envelope" id="envelope"></div>
     </div>
 
-    <p class="small" id="hint">Tap the envelope gently ♡</p>
+    <p class="small" id="hint">
+      Tap the envelope gently ♡
+    </p>
 
     <button class="action" id="letterBtn"
             onclick="goTo(3)" disabled>
@@ -301,122 +381,137 @@ p {
   </div>
 </section>
 
-<!-- SCREEN 3 -->
+<!-- SCREEN 3: MEMORIES -->
 <section class="page" id="screen3">
   <div class="card">
     <div class="progress"><div class="bar"></div></div>
 
     <div class="eyebrow">Little things, lasting memories</div>
 
-    <h1>Things I still miss…</h1>
+    <h1>Do you know<br>what I miss?</h1>
 
     <div class="memory">
-      I miss our conversations and the way
-      ordinary moments once felt special.
+      I miss our conversations
+      and the way ordinary moments
+      became special when we shared them.
     </div>
 
     <div class="memory">
       I miss the laughter, the comfort,
-      and all those little things about you.
+      and all the little things
+      that made you special to me.
     </div>
 
     <div class="memory">
       I miss the memories we created,
-      even the ones that seemed ordinary then.
+      the moments I wish I could revisit,
+      even just for a little while.
     </div>
 
     <div class="memory">
       Most of all, I miss everything about you
-      and the moments we shared.
+      and the beautiful memories
+      that still live in my heart.
     </div>
 
     <p class="small">
-      I cannot return to those days.
-      But I don't have to pretend
-      they meant nothing to me.
+      I can't turn back time.
+      But I can be grateful for the moments
+      that once made me happy.
     </p>
 
     <button class="action" onclick="goTo(4)">
-      There's something more…
+      There's something I need to say…
     </button>
   </div>
 </section>
 
-<!-- SCREEN 4 -->
+<!-- SCREEN 4: YOUR PERSONAL LETTER -->
 <section class="page" id="screen4">
   <div class="card">
     <div class="progress"><div class="bar"></div></div>
 
     <div class="eyebrow">From my heart, honestly</div>
 
-    <h1>I miss you,<br>but I'll let you go.</h1>
+    <h1>I miss you.<br>I still love you.</h1>
 
-    <div class="letter">There are days when I miss you more than I can explain.
+    <div class="letter">There are so many things I wish I could tell you, but I don't want to disturb your peace.
 
-I miss everything about you and the memories we shared. Sometimes I wish things could have been different. I wish the happy moments could have lasted longer, and I wish the silence didn't feel so heavy.
+I'm truly sorry if I ever hurt you, knowingly or unknowingly. That was never what I wanted, and I sincerely hope your heart finds peace.
 
-I still remember the little things. The conversations, the laughter, and the moments that made me smile. Those memories still mean something to me, even though things are different now.
+I didn't write these words to bother you or ask anything from you. You don't need to reply to me. I just wanted you to know, in my own heart, that I still miss you.
 
-But I'm slowly understanding something: missing you doesn't mean I can ask you to stay. And caring about you doesn't give me the right to cross your boundaries.
+I miss everything about you and the memories we shared. I miss the little things, the conversations, the laughter, and the moments that became special simply because they were ours.
 
-I respect your space. I won't force a conversation or ask you for a reply. You don't owe me an explanation or a promise.
+Even though we're no longer talking, those memories still mean a lot to me.
 
-A part of me wishes our story had turned out differently. But I cannot change what has happened, and I cannot hold on to someone who doesn't want to talk to me.
+I understand that things are different now. I respect your space, and I don't want to disturb you again. I won't force a conversation or expect anything from you.
 
-So I'll keep the good memories with gratitude. I'll allow myself to miss you without turning that feeling into a reason to reach out.
+I still love you, and a part of me may always carry that love. But I don't want my feelings to become a burden for you.
 
-I hope life is kind to you. I hope you find happiness, peace, and all the beautiful things you deserve.
+I'm learning to accept what I cannot change. I'll keep the beautiful memories close to my heart while giving you the distance you deserve.
 
-I miss you. I really do.
+Please take care of yourself. I hope life gives you happiness, peace, good health, and countless reasons to smile.
 
-But this time, I'll let my feelings remain words on a page. I'll respect your silence, take care of my own heart, and slowly learn to move forward.
+Even if I am no longer a part of your days, I genuinely hope your days are beautiful.
 
-Not because the memories meant nothing, but because they meant something.
+I miss you.
+I love you.
+And I hope you're happy.
 
-And now, it's time to let go.</div>
+You don't need to reply. Please just take care of yourself.
 
-    <div class="signature">With a quiet heart, ♡</div>
+Some feelings may remain, even when we choose to let go. 🤍</div>
+
+    <div class="signature">With love, and without expectations. ♡</div>
 
     <button class="action" onclick="goTo(5)">
-      One last thought 🤍
+      One last thought beneath the stars
     </button>
   </div>
 </section>
 
-<!-- SCREEN 5 -->
+<!-- SCREEN 5: ACCEPTANCE -->
 <section class="page" id="screen5">
   <div class="card">
     <div class="progress"><div class="bar"></div></div>
 
-    <div class="eyebrow">A gentle goodbye</div>
+    <div class="eyebrow">A quiet goodbye</div>
 
-    <div class="heart">♡</div>
+    <div class="heart">☾ ♡</div>
 
-    <h1>Some feelings stay.<br>Some stories end.</h1>
-
-    <p>Both can be true.</p>
+    <h1>I'll miss you<br>in silence.</h1>
 
     <p>
-      I'll keep the beautiful memories,
-      release what I cannot change,
-      and slowly find my way forward.
+      I cannot change the past,
+      and I don't need to ask for a place
+      in your future.
     </p>
 
     <p>
-      No expectations. No demands.
-      Just gratitude for what was
-      and acceptance of what is.
+      I'll keep the memories with gratitude,
+      respect your distance,
+      and slowly learn to move forward.
     </p>
 
-    <div class="stars">✧ · ♡ · ✧</div>
+    <div class="stars">✧ · ✦ · ✧</div>
 
     <h1 style="font-size:27px">
-      Take care of yourself.
+      I wish you happiness.
     </h1>
 
+    <p>
+      Wherever life takes you,
+      I hope you find peace
+      and beautiful reasons to smile.
+    </p>
+
+    <div class="signature">Take care of yourself. 🤍</div>
+
     <p class="small">
-      Some goodbyes happen quietly,
-      inside the heart.
+      Some feelings stay.
+      Some stories change.
+      And sometimes, love means letting go.
     </p>
 
     <button class="action" onclick="restart()">
@@ -426,12 +521,34 @@ And now, it's time to let go.</div>
     <button class="action secondary" onclick="toggleMusic()">
       Music on / off ♫
     </button>
+
+    <div class="footer">
+      Beneath the same sky, under a thousand stars.
+    </div>
   </div>
 </section>
 
 <script>
 let currentScreen = 1;
 let envelopeOpened = false;
+
+function createStars() {
+  const sky = document.getElementById("sky");
+
+  for (let i = 0; i < 65; i++) {
+    const star = document.createElement("span");
+    star.className = "star";
+    star.textContent = Math.random() > 0.7 ? "✦" : "·";
+
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.fontSize = (Math.random() * 9 + 4) + "px";
+    star.style.animationDelay = Math.random() * 4 + "s";
+    star.style.animationDuration = (2 + Math.random() * 4) + "s";
+
+    sky.appendChild(star);
+  }
+}
 
 function updateProgress(number) {
   document.querySelectorAll(".bar").forEach(bar => {
@@ -459,7 +576,7 @@ function openEnvelope() {
 
   document.getElementById("envelope").classList.add("open");
   document.getElementById("hint").textContent =
-    "A few words, from the heart…";
+    "A little piece of my heart…";
   document.getElementById("letterBtn").disabled = false;
 }
 
@@ -502,9 +619,10 @@ function restart() {
   goTo(1);
 }
 
+createStars();
 updateProgress(1);
 </script>
 
 </body>
-                            </html>
-                            
+  </html>
+  
