@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100d20">
+<title>A Little Piece of My Heart 💌</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #30203f, #100d20 70%);
+  color: #fff0f7;
+  font-family: Georgia, "Times New Roman", serif;
+  text-align: center;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 65px 22px 110px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  animation: fadeIn 0.8s ease;
+}
+
+.screen.active {
+  display: flex;
+}
+
+h1 {
+  color: #f4bfd9;
+  font-size: clamp(28px, 7vw, 42px);
+  font-weight: normal;
+  line-height: 1.4;
+}
+
+p {
+  max-width: 520px;
+  font-size: 17px;
+  line-height: 1.9;
+  color: #f5e3ee;
+}
+
+.soft {
+  color: #d7b8d0;
+  font-size: 14px;
+}
+
+.next-button {
+  margin-top: 22px;
+  padding: 13px 24px;
+  border: 1px solid #d99abd;
+  border-radius: 28px;
+  background: #a64d7a;
+  color: white;
+  font-size: 16px;
+}
+
+.envelope {
+  position: relative;
+  width: min(260px, 75vw);
+  height: 170px;
+  margin: 30px auto;
+  border: 0;
+  background: #c477a0;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 35px #e6a3cd33;
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e4a7c8;
+  clip-path: polygon(0 0, 100% 0, 50% 65%);
+}
+
+.envelope::after {
+  content: "♥";
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 34px;
+  color: #7c2856;
+}
+
+.memory {
+  width: min(480px, 100%);
+  margin: 12px auto;
+  padding: 18px;
+  border: 1px solid #73516f;
+  border-radius: 16px;
+  background: #ffffff09;
+  color: #f8dce9;
+  line-height: 1.8;
+}
+
+.letter {
+  width: min(520px, 100%);
+  padding: 25px 20px;
+  border: 1px solid #936786;
+  border-radius: 14px;
+  background: #ffffff08;
+  line-height: 2;
+  text-align: left;
+  white-space: pre-line;
+}
+
+.signature {
+  text-align: right;
+  color: #f4bfd9;
+  font-style: italic;
+}
+
+.music-player {
+  position: fixed;
+  z-index: 100;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #a64d7a;
+  color: #fff2fa;
+  border: 1px solid #e9bdd6;
+  border-radius: 30px;
+  padding: 12px 22px;
+  box-shadow: 0 0 20px #e9bdd633;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.next-button,
+.envelope,
+.music-player {
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<section class="screen active" id="screen1">
+  <p class="soft">A little message from my heart ✦</p>
+  <h1>Some people stay<br>in our hearts...</h1>
+  <p>Even when life leaves us standing far apart.</p>
+  <button class="next-button" onclick="goTo(2)">
+    Open your little surprise ♡
+  </button>
+</section>
+
+<section class="screen" id="screen2">
+  <p class="soft">A letter I never stopped wanting to write</p>
+  <h1>For you 💌</h1>
+  <button class="envelope" onclick="goTo(3)" aria-label="Open the envelope"></button>
+  <p>Tap the envelope to open it.</p>
+</section>
+
+<section class="screen" id="screen3">
+  <h1>Little things I miss...</h1>
+  <div class="memory">♡ I'm missing our late-night talks.</div>
+  <div class="memory">♡ I'm missing the way you comforted me when I felt alone.</div>
+  <div class="memory">♡ I'm missing the little moments that once meant everything.</div>
+  <div class="memory">♡ Sometimes, even the smallest memory brings you back to my mind.</div>
+  <button class="next-button" onclick="goTo(4)">
+    One last thing... ♡
+  </button>
+</section>
+
+<section class="screen" id="screen4">
+  <h1>A letter from my heart</h1>
+  <div class="letter">I don't know if these words will ever reach you, but I wanted to give my feelings a quiet place to exist.
+
+I miss you. I miss the conversations, the comfort, and the little moments that became special to me.
+
+If I ever hurt you, I'm truly sorry. I never wanted to leave pain in your heart.
+
+I'm not writing this to ask for a reply or to change your decision. I respect your space, and I won't ask you to do anything.
+
+I just wanted to say that what we shared mattered to me. I hope life brings you peace, happiness, and beautiful things.
+
+Even from a distance, I wish you well.</div>
+  <button class="next-button" onclick="goTo(5)">
+    Read my last words ✦
+  </button>
+</section>
+
+<section class="screen" id="screen5">
+  <p class="soft">Under the same sky...</p>
+  <h1>Take care of yourself ♡</h1>
+  <p>Some feelings don't need an answer. Some memories can be treasured quietly, without asking anything in return.</p>
+  <p>I hope you find happiness, wherever life takes you.</p>
+  <p class="signature">With care, always ✨</p>
+  <p class="soft">Made with feelings, beneath the same sky ✦</p>
+  <button class="next-button" onclick="goTo(1)">
+    Read again ♡
+  </button>
+</section>
+
+<!-- ONE music button for every screen -->
+<button
+  id="musicButton"
+  class="music-player"
+  type="button"
+  onclick="toggleMusic()">
+  ♫ Play our song
+</button>
+
+<footer class="soft" style="padding: 10px 12px 95px;">
+  Made with feelings, beneath the same sky ✦
+</footer>
+
+<!-- Your song file is stored in the repository root -->
+<audio id="song" loop preload="none">
+  <source
+    src="https://raw.githubusercontent.com/mamatha021622-cloud/SurpriseStory.x/main/_Oohale_Oohale_Jaanu_Ringtone_%28by%20Fringster.com%29.mp3"
+    type="audio/mpeg">
+</audio>
+
+<script>
+function goTo(number) {
+  document.querySelectorAll(".screen").forEach(function(screen) {
+    screen.classList.remove("active");
+  });
+
+  document.getElementById("screen" + number).classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function toggleMusic() {
+  const song = document.getElementById("song");
+  const button = document.getElementById("musicButton");
+
+  if (song.paused) {
+    try {
+      await song.play();
+      button.textContent = "♫ Pause our song";
+    } catch (error) {
+      console.error("Audio playback error:", error);
+      button.textContent = "Music couldn't play — check the MP3 URL";
+    }
+  } else {
+    song.pause();
+    button.textContent = "♫ Play our song";
+  }
+}
+</script>
+
+</body>
+</html>
