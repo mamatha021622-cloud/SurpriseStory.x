@@ -3,18 +3,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#fff0f5">
 <title>I Miss You | SurpriseStory ♡</title>
 
 <style>
 :root {
-  --pink: #fff0f5;
   --rose: #d982a0;
   --deep: #8e4966;
   --ink: #684b59;
   --paper: #fffaf8;
 }
+
 * { box-sizing: border-box; }
 
 body {
@@ -23,7 +23,7 @@ body {
   font-family: Georgia, "Times New Roman", serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at 15% 15%, #fff 0, transparent 30%),
+    radial-gradient(circle at 15% 15%, #fff, transparent 30%),
     linear-gradient(145deg, #fff4f7, #f9e2ec, #eee6f7);
 }
 
@@ -36,29 +36,31 @@ button { font: inherit; }
   align-items: center;
   justify-content: center;
 }
+
 .page.active {
   display: flex;
-  animation: appear .8s ease both;
+  animation: appear .7s ease both;
 }
 
 .card {
   width: 100%;
   max-width: 430px;
-  text-align: center;
   padding: 28px 22px;
+  text-align: center;
   border: 1px solid #ffffffcc;
   border-radius: 25px;
-  background: #fffaf8e8;
+  background: #fffaf8ed;
   box-shadow: 0 16px 55px #b77c9620;
 }
 
 .progress {
   height: 3px;
+  margin-bottom: 26px;
   background: #f0dce5;
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 26px;
 }
+
 .bar {
   height: 100%;
   width: 0;
@@ -73,6 +75,7 @@ button { font: inherit; }
   font-size: 10px;
   letter-spacing: 3px;
 }
+
 h1 {
   color: var(--deep);
   font-size: clamp(29px, 8vw, 38px);
@@ -80,19 +83,23 @@ h1 {
   font-weight: normal;
   margin: 22px 0;
 }
+
 p {
   font-size: 16px;
   line-height: 1.9;
 }
+
 .small {
   font-size: 13px;
   line-height: 1.8;
 }
+
 .heart {
-  font-size: 43px;
   color: var(--rose);
+  font-size: 43px;
   margin: 22px 0;
 }
+
 .stars {
   color: #d79ab3;
   letter-spacing: 8px;
@@ -107,14 +114,17 @@ p {
   border-radius: 30px;
   color: white;
   background: linear-gradient(120deg, #d982a0, #b96d91);
-  cursor: pointer;
   box-shadow: 0 7px 20px #d982a033;
+  cursor: pointer;
 }
+
 .action:active { transform: scale(.98); }
+
 .action:disabled {
   opacity: .45;
   cursor: not-allowed;
 }
+
 .secondary {
   color: var(--deep);
   background: transparent;
@@ -127,22 +137,23 @@ p {
   z-index: 10;
   right: 12px;
   top: 12px;
+  padding: 10px 13px;
   border: 1px solid #e8bfd0;
+  border-radius: 25px;
   color: var(--deep);
   background: #fffaf8f2;
-  border-radius: 25px;
-  padding: 10px 13px;
   font-size: 12px;
 }
 
 .envelope-wrap {
-  margin: 36px auto;
   width: 180px;
   height: 125px;
   position: relative;
+  margin: 36px auto;
   cursor: pointer;
   perspective: 500px;
 }
+
 .envelope {
   position: absolute;
   inset: 0;
@@ -150,6 +161,7 @@ p {
   border-radius: 5px;
   overflow: hidden;
 }
+
 .envelope::before {
   content: "";
   position: absolute;
@@ -160,6 +172,7 @@ p {
   transform-origin: top;
   transition: transform .65s ease;
 }
+
 .envelope::after {
   content: "♡";
   position: absolute;
@@ -170,6 +183,7 @@ p {
   color: #a95d7d;
   font-size: 29px;
 }
+
 .envelope.open::before {
   transform: rotateX(180deg);
 }
@@ -184,19 +198,20 @@ p {
 }
 
 .letter {
-  background: var(--paper);
-  border: 1px solid #f1d6e0;
   padding: 20px 17px;
+  border: 1px solid #f1d6e0;
   border-radius: 12px;
+  background: var(--paper);
   text-align: left;
   line-height: 1.9;
   font-size: 15px;
   white-space: pre-line;
 }
+
 .signature {
-  font-style: italic;
-  font-size: 21px;
   color: var(--deep);
+  font-size: 21px;
+  font-style: italic;
   margin-top: 25px;
 }
 
@@ -204,6 +219,7 @@ p {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
@@ -215,18 +231,22 @@ p {
 
 <body>
 
+<!-- Background song -->
 <audio id="music" loop preload="none">
-  <source src="./oohale.mp3" type="audio/mpeg">
+  <source
+    src="./_Oohale_Oohale_Jaanu_Ringtone_(by%20Fringster.com).mp3"
+    type="audio/mpeg">
 </audio>
 
 <button class="music" id="musicBtn" onclick="toggleMusic()">
   ♫ Music off
 </button>
 
-<!-- SCREEN 1: BEGINNING -->
+<!-- SCREEN 1 -->
 <section class="page active" id="screen1">
   <div class="card">
     <div class="progress"><div class="bar"></div></div>
+
     <div class="eyebrow">SurpriseStory ♡</div>
     <div class="stars">✧ · ♡ · ✧</div>
 
@@ -251,10 +271,11 @@ p {
   </div>
 </section>
 
-<!-- SCREEN 2: ENVELOPE -->
+<!-- SCREEN 2 -->
 <section class="page" id="screen2">
   <div class="card">
     <div class="progress"><div class="bar"></div></div>
+
     <div class="eyebrow">Words left unspoken</div>
 
     <h1>A letter<br>never sent 💌</h1>
@@ -280,10 +301,11 @@ p {
   </div>
 </section>
 
-<!-- SCREEN 3: MEMORIES -->
+<!-- SCREEN 3 -->
 <section class="page" id="screen3">
   <div class="card">
     <div class="progress"><div class="bar"></div></div>
+
     <div class="eyebrow">Little things, lasting memories</div>
 
     <h1>Things I still miss…</h1>
@@ -304,8 +326,8 @@ p {
     </div>
 
     <div class="memory">
-      Most of all, I miss the version of us
-      that existed in those beautiful moments.
+      Most of all, I miss everything about you
+      and the moments we shared.
     </div>
 
     <p class="small">
@@ -320,10 +342,11 @@ p {
   </div>
 </section>
 
-<!-- SCREEN 4: HEARTFELT LETTER -->
+<!-- SCREEN 4 -->
 <section class="page" id="screen4">
   <div class="card">
     <div class="progress"><div class="bar"></div></div>
+
     <div class="eyebrow">From my heart, honestly</div>
 
     <h1>I miss you,<br>but I'll let you go.</h1>
@@ -332,7 +355,7 @@ p {
 
 I miss everything about you and the memories we shared. Sometimes I wish things could have been different. I wish the happy moments could have lasted longer, and I wish the silence didn't feel so heavy.
 
-I still remember the little things. The conversations, the laughter, the moments that made me smile. Those memories still mean something to me, even though things are different now.
+I still remember the little things. The conversations, the laughter, and the moments that made me smile. Those memories still mean something to me, even though things are different now.
 
 But I'm slowly understanding something: missing you doesn't mean I can ask you to stay. And caring about you doesn't give me the right to cross your boundaries.
 
@@ -360,10 +383,11 @@ And now, it's time to let go.</div>
   </div>
 </section>
 
-<!-- SCREEN 5: ACCEPTANCE -->
+<!-- SCREEN 5 -->
 <section class="page" id="screen5">
   <div class="card">
     <div class="progress"><div class="bar"></div></div>
+
     <div class="eyebrow">A gentle goodbye</div>
 
     <div class="heart">♡</div>
@@ -432,6 +456,7 @@ function openEnvelope() {
   if (envelopeOpened) return;
 
   envelopeOpened = true;
+
   document.getElementById("envelope").classList.add("open");
   document.getElementById("hint").textContent =
     "A few words, from the heart…";
@@ -441,6 +466,7 @@ function openEnvelope() {
 const envelopeWrap = document.getElementById("envelopeWrap");
 
 envelopeWrap.addEventListener("click", openEnvelope);
+
 envelopeWrap.addEventListener("keydown", function(event) {
   if (event.key === "Enter" || event.key === " ") {
     event.preventDefault();
@@ -467,10 +493,12 @@ async function toggleMusic() {
 
 function restart() {
   envelopeOpened = false;
+
   document.getElementById("envelope").classList.remove("open");
   document.getElementById("hint").textContent =
     "Tap the envelope gently ♡";
   document.getElementById("letterBtn").disabled = true;
+
   goTo(1);
 }
 
@@ -478,5 +506,5 @@ updateProgress(1);
 </script>
 
 </body>
-  </html>
-  
+                            </html>
+                            
