@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunny's Secret Birthday Adventure 🎂</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  background: linear-gradient(135deg, #ffe0ef, #fff4d8, #e4f7ff);
+  color: #67334d;
+  overflow-x: hidden;
+}
+
+#game {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 18px;
+}
+
+h1 {
+  color: #ed5796;
+  font-size: clamp(25px, 6vw, 42px);
+  text-shadow: 2px 3px white;
+}
+
+#scene {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  min-height: 420px;
+  margin: 0 auto;
+  border-radius: 28px;
+  background: linear-gradient(#bdeeff, #fff5fa 80%);
+  border: 5px solid white;
+  box-shadow: 0 12px 35px #c57da755;
+  overflow: hidden;
+}
+
+#ground {
+  position: absolute;
+  bottom: 0;
+  height: 90px;
+  width: 100%;
+  background: linear-gradient(#b6e8a2, #7bc76a);
+  border-radius: 50% 50% 0 0 / 20% 20% 0 0;
+}
+
+#message {
+  position: relative;
+  z-index: 8;
+  min-height: 85px;
+  padding: 15px 10px;
+  font-size: clamp(17px, 4vw, 24px);
+  font-weight: bold;
+}
+
+button {
+  border: 0;
+  border-radius: 30px;
+  padding: 13px 24px;
+  margin: 8px;
+  background: #ff6fa8;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #d94c87;
+}
+
+button:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 #d94c87;
+}
+
+#startBtn {
+  background: #9a66db;
+  box-shadow: 0 5px 0 #7142af;
+}
+
+#choices {
+  position: relative;
+  z-index: 9;
+  min-height: 70px;
+}
+
+.choice {
+  background: white;
+  color: #d94c87;
+  border: 2px solid #ff9ec5;
+  box-shadow: 0 5px 0 #f4b2d0;
+}
+
+/* Bunny */
+
+#bunny {
+  position: absolute;
+  width: 190px;
+  height: 250px;
+  bottom: 45px;
+  left: -220px;
+  z-index: 4;
+  transition: left 1.4s ease;
+}
+
+#bunny.run {
+  animation: bunnyHop .35s infinite alternate;
+}
+
+@keyframes bunnyHop {
+  from { transform: translateY(0) rotate(-3deg); }
+  to { transform: translateY(-16px) rotate(3deg); }
+}
+
+#bunny.trip {
+  animation: bunnyTrip 1s forwards;
+}
+
+@keyframes bunnyTrip {
+  0% { transform: rotate(0); }
+  35% { transform: rotate(65deg) translateY(15px); }
+  65% { transform: rotate(100deg) translateY(25px); }
+  100% { transform: rotate(90deg) translateY(25px); }
+}
+
+#bunny.walkCake {
+  left: 38%;
+  animation: cakeWalk .5s infinite alternate;
+}
+
+@keyframes cakeWalk {
+  from { transform: translateY(0) rotate(-2deg); }
+  to { transform: translateY(-9px) rotate(2deg); }
+}
+
+#bunny svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Scattered gifts */
+
+.gift {
+  position: absolute;
+  z-index: 3;
+  font-size: 45px;
+  opacity: 0;
+  bottom: 95px;
+}
+
+#gift1 { left: 20%; }
+#gift2 { left: 42%; }
+#gift3 { left: 65%; }
+
+.gift.scatter {
+  opacity: 1;
+  animation: scatter .7s forwards;
+}
+
+@keyframes scatter {
+  0% { transform: translate(0,0) rotate(0); }
+  100% { transform: translate(20px,40px) rotate(100deg); }
+}
+
+/* Balloon shower */
+
+#balloonLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  overflow: hidden;
+  pointer-events: none;
+  display: none;
+}
+
+.balloon {
+  position: absolute;
+  top: -180px;
+  width: var(--w);
+  height: calc(var(--w) * 1.25);
+  left: var(--x);
+  border-radius: 50% 50% 45% 45%;
+  background:
+    radial-gradient(ellipse at 28% 20%,
+      rgba(255,255,255,.95) 0%,
+      rgba(255,255,255,.5) 8%,
+      transparent 25%),
+    radial-gradient(ellipse at 35% 30%,
+      var(--light),
+      var(--color) 60%,
+      var(--dark));
+  box-shadow:
+    inset -9px -12px 18px #0002,
+    inset 7px 8px 12px #fff5,
+    0 8px 15px #0002;
+  animation: balloonFall var(--duration) linear forwards;
+}
+
+.balloon::before {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 45%;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 10px solid var(--color);
+}
+
+.balloon::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 1px;
+  height: 70px;
+  background: #ffffffb0;
+}
+
+@keyframes balloonFall {
+  0% {
+    transform: translateY(-20px) rotate(-12deg);
+  }
+  70% {
+    transform: translateY(75vh) rotate(18deg);
+  }
+  100% {
+    transform: translateY(110vh) rotate(-10deg);
+  }
+}
+
+/* Confetti */
+
+.confetti {
+  position: absolute;
+  top: -20px;
+  left: var(--x);
+  width: 9px;
+  height: 15px;
+  background: var(--color);
+  animation: confettiFall var(--duration) linear forwards;
+}
+
+@keyframes confettiFall {
+  to {
+    transform: translateY(110vh) rotate(900deg);
+  }
+}
+
+/* Cake */
+
+#cake {
+  position: absolute;
+  z-index: 5;
+  width: 145px;
+  height: 160px;
+  bottom: 125px;
+  left: 52%;
+  opacity: 0;
+  transform: scale(.5);
+  transition: opacity .8s, transform .8s;
+}
+
+#cake.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cakeBase {
+  position: absolute;
+  bottom: 0;
+  width: 145px;
+  height: 80px;
+  background: linear-gradient(#ffb4cf, #f17da9);
+  border-radius: 15px 15px 22px 22px;
+  border: 3px solid white;
+  box-shadow: 0 8px 0 #d85d91;
+}
+
+.cakeTop {
+  position: absolute;
+  bottom: 65px;
+  left: 8px;
+  width: 129px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff5f8;
+  border: 3px solid #ffcae0;
+}
+
+.candle {
+  position: absolute;
+  bottom: 92px;
+  width: 12px;
+  height: 38px;
+  background: repeating-linear-gradient(
+    45deg,
+    #fff,
+    #fff 5px,
+    #ff74a8 5px,
+    #ff74a8 10px
+  );
+  border-radius: 3px;
+}
+
+.candle:nth-child(3) { left: 43px; }
+.candle:nth-child(4) { left: 66px; }
+.candle:nth-child(5) { left: 89px; }
+
+.flame {
+  position: absolute;
+  bottom: 130px;
+  width: 16px;
+  height: 25px;
+  background: radial-gradient(ellipse at 50% 70%, #fff 0%, #fff36b 25%, #ff9c32 65%, #ff5d22);
+  border-radius: 50% 50% 45% 45%;
+  animation: flicker .15s infinite alternate;
+  filter: drop-shadow(0 0 8px #ffb52e);
+}
+
+.flame:nth-child(6) { left: 41px; }
+.flame:nth-child(7) { left: 64px; }
+.flame:nth-child(8) { left: 87px; }
+
+@keyframes flicker {
+  from { transform: scale(.9) rotate(-4deg); }
+  to { transform: scale(1.15) rotate(5deg); }
+}
+
+/* Birthday content */
+
+#birthdayContent {
+  display: none;
+  position: relative;
+  z-index: 10;
+  max-width: 750px;
+  margin: 20px auto;
+  background: #ffffffed;
+  border: 3px solid white;
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 0 10px 30px #db82aa66;
+}
+
+#birthdayContent h2 {
+  color: #ed5796;
+  font-size: clamp(25px, 6vw, 40px);
+}
+
+#photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+#photos img {
+  width: min(42%, 210px);
+  height: 210px;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 4px solid white;
+  box-shadow: 0 5px 15px #0002;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  #scene {
+    min-height: 470px;
+  }
+
+  #bunny {
+    width: 160px;
+    height: 215px;
+  }
+
+  #cake {
+    left: 48%;
+    transform: scale(.8);
+  }
+
+  #cake.show {
+    transform: scale(.8);
+  }
+
+  #photos img {
+    height: 150px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+  <h1>🐰 Bunny's Secret Birthday Adventure 🎁</h1>
+
+  <div id="message">
+    A little birthday surprise is waiting for you!
+  </div>
+
+  <button id="startBtn" onclick="startAdventure()">
+    Start the Adventure 💖
+  </button>
+
+  <div id="scene">
+
+    <div id="ground"></div>
+
+    <!-- Original cartoon bunny -->
+    <div id="bunny">
+      <svg viewBox="0 0 200 260" xmlns="http://www.w3.org/2000/svg">
+
+        <!-- Ears -->
+        <ellipse cx="72" cy="48" rx="24" ry="65"
+          fill="#fff" stroke="#e9cbd7" stroke-width="3"
+          transform="rotate(-15 72 48)"/>
+
+        <ellipse cx="126" cy="43" rx="24" ry="65"
+          fill="#fff" stroke="#e9cbd7" stroke-width="3"
+          transform="rotate(12 126 43)"/>
+
+        <ellipse cx="74" cy="48" rx="12" ry="48"
+          fill="#ffb6d2" transform="rotate(-15 74 48)"/>
+
+        <ellipse cx="126" cy="43" rx="12" ry="48"
+          fill="#ffb6d2" transform="rotate(12 126 43)"/>
+
+        <!-- Body -->
+        <ellipse cx="100" cy="188" rx="57" ry="65"
+          fill="#fff" stroke="#e9cbd7" stroke-width="3"/>
+
+        <!-- Feet -->
+        <ellipse cx="67" cy="238" rx="28" ry="15" fill="#fff"/>
+        <ellipse cx="133" cy="238" rx="28" ry="15" fill="#fff"/>
+
+        <!-- Head -->
+        <circle cx="100" cy="105" r="72"
+          fill="#fff" stroke="#e9cbd7" stroke-width="3"/>
+
+        <!-- Cheeks -->
+        <ellipse cx="58" cy="126" rx="18" ry="11" fill="#ffb9d4"/>
+        <ellipse cx="142" cy="126" rx="18" ry="11" fill="#ffb9d4"/>
+
+        <!-- Eyes -->
+        <ellipse cx="78" cy="100" rx="9" ry="13" fill="#422e38"/>
+        <ellipse cx="122" cy="100" rx="9" ry="13" fill="#422e38"/>
+
+        <circle cx="81" cy="96" r="3" fill="white"/>
+        <circle cx="125" cy="96" r="3" fill="white"/>
+
+        <!-- Nose -->
+        <ellipse cx="100" cy="119" rx="8" ry="6" fill="#ed699e"/>
+
+        <!-- Mouth -->
+        <path d="M100 124 Q91 137 82 127"
+          fill="none" stroke="#65404e" stroke-width="3"
+          stroke-linecap="round"/>
+
+        <path d="M100 124 Q109 137 118 127"
+          fill="none" stroke="#65404e" stroke-width="3"
+          stroke-linecap="round"/>
+
+        <!-- Arms -->
+        <ellipse cx="44" cy="174" rx="18" ry="35"
+          fill="#fff" transform="rotate(25 44 174)"/>
+
+        <ellipse cx="156" cy="174" rx="18" ry="35"
+          fill="#fff" transform="rotate(-25 156 174)"/>
+
+        <!-- Bow -->
+        <path d="M92 42 Q65 20 65 43 Q65 61 96 50"
+          fill="#ff6fa8" stroke="#e94d8c" stroke-width="2"/>
+
+        <path d="M108 42 Q135 20 135 43 Q135 61 104 50"
+          fill="#ff6fa8" stroke="#e94d8c" stroke-width="2"/>
+
+        <circle cx="100" cy="46" r="9" fill="#ffb8d4"/>
+
+      </svg>
+    </div>
+
+    <!-- Gifts that scatter -->
+    <div id="gift1" class="gift">🎁</div>
+    <div id="gift2" class="gift">🎀</div>
+    <div id="gift3" class="gift">🎁</div>
+
+    <!-- Cake carried after balloon shower -->
+    <div id="cake">
+      <div class="cakeBase"></div>
+      <div class="cakeTop"></div>
+
+      <div class="candle"></div>
+      <div class="candle"></div>
+      <div class="candle"></div>
+
+      <div class="flame"></div>
+      <div class="flame"></div>
+      <div class="flame"></div>
+    </div>
+
+    <!-- Foreground balloon rain -->
+    <div id="balloonLayer"></div>
+
+  </div>
+
+  <div id="choices"></div>
+
+  <div id="birthdayContent">
+
+    <h2>🎂 Happy Birthday! 🎂</h2>
+
+    <p>
+      You deserve all the happiness, love, laughter,
+      and beautiful surprises in the world! 💖
+    </p>
+
+    <p>
+      May your birthday be as special and wonderful
+      as you are. Keep smiling always! 🎈
+    </p>
+
+    <h2>📸 Beautiful Memories</h2>
+
+    <div id="photos">
+      <img src="78db597aa35e18dd38055fe6ddcd544c.jpg" alt="Birthday memory 1">
+      <img src="5435bd09e80e96120d583fe81c5e212d.jpg" alt="Birthday memory 2">
+      <img src="8b8cb5317fa2753aff9ff9ed60b859be.jpg" alt="Birthday memory 3">
+      <img src="927256f3b5fabac7e8d293b9cc8dbac6.jpg" alt="Birthday memory 4">
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Your audio files -->
+<audio id="funnySong" src="Oggy_And_The_Cockroaches_-Main_Theme(mp3.pm).mp3" preload="auto"></audio>
+<audio id="birthdaySong" src="atlasaudio-birthday-606219.mp3" preload="auto" loop></audio>
+
+<script>
+const bunny = document.getElementById("bunny");
+const message = document.getElementById("message");
+const choices = document.getElementById("choices");
+const funnySong = document.getElementById("funnySong");
+const birthdaySong = document.getElementById("birthdaySong");
+const balloonLayer = document.getElementById("balloonLayer");
+const cake = document.getElementById("cake");
+
+let started = false;
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function startAdventure() {
+  if (started) return;
+  started = true;
+
+  document.getElementById("startBtn").classList.add("hidden");
+
+  // Start funny song after the visitor taps the button
+  funnySong.volume = 0.65;
+  funnySong.play().catch(() => {});
+
+  message.innerHTML = "Look! Bunny is running with birthday gifts! 🐰🎁";
+
+  bunny.classList.add("run");
+  bunny.style.left = "35%";
+
+  await wait(1800);
+
+  bunny.classList.remove("run");
+  bunny.classList.add("trip");
+
+  // Gifts scatter
+  document.querySelectorAll(".gift").forEach(gift => {
+    gift.classList.add("scatter");
+  });
+
+  message.innerHTML =
+    "Oh no! Bunny tripped! 😵‍💫 The gifts scattered everywhere!";
+
+  await wait(1300);
+
+  bunny.classList.remove("trip");
+
+  message.innerHTML =
+    "Can you help Bunny find the correct birthday gift?";
+
+  showChoices();
+}
+
+function showChoices() {
+  choices.innerHTML = `
+    <button class="choice" onclick="wrongGift()">🥕 Carrot</button>
+    <button class="choice" onclick="wrongGift()">🧦 Socks</button>
+    <button class="choice" onclick="correctGift()">🎁 Birthday Gift</button>
+  `;
+}
+
+function wrongGift() {
+  message.innerHTML =
+    "Bunny: Hey! That's my carrot! 🥕😅 Try another gift!";
+
+  bunny.style.transform = "rotate(-8deg)";
+
+  setTimeout(() => {
+    bunny.style.transform = "";
+  }, 500);
+}
+
+async function correctGift() {
+  choices.innerHTML = "";
+
+  message.innerHTML =
+    "You found the right gift! Bunny is so happy! 🎁💖";
+
+  await wait(1000);
+
+  // Stop funny song
+  funnySong.pause();
+  funnySong.currentTime = 0;
+
+  // Start birthday song
+  birthdaySong.volume = 0.7;
+  birthdaySong.play().catch(() => {});
+
+  message.innerHTML =
+    "SURPRISE! It's time for a birthday celebration! 🎉";
+
+  // Balloon shower falls in front of Bunny
+  await balloonShower();
+
+  // After the balloons finish falling, Bunny brings cake
+  await wait(500);
+
+  message.innerHTML =
+    "Look! Bunny is bringing a birthday cake with glowing candles! 🎂";
+
+  bunny.style.left = "10%";
+  bunny.classList.add("walkCake");
+
+  cake.classList.add("show");
+
+  await wait(2200);
+
+  bunny.classList.remove("walkCake");
+
+  message.innerHTML =
+    "Make a wish and blow out your candles! ✨";
+
+  await wait(1800);
+
+  message.innerHTML =
+    "Happy Birthday! Here's a little surprise made just for you! 💖";
+
+  document.getElementById("birthdayContent").style.display = "block";
+}
+
+/* Full-screen balloon shower */
+
+async function balloonShower() {
+  balloonLayer.style.display = "block";
+
+  message.innerHTML =
+    "🎈🎈 Balloon shower! 🎈🎈";
+
+  const colors = [
+    ["#ff7fb5", "#ffb9d5", "#d83279"],
+    ["#78d7ff", "#c5f0ff", "#269acb"],
+    ["#ffe36f", "#fff5b8", "#e8a900"],
+    ["#b99aff", "#e3d6ff", "#7550d2"],
+    ["#8de8a2", "#c9ffd5", "#36a65a"],
+    ["#ff9b76", "#ffd0bd", "#d95e36"]
+  ];
+
+  // Balloons fall from top across the full screen
+  for (let i = 0; i < 45; i++) {
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+
+    const color = colors[Math.floor(Math.random() * colors.length)];
+
+    balloon.style.setProperty("--color", color[0]);
+    balloon.style.setProperty("--light", color[1]);
+    balloon.style.setProperty("--dark", color[2]);
+
+    balloon.style.setProperty("--w", (35 + Math.random() * 65) + "px");
+    balloon.style.setProperty("--x", Math.random() * 100 + "%");
+    balloon.style.setProperty("--duration", (3 + Math.random() * 3) + "s");
+
+    balloonLayer.appendChild(balloon);
+
+    await wait(90);
+  }
+
+  // Confetti falling in front too
+  const confettiColors = [
+    "#ff5da2", "#ffe45e", "#7ee9ff",
+    "#ad8bff", "#75e99a", "#ff9866"
+  ];
+
+  for (let i = 0; i < 100; i++) {
+    const piece = document.createElement("div");
+    piece.className = "confetti";
+
+    piece.style.setProperty("--x", Math.random() * 100 + "%");
+    piece.style.setProperty("--color",
+      confettiColors[Math.floor(Math.random() * confettiColors.length)]
+    );
+    piece.style.setProperty("--duration", (3 + Math.random() * 3) + "s");
+
+    balloonLayer.appendChild(piece);
+  }
+
+  // Wait until the balloons and confetti have fallen
+  await wait(6500);
+
+  // Clear the foreground so Bunny and cake can be seen clearly
+  balloonLayer.innerHTML = "";
+  balloonLayer.style.display = "none";
+}
+</script>
+
+</body>
+</html>
