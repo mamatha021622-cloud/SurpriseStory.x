@@ -77,37 +77,68 @@ button {
   font-weight: bold;
   box-shadow: 0 5px 12px #d88bb355;
   cursor: pointer;
+  transition: transform .2s;
 }
 
 button:active {
-  transform: scale(.94);
+  transform: scale(.92);
 }
+
+/* BUNNY ANIMATIONS */
 
 .bunny {
   font-size: 100px;
   display: inline-block;
+  position: relative;
   filter: drop-shadow(0 5px 5px #e5a2c3);
 }
 
 .run {
-  animation: bunnyRun 2s ease-in-out;
+  animation: bunnyRun 2.5s ease-in-out forwards;
 }
 
 @keyframes bunnyRun {
-  0% {transform:translateX(-120vw) rotate(-15deg);}
-  65% {transform:translateX(15px) rotate(10deg);}
-  80% {transform:translateX(-8px) rotate(-5deg);}
-  100% {transform:translateX(0) rotate(0);}
+  0% {
+    transform: translateX(-120vw) translateY(30px) rotate(-25deg);
+  }
+  35% {
+    transform: translateX(20px) translateY(-35px) rotate(15deg);
+  }
+  55% {
+    transform: translateX(-10px) translateY(0) rotate(-10deg);
+  }
+  75% {
+    transform: translateX(5px) translateY(-15px) rotate(5deg);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(0);
+  }
 }
 
 .hop {
-  animation: hop 1s infinite alternate;
+  animation: bunnyHop .8s ease-in-out infinite alternate;
 }
 
-@keyframes hop {
-  from {transform:translateY(0);}
-  to {transform:translateY(-13px);}
+@keyframes bunnyHop {
+  from {
+    transform: translateY(0) rotate(-5deg);
+  }
+  to {
+    transform: translateY(-22px) rotate(5deg);
+  }
 }
+
+.excited {
+  animation: excitedJump .7s ease-in-out 3;
+}
+
+@keyframes excitedJump {
+  0%,100% {transform:translateY(0) rotate(0);}
+  30% {transform:translateY(-35px) rotate(-15deg);}
+  60% {transform:translateY(-15px) rotate(15deg);}
+}
+
+/* SPEECH BUBBLE */
 
 .bubble {
   background: #fff1f8;
@@ -118,7 +149,24 @@ button:active {
   max-width: 350px;
   font-size: 18px;
   line-height: 1.5;
+  animation: bubblePop .7s cubic-bezier(.17,.67,.48,1.5);
 }
+
+@keyframes bubblePop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* GIFT ANIMATIONS */
 
 .gifts {
   display: flex;
@@ -136,16 +184,36 @@ button:active {
   border: 2px dashed #f3a8cb;
   border-radius: 18px;
   padding: 5px;
-  animation: giftWiggle 2s infinite;
+  animation: giftBounce 1.2s ease-in-out infinite alternate;
 }
 
-.gift:nth-child(2) {animation-delay:.3s;}
-.gift:nth-child(3) {animation-delay:.6s;}
+.gift:nth-child(2) {
+  animation-delay: .2s;
+}
 
-@keyframes giftWiggle {
+.gift:nth-child(3) {
+  animation-delay: .4s;
+}
+
+@keyframes giftBounce {
+  from {
+    transform: translateY(0) rotate(-4deg);
+  }
+  to {
+    transform: translateY(-15px) rotate(4deg);
+  }
+}
+
+.shake {
+  animation: giftShake .5s ease-in-out;
+}
+
+@keyframes giftShake {
   0%,100% {transform:rotate(0);}
-  25% {transform:rotate(-5deg);}
-  75% {transform:rotate(5deg);}
+  20% {transform:rotate(-15deg) scale(1.1);}
+  40% {transform:rotate(15deg) scale(1.1);}
+  60% {transform:rotate(-10deg);}
+  80% {transform:rotate(10deg);}
 }
 
 .message {
@@ -157,9 +225,7 @@ button:active {
   margin: 15px 0;
 }
 
-.hidden {
-  display: none !important;
-}
+/* BIRTHDAY CAKE */
 
 .cake {
   font-size: 100px;
@@ -172,6 +238,8 @@ button:active {
   to {transform:translateY(-12px);}
 }
 
+/* LETTER */
+
 .letter {
   background: #fff7fb;
   padding: 20px;
@@ -181,6 +249,8 @@ button:active {
   white-space: pre-line;
   font-size: 17px;
 }
+
+/* PHOTOS */
 
 .photos {
   display: grid;
@@ -200,6 +270,8 @@ button:active {
   box-shadow: 0 5px 15px #cc8bb455;
 }
 
+/* CONFETTI */
+
 .sparkle {
   position: fixed;
   top: 100vh;
@@ -209,19 +281,23 @@ button:active {
 }
 
 @keyframes sparkleUp {
-  0% {transform:translateY(0) rotate(0);opacity:1;}
-  100% {transform:translateY(-120vh) rotate(360deg);opacity:0;}
+  0% {
+    transform:translateY(0) rotate(0);
+    opacity:1;
+  }
+  100% {
+    transform:translateY(-120vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+.hidden {
+  display: none !important;
 }
 
 .small {
   font-size: 13px;
   color: #b07a9b;
-}
-
-#soundNotice {
-  font-size: 12px;
-  color: #b07a9b;
-  margin-top: 12px;
 }
 
 </style>
@@ -263,7 +339,7 @@ loop preload="auto"></audio>
       What happened, Bunny? 😂
     </button>
 
-    <p id="soundNotice">
+    <p id="soundNotice" class="small">
       🎵 Tap to begin your adventure!
     </p>
 
@@ -355,7 +431,7 @@ loop preload="auto"></audio>
 
   <div class="card">
 
-    <div class="bunny hop">🐰🎉</div>
+    <div id="foundBunny" class="bunny excited">🐰🎉</div>
 
     <h1>YAAAAAY!!</h1>
 
@@ -425,7 +501,7 @@ loop preload="auto"></audio>
 
   <div class="card">
 
-    <div class="bunny">🐰💗</div>
+    <div class="bunny hop">🐰💗</div>
 
     <h1>One last thing…</h1>
 
@@ -436,29 +512,29 @@ loop preload="auto"></audio>
 
     <div class="letter">
 
-      Happy Birthday to someone
-      who deserves so much happiness. ❤️
+Happy Birthday to someone
+who deserves so much happiness. ❤️
 
-      I hope this new year of your life
-      brings you endless smiles,
-      beautiful memories,
-      and all the love your heart can hold.
+I hope this new year of your life
+brings you endless smiles,
+beautiful memories,
+and all the love your heart can hold.
 
-      No matter how silly life gets,
-      never forget how special you are.
+No matter how silly life gets,
+never forget how special you are.
 
-      May your dreams come true,
-      may your heart always feel loved,
-      and may you always find
-      a reason to smile.
+May your dreams come true,
+may your heart always feel loved,
+and may you always find
+a reason to smile.
 
-      And if this little bunny
-      could give you one thing…
+And if this little bunny
+could give you one thing…
 
-      It would be a thousand more
-      happy moments just like this.
+It would be a thousand more
+happy moments just like this.
 
-      Happy Birthday! 🎂💖
+Happy Birthday! 🎂💖
 
     </div>
 
@@ -517,6 +593,7 @@ function showScreen(id) {
     top: 0,
     behavior: "smooth"
   });
+
 }
 
 
@@ -528,6 +605,7 @@ function startAdventure() {
   funnyMusic.play().catch(() => {});
 
   showScreen("mission");
+
 }
 
 
@@ -536,6 +614,16 @@ function chooseGift(number) {
 
   const message = document.getElementById("giftMessage");
   const tryAgain = document.getElementById("tryAgain");
+
+  const selectedGift =
+  document.querySelectorAll(".gift")[number - 1];
+
+  selectedGift.classList.remove("shake");
+
+  // Force restart of animation
+  void selectedGift.offsetWidth;
+
+  selectedGift.classList.add("shake");
 
   if (number === 1) {
 
@@ -651,5 +739,5 @@ function confetti() {
 </script>
 
 </body>
-  </html>
-  
+        </html>
+        
