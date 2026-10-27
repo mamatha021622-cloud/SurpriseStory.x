@@ -1,744 +1,123 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Bunny's Secret Birthday Adventure 🐰</title>
-
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  overflow-x: hidden;
-  font-family: "Trebuchet MS", sans-serif;
-  text-align: center;
-  color: #81436b;
-  background: linear-gradient(135deg,#ffe1ef,#fff5fa,#e8ddff);
-}
-
-.screen {
-  display: none;
-  min-height: 100vh;
-  padding: 25px 15px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  position: relative;
-}
-
-.screen.active {
-  display: flex;
-  animation: appear .7s ease;
-}
-
-@keyframes appear {
-  from {opacity:0; transform:translateY(15px);}
-  to {opacity:1; transform:translateY(0);}
-}
-
-.card {
-  width: 100%;
-  max-width: 460px;
-  padding: 25px 18px;
-  border-radius: 28px;
-  background: #ffffffdf;
-  border: 2px solid #ffc3df;
-  box-shadow: 0 12px 35px #cf82ad33;
-}
-
-h1 {
-  color: #e45398;
-  font-size: 29px;
-  margin: 12px 0;
-}
-
-h2 {
-  color: #df5999;
-}
-
-p {
-  font-size: 17px;
-  line-height: 1.65;
-}
-
-button {
-  border: 0;
-  padding: 14px 22px;
-  border-radius: 30px;
-  margin: 8px;
-  background: linear-gradient(135deg,#f47cb1,#d96ba8);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  box-shadow: 0 5px 12px #d88bb355;
-  cursor: pointer;
-  transition: transform .2s;
-}
-
-button:active {
-  transform: scale(.92);
-}
-
-/* BUNNY ANIMATIONS */
-
-.bunny {
-  font-size: 100px;
-  display: inline-block;
-  position: relative;
-  filter: drop-shadow(0 5px 5px #e5a2c3);
-}
-
-.run {
-  animation: bunnyRun 2.5s ease-in-out forwards;
-}
-
-@keyframes bunnyRun {
-  0% {
-    transform: translateX(-120vw) translateY(30px) rotate(-25deg);
-  }
-  35% {
-    transform: translateX(20px) translateY(-35px) rotate(15deg);
-  }
-  55% {
-    transform: translateX(-10px) translateY(0) rotate(-10deg);
-  }
-  75% {
-    transform: translateX(5px) translateY(-15px) rotate(5deg);
-  }
-  100% {
-    transform: translateX(0) translateY(0) rotate(0);
-  }
-}
-
-.hop {
-  animation: bunnyHop .8s ease-in-out infinite alternate;
-}
-
-@keyframes bunnyHop {
-  from {
-    transform: translateY(0) rotate(-5deg);
-  }
-  to {
-    transform: translateY(-22px) rotate(5deg);
-  }
-}
-
-.excited {
-  animation: excitedJump .7s ease-in-out 3;
-}
-
-@keyframes excitedJump {
-  0%,100% {transform:translateY(0) rotate(0);}
-  30% {transform:translateY(-35px) rotate(-15deg);}
-  60% {transform:translateY(-15px) rotate(15deg);}
-}
-
-/* SPEECH BUBBLE */
-
-.bubble {
-  background: #fff1f8;
-  border: 2px solid #ffc5df;
-  border-radius: 22px;
-  padding: 13px;
-  margin: 15px auto;
-  max-width: 350px;
-  font-size: 18px;
-  line-height: 1.5;
-  animation: bubblePop .7s cubic-bezier(.17,.67,.48,1.5);
-}
-
-@keyframes bubblePop {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  70% {
-    transform: scale(1.12);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* GIFT ANIMATIONS */
-
-.gifts {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 18px 0;
-}
-
-.gift {
-  width: 88px;
-  height: 100px;
-  font-size: 55px;
-  background: #fff1f8;
-  border: 2px dashed #f3a8cb;
-  border-radius: 18px;
-  padding: 5px;
-  animation: giftBounce 1.2s ease-in-out infinite alternate;
-}
-
-.gift:nth-child(2) {
-  animation-delay: .2s;
-}
-
-.gift:nth-child(3) {
-  animation-delay: .4s;
-}
-
-@keyframes giftBounce {
-  from {
-    transform: translateY(0) rotate(-4deg);
-  }
-  to {
-    transform: translateY(-15px) rotate(4deg);
-  }
-}
-
-.shake {
-  animation: giftShake .5s ease-in-out;
-}
-
-@keyframes giftShake {
-  0%,100% {transform:rotate(0);}
-  20% {transform:rotate(-15deg) scale(1.1);}
-  40% {transform:rotate(15deg) scale(1.1);}
-  60% {transform:rotate(-10deg);}
-  80% {transform:rotate(10deg);}
-}
-
-.message {
-  font-size: 19px;
-  font-weight: bold;
-  color: #df4b91;
-  min-height: 58px;
-  line-height: 1.5;
-  margin: 15px 0;
-}
-
-/* BIRTHDAY CAKE */
-
-.cake {
-  font-size: 100px;
-  display: inline-block;
-  animation: cakeBounce 1s infinite alternate;
-}
-
-@keyframes cakeBounce {
-  from {transform:translateY(0);}
-  to {transform:translateY(-12px);}
-}
-
-/* LETTER */
-
-.letter {
-  background: #fff7fb;
-  padding: 20px;
-  border-radius: 22px;
-  border: 1px solid #ffd1e6;
-  line-height: 1.9;
-  white-space: pre-line;
-  font-size: 17px;
-}
-
-/* PHOTOS */
-
-.photos {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  max-width: 440px;
-  width: 100%;
-  margin: 18px auto;
-}
-
-.photos img {
-  width: 100%;
-  height: 175px;
-  object-fit: cover;
-  border: 4px solid white;
-  border-radius: 18px;
-  box-shadow: 0 5px 15px #cc8bb455;
-}
-
-/* CONFETTI */
-
-.sparkle {
-  position: fixed;
-  top: 100vh;
-  pointer-events: none;
-  z-index: 10;
-  animation: sparkleUp 4s linear forwards;
-}
-
-@keyframes sparkleUp {
-  0% {
-    transform:translateY(0) rotate(0);
-    opacity:1;
-  }
-  100% {
-    transform:translateY(-120vh) rotate(360deg);
-    opacity:0;
-  }
-}
-
-.hidden {
-  display: none !important;
-}
-
-.small {
-  font-size: 13px;
-  color: #b07a9b;
-}
-
+:root{--pink:#f26eaa;--deep:#a94c83;--pale:#fff0f7;--ink:#744568}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:'Trebuchet MS',system-ui,sans-serif;text-align:center;color:var(--ink);background:linear-gradient(145deg,#ffe0ee,#fff8fb 55%,#e9dcff);overflow-x:hidden}
+.screen{display:none;min-height:100svh;padding:24px 14px;align-items:center;justify-content:center}.screen.active{display:flex;animation:sceneIn .6s ease both}@keyframes sceneIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.card{width:min(100%,470px);padding:20px 16px 24px;background:#ffffffed;border:2px solid #ffc0dd;border-radius:30px;box-shadow:0 15px 40px #bd78a833;overflow:hidden}
+h1{font-size:clamp(25px,7vw,34px);color:#df4c96;margin:10px 0}h2{color:#df4c96}p{font-size:17px;line-height:1.65}.bubble{max-width:350px;margin:12px auto;padding:14px;background:#fff0f7;border:2px solid #ffc2df;border-radius:23px;font-size:18px;line-height:1.5;animation:pop .55s cubic-bezier(.2,1.5,.5,1)}@keyframes pop{from{transform:scale(.65);opacity:0}to{transform:scale(1);opacity:1}}
+button{border:0;border-radius:30px;padding:14px 20px;margin:7px;background:linear-gradient(135deg,#f47db4,#d95b9e);color:#fff;font-size:16px;font-weight:700;box-shadow:0 6px 14px #d78bb455;cursor:pointer}button:active{transform:scale(.95)}.small{font-size:13px;color:#ad7c9c}
+/* Bunny is drawn in SVG; the limbs and ears animate independently. */
+.bunny-wrap{width:min(270px,75vw);margin:0 auto;overflow:visible}.bunny{width:100%;height:auto;overflow:visible;filter:drop-shadow(0 7px 5px #e9a7c4)}
+.bunny .ear{transform-box:fill-box;transform-origin:50% 100%;animation:earFlop .85s ease-in-out infinite alternate}.bunny .ear.left{animation-delay:.12s}.bunny .arm{transform-box:fill-box;transform-origin:50% 10%;animation:armSwing .45s ease-in-out infinite alternate}.bunny .leg{transform-box:fill-box;transform-origin:50% 15%;animation:legRun .28s ease-in-out infinite alternate}.bunny .leg.back{animation-delay:.14s}.bunny .body{animation:bodyBob .28s ease-in-out infinite alternate}.bunny .blink{animation:blink 4s infinite}.bunny .mouth{animation:mouthTalk .5s infinite alternate}
+.run .bunny{animation:bunnyRun 2.1s cubic-bezier(.2,.8,.3,1) both}@keyframes bunnyRun{0%{transform:translateX(-120%) rotate(-12deg)}45%{transform:translateX(15%) translateY(-24px) rotate(8deg)}65%{transform:translateX(-5%) translateY(0) rotate(-5deg)}100%{transform:translateX(0) translateY(0) rotate(0)}}
+@keyframes earFlop{from{transform:rotate(-12deg)}to{transform:rotate(17deg)}}@keyframes armSwing{from{transform:rotate(-25deg)}to{transform:rotate(28deg)}}@keyframes legRun{from{transform:rotate(-24deg)}to{transform:rotate(28deg)}}@keyframes bodyBob{from{transform:translateY(0)}to{transform:translateY(-5px)}}@keyframes blink{0%,44%,48%,100%{transform:scaleY(1)}46%{transform:scaleY(.08)}}@keyframes mouthTalk{from{transform:scaleY(.65)}to{transform:scaleY(1.25)}}
+.gifts{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:20px 0}.gift{width:88px;height:100px;font-size:54px;padding:4px;background:#fff3fa;border:2px dashed #f3a7cb;border-radius:19px;animation:giftBob 1s ease-in-out infinite alternate}.gift:nth-child(2){animation-delay:.2s}.gift:nth-child(3){animation-delay:.4s}@keyframes giftBob{to{transform:translateY(-12px) rotate(5deg)}}.shake{animation:shake .55s!important}@keyframes shake{0%,100%{transform:rotate(0)}20%{transform:rotate(-18deg) scale(1.1)}40%{transform:rotate(18deg) scale(1.1)}60%{transform:rotate(-12deg)}80%{transform:rotate(12deg)}}
+.cake{font-size:88px;animation:cakeBounce .8s infinite alternate}@keyframes cakeBounce{to{transform:translateY(-12px) rotate(4deg)}}.letter{white-space:pre-line;line-height:1.85;font-size:17px;background:#fff7fb;border:1px solid #ffd0e5;border-radius:22px;padding:18px}.photos{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px auto}.photos img{width:100%;height:170px;object-fit:cover;border:4px solid white;border-radius:17px;box-shadow:0 5px 14px #c98bb455}.spark{position:fixed;top:100vh;z-index:20;pointer-events:none;animation:floatUp 4s linear forwards}@keyframes floatUp{to{transform:translateY(-120vh) rotate(360deg);opacity:0}}.hidden{display:none!important}
 </style>
 </head>
-
 <body>
-
-<!-- FUNNY CARTOON MUSIC -->
-<audio id="funMusic"
-src="Oggy_And_The_Cockroaches_-_Main_Theme_(mp3.pm).mp3"
-loop preload="auto"></audio>
-
-<!-- BIRTHDAY MUSIC -->
-<audio id="birthMusic"
-src="atlasaudio-birthday-606219.mp3"
-loop preload="auto"></audio>
-
-
-<!-- SCENE 1: BUNNY ENTRANCE -->
-<section id="intro" class="screen active">
-
-  <div class="card">
-
-    <div id="introBunny" class="bunny run">🐰</div>
-
-    <h1>Hey there!!</h1>
-
-    <div class="bubble">
-      Wait! Wait! Don't go!<br>
-      I have something VERY important to tell you!
-    </div>
-
-    <p>
-      But first…<br>
-      You have to help me with a tiny little problem.
-    </p>
-
-    <button onclick="startAdventure()">
-      What happened, Bunny? 😂
-    </button>
-
-    <p id="soundNotice" class="small">
-      🎵 Tap to begin your adventure!
-    </p>
-
-  </div>
-
-</section>
-
-
-<!-- SCENE 2: BUNNY'S PROBLEM -->
-<section id="mission" class="screen">
-
-  <div class="card">
-
-    <div class="bunny hop">🐰</div>
-
-    <h1>Oh no!! 😭</h1>
-
-    <div class="bubble">
-      I was carrying a SUPER special birthday gift…
-    </div>
-
-    <p>
-      But three gift boxes fell out of my basket!<br>
-      And now I don't remember which one is the right one!
-    </p>
-
-    <div class="message">
-      Will you help me find it? 🥺
-    </div>
-
-    <button onclick="showScreen('gifts')">
-      Of course, Bunny! 🎁
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- SCENE 3: GIFT GAME -->
-<section id="gifts" class="screen">
-
-  <div class="card">
-
-    <div class="bunny hop">🐰</div>
-
-    <h1>Choose carefully!</h1>
-
-    <div class="bubble">
-      One of these gifts is REALLY special.<br>
-      The other two… well… 😂
-    </div>
-
-    <p>Which one should we open?</p>
-
-    <div class="gifts">
-
-      <button class="gift" onclick="chooseGift(1)">
-        🎁
-      </button>
-
-      <button class="gift" onclick="chooseGift(2)">
-        🎁
-      </button>
-
-      <button class="gift" onclick="chooseGift(3)">
-        🎁
-      </button>
-
-    </div>
-
-    <div id="giftMessage" class="message">
-      Pick a gift, pick a gift! 🤭
-    </div>
-
-    <button id="tryAgain"
-    class="hidden"
-    onclick="resetGifts()">
-      Go back and try again ↩️
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- SCENE 4: CORRECT GIFT -->
-<section id="found" class="screen">
-
-  <div class="card">
-
-    <div id="foundBunny" class="bunny excited">🐰🎉</div>
-
-    <h1>YAAAAAY!!</h1>
-
-    <div class="bubble">
-      YOU FOUND IT!!
-    </div>
-
-    <p>
-      Finally!! My little bunny brain can rest! 😂
-    </p>
-
-    <p>
-      Okay… this gift is REALLY special.
-    </p>
-
-    <div class="cake">🎁</div>
-
-    <button onclick="openBirthday()">
-      Open your special gift! 💗
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- SCENE 5: BIRTHDAY CELEBRATION -->
-<section id="celebration" class="screen">
-
-  <div class="card">
-
-    <div class="bunny hop">🐰🎉</div>
-
-    <h1>HAPPY BIRTHDAY!!</h1>
-
-    <div class="cake">🎂</div>
-
-    <div class="bubble">
-      Happy Birthday to youuu!<br>
-      Happy Birthday to youuu!<br>
-      Happy Birthday dear birthday star!<br>
-      Happy Birthday to youuu! 🎶
-    </div>
-
-    <p>
-      Wait… I forgot something!
-    </p>
-
-    <h2>Make a wish! ✨</h2>
-
-    <p>
-      Close your eyes…<br>
-      Make your biggest birthday wish…
-    </p>
-
-    <button onclick="blowCandles()">
-      Blow out the candles! 🕯️
-    </button>
-
-  </div>
-
-</section>
-
-
-<!-- SCENE 6: EMOTIONAL MESSAGE -->
-<section id="final" class="screen">
-
-  <div class="card">
-
-    <div class="bunny hop">🐰💗</div>
-
-    <h1>One last thing…</h1>
-
-    <div class="bubble">
-      Okay… jokes aside.<br>
-      There's something I really want you to know.
-    </div>
-
-    <div class="letter">
-
-Happy Birthday to someone
+<audio id="funMusic" src="Oggy_And_The_Cockroaches_-_Main_Theme_(mp3.pm).mp3" loop preload="auto"></audio>
+<audio id="birthdayMusic" src="atlasaudio-birthday-606219.mp3" loop preload="auto"></audio>
+
+<!-- reusable original SVG cartoon bunny -->
+<template id="bunnyTemplate">
+<svg class="bunny" viewBox="0 0 260 270" role="img" aria-label="Animated cute white bunny">
+ <g class="ear left"><ellipse cx="91" cy="66" rx="27" ry="67" fill="#fff" stroke="#d9cbd5" stroke-width="3"/><ellipse cx="91" cy="64" rx="14" ry="51" fill="#f6a6c8"/></g>
+ <g class="ear right"><ellipse cx="169" cy="66" rx="27" ry="67" fill="#fff" stroke="#d9cbd5" stroke-width="3"/><ellipse cx="169" cy="64" rx="14" ry="51" fill="#f6a6c8"/></g>
+ <g class="body"><ellipse cx="130" cy="184" rx="76" ry="78" fill="#fff" stroke="#d9cbd5" stroke-width="3"/><ellipse cx="130" cy="204" rx="43" ry="48" fill="#fff5fa"/><circle cx="199" cy="205" r="17" fill="#fff" stroke="#d9cbd5" stroke-width="3"/></g>
+ <g class="leg back"><ellipse cx="91" cy="239" rx="37" ry="19" fill="#fff" stroke="#d9cbd5" stroke-width="3"/><ellipse cx="169" cy="239" rx="37" ry="19" fill="#fff" stroke="#d9cbd5" stroke-width="3"/></g>
+ <g class="arm"><path d="M66 165 Q33 188 61 211 Q75 218 84 201" fill="#fff" stroke="#d9cbd5" stroke-width="15" stroke-linecap="round"/></g>
+ <g class="arm"><path d="M194 165 Q226 188 199 211 Q185 218 176 201" fill="#fff" stroke="#d9cbd5" stroke-width="15" stroke-linecap="round"/></g>
+ <ellipse cx="130" cy="137" rx="87" ry="75" fill="#fff" stroke="#d9cbd5" stroke-width="3"/>
+ <ellipse cx="130" cy="157" rx="43" ry="32" fill="#fff5fa"/>
+ <g class="blink"><ellipse cx="101" cy="128" rx="8" ry="13" fill="#463a45"/><ellipse cx="159" cy="128" rx="8" ry="13" fill="#463a45"/></g>
+ <ellipse cx="130" cy="151" rx="10" ry="7" fill="#ef8caf"/><path d="M130 157 Q124 168 116 162 M130 157 Q136 168 144 162" fill="none" stroke="#65505c" stroke-width="3.5" stroke-linecap="round"/>
+ <g stroke="#a99aa5" stroke-width="2.5" stroke-linecap="round"><path d="M92 153 L65 148 M92 160 L65 162 M168 153 L195 148 M168 160 L195 162"/></g>
+</svg>
+</template>
+
+
+<section id="intro" class="screen active"><div class="card">
+<div id="introBunny" class="bunny-wrap run"></div><h1>Hey there!!</h1>
+<div class="bubble">Wait! Wait! Don't go!<br>I have something VERY important to tell you!</div>
+<p>But first…<br>You have to help me with a tiny little problem.</p>
+<button onclick="startAdventure()">What happened, Bunny? 😂</button><p class="small">🎵 Tap to begin your adventure!</p>
+</div></section>
+
+
+<section id="mission" class="screen"><div class="card">
+<div class="bunny-wrap" id="missionBunny"></div><h1>Oh no!! 😭</h1>
+<div class="bubble">I was carrying a SUPER special birthday gift…</div>
+<p>But three gift boxes fell out of my basket!<br>And now I don't remember which one is the right one!</p>
+<p><b>Will you help me find it? 🥺</b></p><button onclick="showScreen('gifts')">Of course, Bunny! 🎁</button>
+</div></section>
+
+<section id="gifts" class="screen"><div class="card">
+<div class="bunny-wrap" id="giftBunny"></div><h1>Choose carefully!</h1>
+<div class="bubble">One of these gifts is REALLY special.<br>The other two… well… 😂</div><p>Which one should we open?</p>
+<div class="gifts"><button class="gift" onclick="chooseGift(1)">🎁</button><button class="gift" onclick="chooseGift(2)">🎁</button><button class="gift" onclick="chooseGift(3)">🎁</button></div>
+<div id="giftMessage" class="message">Pick a gift, pick a gift! 🤭</div><button id="tryAgain" class="hidden" onclick="resetGifts()">Go back and try again ↩️</button>
+</div></section>
+
+<section id="found" class="screen"><div class="card">
+<div class="bunny-wrap" id="foundBunny"></div><h1>YAAAAAY!!</h1><div class="bubble">YOU FOUND IT!!</div>
+<p>Finally!! My little bunny brain can rest! 😂</p><p>Okay… this gift is REALLY special.</p><div class="cake">🎁</div>
+<button onclick="openBirthday()">Open your special gift! 💗</button>
+</div></section>
+
+<section id="celebration" class="screen"><div class="card">
+<div class="bunny-wrap" id="celebrateBunny"></div><h1>HAPPY BIRTHDAY!!</h1><div class="cake">🎂</div>
+<div class="bubble">Happy Birthday to youuu!<br>Happy Birthday to youuu!<br>Happy Birthday dear birthday star!<br>Happy Birthday to youuu! 🎶</div>
+<p>Wait… I forgot something!</p><h2>Make a wish! ✨</h2><p>Close your eyes…<br>Make your biggest birthday wish…</p>
+<button onclick="blowCandles()">Blow out the candles! 🕯️</button>
+</div></section>
+
+<section id="final" class="screen"><div class="card">
+<div class="bunny-wrap" id="finalBunny"></div><h1>One last thing…</h1><div class="bubble">Okay… jokes aside.<br>There's something I really want you to know.</div>
+<div class="letter">Happy Birthday to someone
 who deserves so much happiness. ❤️
 
-I hope this new year of your life
-brings you endless smiles,
-beautiful memories,
-and all the love your heart can hold.
+I hope this new year of your life brings you endless smiles, beautiful memories, and all the love your heart can hold.
 
-No matter how silly life gets,
-never forget how special you are.
+No matter how silly life gets, never forget how special you are.
 
-May your dreams come true,
-may your heart always feel loved,
-and may you always find
-a reason to smile.
+May your dreams come true, may your heart always feel loved, and may you always find a reason to smile.
 
-And if this little bunny
-could give you one thing…
+And if this little bunny could give you one thing…
 
-It would be a thousand more
-happy moments just like this.
+It would be a thousand more happy moments just like this.
 
-Happy Birthday! 🎂💖
-
-    </div>
-
-    <h2>Our little memories 📸</h2>
-
-    <div class="photos">
-
-      <img
-      src="78db597aa35e18dd38055fe6ddcd544c.jpg"
-      alt="Birthday memory 1">
-
-      <img
-      src="5435bd09e80e96120d583fe81c5e212d.jpg"
-      alt="Birthday memory 2">
-
-      <img
-      src="8b8cb5317fa2753aff9ff9ed60b859be.jpg"
-      alt="Birthday memory 3">
-
-      <img
-      src="927256f3b5fabac7e8d293b9cc8dbac6.jpg"
-      alt="Birthday memory 4">
-
-    </div>
-
-    <div class="bubble">
-      Made with lots of love,<br>
-      just for you. 💌
-    </div>
-
-    <div class="bunny hop">🐰❤️</div>
-
-    <p class="small">
-      Bunny's Secret Birthday SurpriseStory
-    </p>
-
-  </div>
-
-</section>
-
+Happy Birthday! 🎂💖</div>
+<h2>Our little memories 📸</h2><div class="photos">
+<img src="78db597aa35e18dd38055fe6ddcd544c.jpg" alt="Birthday memory 1">
+<img src="5435bd09e80e96120d583fe81c5e212d.jpg" alt="Birthday memory 2">
+<img src="8b8cb5317fa2753aff9ff9ed60b859be.jpg" alt="Birthday memory 3">
+<img src="927256f3b5fabac7e8d293b9cc8dbac6.jpg" alt="Birthday memory 4">
+</div><div class="bubble">Made with lots of love,<br>just for you. 💌</div><p class="small">Bunny's Secret Birthday SurpriseStory</p>
+</div></section>
 
 <script>
-
-const funnyMusic = document.getElementById("funMusic");
-const birthdayMusic = document.getElementById("birthMusic");
-
-function showScreen(id) {
-
-  document.querySelectorAll(".screen").forEach(screen => {
-    screen.classList.remove("active");
-  });
-
-  document.getElementById(id).classList.add("active");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-}
-
-
-// START THE ADVENTURE
-function startAdventure() {
-
-  funnyMusic.volume = 0.7;
-
-  funnyMusic.play().catch(() => {});
-
-  showScreen("mission");
-
-}
-
-
-// GIFT CHOICES
-function chooseGift(number) {
-
-  const message = document.getElementById("giftMessage");
-  const tryAgain = document.getElementById("tryAgain");
-
-  const selectedGift =
-  document.querySelectorAll(".gift")[number - 1];
-
-  selectedGift.classList.remove("shake");
-
-  // Force restart of animation
-  void selectedGift.offsetWidth;
-
-  selectedGift.classList.add("shake");
-
-  if (number === 1) {
-
-    message.innerHTML =
-    "WHAT?! A CARROT?! 🥕😂<br>" +
-    "That's MY lunch! Give it back!";
-
-    tryAgain.classList.remove("hidden");
-
-  } else if (number === 3) {
-
-    message.innerHTML =
-    "WHO ORDERED THESE SOCKS?! 🧦😂<br>" +
-    "Do I look fabulous wearing them on my ears?";
-
-    tryAgain.classList.remove("hidden");
-
-  } else {
-
-    message.innerHTML =
-    "YAAAAAY! YOU FOUND IT!! 🎉";
-
-    tryAgain.classList.add("hidden");
-
-    setTimeout(() => {
-
-      // Stop funny music and start birthday music
-      funnyMusic.pause();
-      funnyMusic.currentTime = 0;
-
-      birthdayMusic.volume = 0.8;
-
-      birthdayMusic.play().catch(() => {});
-
-      showScreen("found");
-
-      confetti();
-
-    }, 1200);
-
-  }
-
-}
-
-
-// TRY AGAIN
-function resetGifts() {
-
-  document.getElementById("giftMessage").innerHTML =
-  "Pick a gift, pick a gift! 🤭";
-
-  document.getElementById("tryAgain").classList.add("hidden");
-
-}
-
-
-// OPEN THE SPECIAL GIFT
-function openBirthday() {
-
-  showScreen("celebration");
-
-  confetti();
-
-}
-
-
-// BLOW OUT CANDLES
-function blowCandles() {
-
-  showScreen("final");
-
-  confetti();
-
-}
-
-
-// CONFETTI AND SPARKLES
-function confetti() {
-
-  const symbols = [
-    "💖","💕","✨","🎉","🎊",
-    "💗","⭐","🎀","🌸","💝"
-  ];
-
-  for (let i = 0; i < 45; i++) {
-
-    const sparkle = document.createElement("div");
-
-    sparkle.className = "sparkle";
-
-    sparkle.innerHTML =
-    symbols[Math.floor(Math.random() * symbols.length)];
-
-    sparkle.style.left =
-    Math.random() * 100 + "vw";
-
-    sparkle.style.fontSize =
-    (18 + Math.random() * 25) + "px";
-
-    sparkle.style.animationDuration =
-    (2 + Math.random() * 3) + "s";
-
-    document.body.appendChild(sparkle);
-
-    setTimeout(() => {
-      sparkle.remove();
-    }, 5000);
-
-  }
-
-}
-
+// Insert the animated SVG bunny into each scene.
+document.querySelectorAll('[id$="Bunny"]').forEach(el=>{
+  el.appendChild(document.getElementById('bunnyTemplate').content.cloneNode(true));
+});
+const funnyMusic=document.getElementById('funMusic');
+const birthdayMusic=document.getElementById('birthdayMusic');
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function startAdventure(){funnyMusic.volume=.7;funnyMusic.play().catch(()=>{});showScreen('mission');}
+function chooseGift(n){const msg=document.getElementById('giftMessage');const again=document.getElementById('tryAgain');const gift=document.querySelectorAll('.gift')[n-1];gift.classList.remove('shake');void gift.offsetWidth;gift.classList.add('shake');
+if(n===1){msg.innerHTML='WHAT?! A CARROT?! 🥕😂<br>That's MY lunch! Give it back!';again.classList.remove('hidden');}
+else if(n===3){msg.innerHTML='WHO ORDERED THESE SOCKS?! 🧦😂<br>Do I look fabulous wearing them on my ears?';again.classList.remove('hidden');}
+else{msg.innerHTML='YAAAAAY! YOU FOUND IT!! 🎉';again.classList.add('hidden');setTimeout(()=>{funnyMusic.pause();funnyMusic.currentTime=0;birthdayMusic.volume=.8;birthdayMusic.play().catch(()=>{});showScreen('found');confetti();},1200);}}
+function resetGifts(){document.getElementById('giftMessage').innerHTML='Pick a gift, pick a gift! 🤭';document.getElementById('tryAgain').classList.add('hidden');}
+function openBirthday(){showScreen('celebration');confetti();}
+function blowCandles(){showScreen('final');confetti();}
+function confetti(){const symbols=['💖','💕','✨','🎉','🎊','💗','⭐','🎀','🌸','💝'];for(let i=0;i<45;i++){const s=document.createElement('div');s.className='spark';s.textContent=symbols[Math.floor(Math.random()*symbols.length)];s.style.left=Math.random()*100+'vw';s.style.fontSize=(18+Math.random()*25)+'px';s.style.animationDuration=(2+Math.random()*3)+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),5000);}}
 </script>
-
 </body>
-        </html>
-
-  
+</html>
