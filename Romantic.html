@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#680d20">
+<title>Our Little Love Story 💘</title>
+<style>
+:root{--wine:#650d21;--red:#a71939;--rose:#f4a8b9;--blush:#ffe8ee;--gold:#f7d99a;--ink:#4c1022}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Georgia,'Times New Roman',serif;color:var(--ink)}
+body{background:radial-gradient(ellipse at top,#fce1e9 0%,#f7b9c9 38%,#8b1834 100%);overflow-x:hidden}
+button,input{font:inherit}button{cursor:pointer}
+#app{min-height:100svh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:18px}
+.glow{position:fixed;width:55vw;height:55vw;max-width:600px;max-height:600px;border-radius:50%;background:#ffb9cd55;filter:blur(55px);pointer-events:none;top:12%;left:22%}
+.screen{width:min(100%,760px);position:relative;z-index:2;text-align:center;display:none;animation:appear .8s ease both}.screen.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+.eyebrow{font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:#8e2946;margin-bottom:12px}
+h1,h2,p{margin-top:0}h1{font-size:clamp(2rem,7vw,4.5rem);line-height:1.05;color:#7e102b;text-shadow:0 2px #fff7}h2{font-size:clamp(1.5rem,5vw,2.8rem);color:#82152f}p{font-size:clamp(1rem,3.5vw,1.25rem);line-height:1.65}
+.btn{border:1px solid #fff8;background:linear-gradient(135deg,#a71939,#690d24);color:#fff;padding:13px 24px;border-radius:999px;box-shadow:0 8px 20px #67102740, inset 0 1px #ffffff55;transition:transform .2s,filter .2s}.btn:hover{transform:translateY(-2px);filter:brightness(1.08)}.btn:disabled{opacity:.5;cursor:default}
+/* opening */
+#opening{min-height:78svh;display:none;align-items:center;justify-content:center;flex-direction:column}#opening.active{display:flex}
+#heartStage{height:min(66vw,390px);width:min(90vw,540px);position:relative;margin:0 auto 12px}
+.bigHeart{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);font-size:clamp(130px,35vw,250px);line-height:1;color:#c91f4b;filter:drop-shadow(0 12px 16px #690d2445);animation:heartbeat 1.7s ease-in-out infinite}
+@keyframes heartbeat{0%,100%{transform:translate(-50%,-50%) scale(1)}12%{transform:translate(-50%,-50%) scale(1.08)}24%{transform:translate(-50%,-50%) scale(1)}36%{transform:translate(-50%,-50%) scale(1.05)}}
+.bow{position:absolute;bottom:8%;left:4%;font-size:clamp(68px,20vw,130px);transform:rotate(-28deg);filter:drop-shadow(0 7px 5px #590d2033)}
+#arrow{position:absolute;bottom:26%;left:18%;font-size:clamp(45px,13vw,80px);transform:rotate(-22deg);transition:left .9s cubic-bezier(.15,.7,.25,1),bottom .9s,opacity .3s;z-index:5;filter:drop-shadow(0 4px 3px #6b123033)}
+#arrow.fly{left:69%;bottom:53%;opacity:0;transform:rotate(-22deg) scale(1.2)}
+#burst{position:absolute;inset:0;pointer-events:none;display:none}.spark{position:absolute;font-size:26px;animation:spark .9s ease-out forwards}@keyframes spark{from{transform:scale(.2);opacity:1}to{transform:translate(var(--dx),var(--dy)) scale(1.4);opacity:0}}
+/* celebration */
+#rain{position:fixed;inset:0;z-index:8;pointer-events:none;overflow:hidden;display:none}.rainItem{position:absolute;top:-130px;animation:fall var(--dur) linear forwards;will-change:transform}.balloon{width:var(--w);height:calc(var(--w)*1.22);border-radius:50% 50% 46% 46%;background:radial-gradient(ellipse at 28% 22%,#fff 0%,#ffffff90 7%,transparent 25%),radial-gradient(ellipse at 35% 30%,var(--lite),var(--col) 65%,var(--shade));box-shadow:inset -9px -12px 16px #0002,inset 6px 8px 12px #fff5,0 7px 15px #4d102533;position:relative}.balloon:before{content:"";position:absolute;bottom:-7px;left:45%;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid var(--col)}.balloon:after{content:"";position:absolute;top:100%;left:50%;height:75px;width:1px;background:#fff9}.petal{font-size:var(--w);filter:drop-shadow(0 3px 3px #8a173544)}.confetti{width:9px;height:16px;background:var(--col);border-radius:2px}
+@keyframes fall{0%{transform:translate3d(0,-20px,0) rotate(0)}55%{transform:translate3d(var(--drift),55vh,0) rotate(420deg)}100%{transform:translate3d(calc(var(--drift)*-.35),115vh,0) rotate(900deg)}}
+/* card and album */
+.card{background:linear-gradient(145deg,#fffaf9ee,#ffe9efee);border:1px solid #fff;border-radius:28px;padding:clamp(20px,5vw,42px);box-shadow:0 22px 55px #590c2333,inset 0 1px #fff;backdrop-filter:blur(8px)}
+input{width:min(100%,400px);padding:14px 18px;border-radius:999px;border:1px solid #d98ca2;background:#fff9fb;text-align:center;outline:none;color:#65132a}input:focus{box-shadow:0 0 0 4px #eaa4b755}
+#feedback{min-height:35px;color:#a3193b;font-style:italic;margin:12px 0}
+.album{width:min(80vw,320px);aspect-ratio:1/1.15;margin:20px auto 25px;border-radius:15px 24px 24px 15px;background:linear-gradient(135deg,#9b1534,#5b0b20);box-shadow:0 18px 35px #4c0a1f55,inset 7px 0 0 #d95d78,inset 10px 0 0 #f6c1ca,inset 0 0 0 4px #f4c1c8;position:relative;display:flex;align-items:center;justify-content:center;color:#f9dca5;transform:perspective(700px) rotateY(-8deg);transition:transform .5s}.album:before{content:"";position:absolute;left:16px;top:0;bottom:0;width:3px;background:#f8c8d055}.album:after{content:"";position:absolute;inset:13px;border:1px solid #f5d79a88;border-radius:8px}.albumTitle{font-size:clamp(1.4rem,5vw,2.4rem);line-height:1.3;letter-spacing:.06em;text-shadow:0 2px #450718}.albumTitle small{display:block;font-size:.65em;letter-spacing:.15em;margin-top:12px}
+.memoryPhoto{width:min(72vw,330px);height:min(72vw,330px);object-fit:cover;border:8px solid #fff8f7;border-radius:18px;box-shadow:0 12px 28px #650d2433;margin:0 auto 20px;display:block;background:#f4c4d0}.memoryText{font-size:clamp(1.15rem,4vw,1.6rem);font-style:italic;color:#78172e;max-width:540px;margin:0 auto 20px}
+.envelope{width:180px;height:125px;margin:24px auto;background:#b51e42;position:relative;border-radius:8px;box-shadow:0 10px 25px #650d2433;cursor:pointer}.envelope:before{content:"";position:absolute;inset:0;background:#d94b68;clip-path:polygon(0 0,100% 0,50% 62%);transform-origin:top;transition:transform .6s;z-index:2}.envelope.open:before{transform:rotateX(180deg)}.envelope:after{content:"♥";position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);font-size:36px;color:#ffe0e8;z-index:3}
+.letter{background:#fff9f4;border-radius:8px;padding:24px 22px;box-shadow:0 10px 25px #650d2422;max-width:580px;margin:0 auto;border:1px solid #f0c8c9;position:relative}.letter:before{content:"✿  ♥  ✿";display:block;color:#bd3153;letter-spacing:.4em;margin-bottom:14px}
+footer{font-size:.8rem;letter-spacing:.12em;color:#fff9;margin:30px 0 4px}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div id="app">
+  <section id="opening" class="screen active">
+    <div class="eyebrow">A little surprise, just for you</div>
+    <h1>Ready for a little<br>love magic?</h1>
+    <div id="heartStage" aria-label="Heart and bow surprise">
+      <div class="bigHeart" id="bigHeart">♥</div>
+      <div class="bow">🏹</div>
+      <div id="arrow">➶<span style="font-size:.45em;color:#c91f4b">♥</span></div>
+      <div id="burst"></div>
+    </div>
+    <p>Tap the little heart-tipped arrow…</p>
+    <button class="btn" id="shootBtn">Let the magic begin 💘</button>
+  </section>
+
+  <section id="question" class="screen">
+    <div class="card">
+      <div class="eyebrow">One tiny question</div>
+      <h2 id="questionTitle">A little memory test, my love…</h2>
+      <p id="questionText">Where did our beautiful story begin?</p>
+      <input id="answerInput" placeholder="Type your answer here…" autocomplete="off">
+      <div id="feedback" aria-live="polite"></div>
+      <button class="btn" id="answerBtn">My answer 💌</button>
+    </div>
+  </section>
+
+  <section id="albumScreen" class="screen">
+    <div class="eyebrow">A little treasure, made of us</div>
+    <h2>Your memories are waiting</h2>
+    <p>Tap the album to open our little world.</p>
+    <button class="album" id="albumBtn" aria-label="Open our memory album">
+      <span class="albumTitle">Our Love Story<small>♥ OUR LITTLE MOMENTS ♥</small></span>
+    </button>
+    <button class="btn" id="openAlbumBtn">Open album ♥</button>
+  </section>
+  <section id="memoryScreen" class="screen">
+    <div class="eyebrow" id="memoryCounter">Memory 1 of 4</div>
+    <h2 id="memoryHeading">A moment to keep</h2>
+    <img class="memoryPhoto" id="memoryPhoto" alt="A special memory">
+    <p class="memoryText" id="memoryText"></p>
+    <button class="btn" id="nextMemoryBtn">Next memory ♥</button>
+  </section>
+  <section id="envelopeScreen" class="screen">
+    <div class="eyebrow">One last little thing…</div>
+    <h2>A letter from my heart</h2>
+    <p>Tap the little red envelope, my love.</p>
+    <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open love letter"></div>
+    <div id="letterWrap" class="hidden">
+      <div class="letter">
+        <h2>My dearest love,</h2>
+        <p id="letterText">If I could give you one thing, it would be the chance to see yourself through my eyes. Then you would know how deeply you are loved, how much your smile means to me, and how every little moment with you becomes a memory I want to keep forever.</p>
+        <p>Thank you for being my favorite person, my sweetest thought, and my beautiful little surprise. No matter how many pages our story has, I will always want one more with you.</p>
+        <p style="text-align:right;font-style:italic;color:#9d2141">Always yours ♥</p>
+      </div>
+      <p style="font-size:2rem;margin-top:18px">♥ ✿ ♥ ✿ ♥</p>
+    </div>
+  </section>
+</div>
+<div id="rain"></div>
+<footer>MADE WITH LOVE ♥</footer>
+<audio id="song" src="romantic-song.mp3" preload="auto" loop></audio>
+<script>
+/* PERSONALIZE THESE SAMPLE DETAILS LATER */
+const QUESTION = "Where did our beautiful story begin?";
+const ACCEPTED_ANSWER = "the park"; // Example accepted answer
+const MEMORIES = [
+ {photo:"memory1.jpg", heading:"The beginning", text:"That first little moment when our story began. I didn't know then how precious it would become."},
+ {photo:"memory2.jpg", heading:"Our silly moments", text:"The laughs, the teasing, and all the little things that make being with you feel like home."},
+ {photo:"memory3.jpg", heading:"A day to remember", text:"Some days become memories before we even realize how special they are. This is one of mine."},
+ {photo:"memory4.jpg", heading:"My favorite person", text:"Every memory with you has a place in my heart. And I hope we make a thousand more together."}
+];
+const WRONG_MESSAGE = "Wrong answer, my dear love. Try again… you know this one! ♥";
+const AFTER_TWO_MESSAGE = "It's okay, my love. I'll show you the surprise… but I'm angry with you! 😒♥ (Just a little!)";
+const screens = [...document.querySelectorAll('.screen')];
+const rain = document.getElementById('rain');
+const song = document.getElementById('song');
+let attempts=0, memoryIndex=0, answerAccepted=false;
+function showScreen(id){screens.forEach(s=>s.classList.toggle('active',s.id===id));window.scrollTo({top:0,behavior:'smooth'});}
+function playSong(){song.volume=.65;song.play().catch(()=>{});}
+function launchBurst(){
+ const burst=document.getElementById('burst');burst.style.display='block';
+ const symbols=['♥','✿','❀','✨','💕'];
+ for(let i=0;i<42;i++){const e=document.createElement('span');e.className='spark';e.textContent=symbols[i%symbols.length];e.style.left='50%';e.style.top='48%';e.style.color=['#c91f4b','#e85c85','#fff','#bd3153'][i%4];e.style.setProperty('--dx',(Math.random()*520-260)+'px');e.style.setProperty('--dy',(Math.random()*440-220)+'px');burst.appendChild(e);}
+ setTimeout(()=>burst.replaceChildren(),1100);
+}
+function shower(){rain.style.display='block';const palette=[['#e52b50','#ffb1c2','#8d1232'],['#c82048','#ffccd5','#780d2b'],['#f05a7e','#ffd4df','#a71939'],['#b71940','#ffd1a8','#650d21']];
+ for(let i=0;i<76;i++){let el=document.createElement('div');let isBalloon=Math.random()>.32;el.className='rainItem '+(isBalloon?'balloon':'petal');if(isBalloon){let c=palette[Math.floor(Math.random()*palette.length)];el.style.setProperty('--col',c[0]);el.style.setProperty('--lite',c[1]);el.style.setProperty('--shade',c[2]);el.style.setProperty('--w',(30+Math.random()*65)+'px');el.style.width='var(--w)';el.innerHTML='';}else{el.textContent=['🌹','🌸','🌺','♥'][Math.floor(Math.random()*4)];el.style.setProperty('--w',(20+Math.random()*22)+'px');}
+ el.style.left=Math.random()*100+'%';el.style.setProperty('--dur',(4+Math.random()*4)+'s');el.style.setProperty('--drift',(Math.random()*220-110)+'px');el.style.animationDelay=(Math.random()*1.5)+'s';rain.appendChild(el);}
+ setTimeout(()=>{rain.replaceChildren();rain.style.display='none';showScreen('question');document.getElementById('questionText').textContent=QUESTION;document.getElementById('answerInput').focus();},8500);
+}
+document.getElementById('shootBtn').addEventListener('click',()=>{playSong();const arrow=document.getElementById('arrow');arrow.classList.add('fly');setTimeout(()=>{document.getElementById('bigHeart').style.animation='none';document.getElementById('bigHeart').style.transform='translate(-50%,-50%) scale(1.5)';document.getElementById('bigHeart').style.opacity='0';launchBurst();shower();},850);});
+function checkAnswer(){if(answerAccepted)return;const val=document.getElementById('answerInput').value.trim().toLowerCase();const feedback=document.getElementById('feedback');if(val===ACCEPTED_ANSWER.toLowerCase()){answerAccepted=true;feedback.textContent='You remembered, my love! Come see our little memories… ♥';document.getElementById('answerBtn').disabled=true;setTimeout(()=>showScreen('albumScreen'),1300);return;}attempts++;feedback.textContent=attempts<2?WRONG_MESSAGE:AFTER_TWO_MESSAGE;if(attempts>=2){answerAccepted=true;document.getElementById('answerBtn').textContent='Show me the surprise ♥';document.getElementById('answerBtn').onclick=()=>showScreen('albumScreen');}}
+document.getElementById('answerBtn').addEventListener('click',checkAnswer);document.getElementById('answerInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkAnswer();});
+function openAlbum(){document.getElementById('albumBtn').style.transform='perspective(700px) rotateY(0deg) scale(1.04)';setTimeout(()=>{memoryIndex=0;renderMemory();showScreen('memoryScreen');},650);}
+document.getElementById('albumBtn').addEventListener('click',openAlbum);document.getElementById('openAlbumBtn').addEventListener('click',openAlbum);
+function renderMemory(){const m=MEMORIES[memoryIndex];document.getElementById('memoryCounter').textContent=`Memory ${memoryIndex+1} of ${MEMORIES.length}`;document.getElementById('memoryHeading').textContent=m.heading;const photo=document.getElementById('memoryPhoto');photo.src=m.photo;photo.onerror=()=>{photo.onerror=null;photo.src='';photo.style.display='none';};photo.onload=()=>photo.style.display='block';document.getElementById('memoryText').textContent=m.text;document.getElementById('nextMemoryBtn').textContent=memoryIndex===MEMORIES.length-1?'One last surprise ♥':'Next memory ♥';}
+document.getElementById('nextMemoryBtn').addEventListener('click',()=>{if(memoryIndex<MEMORIES.length-1){memoryIndex++;renderMemory();}else showScreen('envelopeScreen');});
+function openLetter(){document.getElementById('envelope').classList.add('open');setTimeout(()=>document.getElementById('letterWrap').classList.remove('hidden'),550);}
+document.getElementById('envelope').addEventListener('click',openLetter);document.getElementById('envelope').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openLetter();});
+</script>
+</body>
+  </html>
+  
