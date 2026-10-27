@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bunny's Secret 🎁</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  background: linear-gradient(135deg, #ffe0ed, #fff1f6, #e8ddff);
+  color: #743b5c;
+  min-height: 100vh;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 25px 16px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen.active {
+  display: flex;
+}
+
+h1 {
+  color: #e05291;
+  font-size: 28px;
+  margin: 12px 0;
+}
+
+p {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+button {
+  border: none;
+  border-radius: 30px;
+  padding: 13px 23px;
+  margin: 8px;
+  background: #ed75aa;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 12px #d98bb455;
+}
+
+button:active {
+  transform: scale(.96);
+}
+
+.bunny {
+  font-size: 90px;
+  animation: hop 1s infinite alternate;
+}
+
+@keyframes hop {
+  from { transform: translateY(0) rotate(-5deg); }
+  to { transform: translateY(-15px) rotate(5deg); }
+}
+
+.run {
+  animation: runin 2s ease-out;
+}
+
+@keyframes runin {
+  0% { transform: translateX(-120vw); }
+  75% { transform: translateX(15px); }
+  100% { transform: translateX(0); }
+}
+
+.card {
+  background: #ffffffd9;
+  border: 2px solid #ffc4df;
+  border-radius: 25px;
+  padding: 22px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 10px 35px #d68bb533;
+}
+
+.gifts {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.gift {
+  font-size: 58px;
+  padding: 13px;
+  background: #fff3fa;
+  border: 2px dashed #f2a6ca;
+  border-radius: 20px;
+  width: 90px;
+  height: 100px;
+  cursor: pointer;
+  animation: wiggle 2s infinite;
+}
+
+.gift:nth-child(2) {
+  animation-delay: .3s;
+}
+
+.gift:nth-child(3) {
+  animation-delay: .6s;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-4deg); }
+  75% { transform: rotate(4deg); }
+}
+
+.message {
+  font-size: 20px;
+  font-weight: bold;
+  color: #df4b91;
+  margin: 15px 0;
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-width: 440px;
+  margin: 15px auto;
+}
+
+.photos img {
+  width: 100%;
+  height: 175px;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 3px solid white;
+  box-shadow: 0 5px 15px #c77da055;
+}
+
+.letter {
+  font-size: 17px;
+  line-height: 1.8;
+  white-space: pre-line;
+}
+
+.heart {
+  font-size: 38px;
+  animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+  50% { transform: scale(1.2); }
+}
+
+.sparkle {
+  position: fixed;
+  pointer-events: none;
+  animation: floatup 3s linear forwards;
+  z-index: 5;
+}
+
+@keyframes floatup {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100vh);
+    opacity: 0;
+  }
+}
+
+.small {
+  font-size: 13px;
+  color: #a86d90;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="music"
+src="Oggy_And_The_Cockroaches_-_Main_Theme_(mp3.pm).mp3"
+loop preload="auto"></audio>
+
+<!-- SCREEN 1: BUNNY INTRO -->
+<section id="intro" class="screen active">
+
+  <div class="card">
+    <div class="bunny run">🐰</div>
+
+    <h1>Hey there!</h1>
+
+    <p>
+      There's something<br>
+      I need to tell you…
+    </p>
+
+    <div class="heart">💗</div>
+
+    <button onclick="startSurprise()">
+      What is it? 👀
+    </button>
+
+    <p class="small">
+      A tiny bunny has a BIG secret!
+    </p>
+  </div>
+
+</section>
+
+<!-- SCREEN 2: THREE GIFTS -->
+<section id="gifts" class="screen">
+
+  <div class="card">
+
+    <div class="bunny">🐰</div>
+
+    <h1>Help me choose!</h1>
+
+    <p>
+      I brought you 3 gifts! 🎁<br>
+      But be careful while choosing…
+    </p>
+
+    <div class="gifts">
+
+      <button class="gift" onclick="chooseGift(1)">🎁</button>
+
+      <button class="gift" onclick="chooseGift(2)">🎁</button>
+
+      <button class="gift" onclick="chooseGift(3)">🎁</button>
+
+    </div>
+
+    <div id="giftMessage" class="message">
+      Which one will you choose? 🤭
+    </div>
+
+    <button id="backButton"
+    style="display:none"
+    onclick="resetGifts()">
+      Go back and try again ↩️
+    </button>
+
+  </div>
+
+</section>
+
+<!-- SCREEN 3: BIRTHDAY SURPRISE -->
+<section id="birthday" class="screen">
+
+  <div class="card">
+
+    <div class="bunny">🐰🎉</div>
+
+    <h1>Yay! You found it!</h1>
+
+    <div class="heart">🎂💖🎂</div>
+
+    <h1>Happy Birthday!</h1>
+
+    <p class="letter">
+      Today is all about YOU!
+
+      I hope your birthday is filled with
+      laughter, love, happiness, and
+      beautiful little moments.
+
+      You deserve all the wonderful things
+      this world has to offer.
+
+      Keep smiling, keep shining,
+      and never forget how special you are.
+
+      And remember…
+      someone took a little extra time
+      to make this surprise just for you. 💗
+    </p>
+
+    <h2>Our little memories 📸</h2>
+
+    <div class="photos">
+
+      <img src="78db597aa35e18dd38055fe6ddcd544c.jpg"
+      alt="Birthday memory 1">
+
+      <img src="5435bd09e80e96120d583fe81c5e212d.jpg"
+      alt="Birthday memory 2">
+
+      <img src="8b8cb5317fa2753aff9ff9ed60b859be.jpg"
+      alt="Birthday memory 3">
+
+      <img src="927256f3b5fabac7e8d293b9cc8dbac6.jpg"
+      alt="Birthday memory 4">
+
+    </div>
+
+    <p class="letter">
+      May your new year bring you
+      endless reasons to smile.
+
+      Happy Birthday, you wonderful human! 🥹❤️
+    </p>
+
+    <div class="heart">💗</div>
+
+    <p class="small">
+      Made with love, just for you.
+    </p>
+
+  </div>
+
+</section>
+
+<script>
+
+const music = document.getElementById("music");
+
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+
+  document.getElementById(id).classList.add("active");
+}
+
+function startSurprise() {
+
+  // Start music after the receiver taps.
+  // Mobile browsers require a user interaction.
+  music.play().catch(() => {
+    console.log("Music playback could not start.");
+  });
+
+  showScreen("gifts");
+}
+
+function chooseGift(number) {
+
+  const message = document.getElementById("giftMessage");
+  const backButton = document.getElementById("backButton");
+
+  // Correct gift is gift number 2.
+  if (number === 2) {
+
+    message.innerHTML =
+      "YAY! You found the secret! 🎉";
+
+    setTimeout(() => {
+      showScreen("birthday");
+      makeSparkles();
+    }, 900);
+
+  } else {
+
+    if (number === 1) {
+      message.innerHTML =
+        "Oopsie! 😂 This gift is full of bunny socks! Try again!";
+    }
+
+    if (number === 3) {
+      message.innerHTML =
+        "Hehe! Nope! This one has carrot cake crumbs! 🥕";
+    }
+
+    backButton.style.display = "inline-block";
+  }
+}
+
+function resetGifts() {
+
+  document.getElementById("giftMessage").innerHTML =
+    "Choose carefully this time! 🤭";
+
+  document.getElementById("backButton").style.display =
+    "none";
+}
+
+function makeSparkles() {
+
+  const symbols = ["💖", "✨", "🎉", "💕", "⭐"];
+
+  for (let i = 0; i < 35; i++) {
+
+    const sparkle = document.createElement("div");
+
+    sparkle.className = "sparkle";
+
+    sparkle.textContent =
+      symbols[Math.floor(Math.random() * symbols.length)];
+
+    sparkle.style.left = Math.random() * 100 + "vw";
+    sparkle.style.top = (60 + Math.random() * 40) + "vh";
+    sparkle.style.fontSize = (18 + Math.random() * 20) + "px";
+
+    document.body.appendChild(sparkle);
+
+    setTimeout(() => sparkle.remove(), 3000);
+  }
+}
+
+</script>
+
+</body>
+  </html>
+  
