@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bunny's Secret 🎁</title>
+<title>Bunny's Secret Birthday Adventure 🐰</title>
 
 <style>
 * {
@@ -13,247 +13,334 @@
 
 body {
   margin: 0;
-  font-family: "Trebuchet MS", sans-serif;
-  background: linear-gradient(135deg, #ffe0ed, #fff1f6, #e8ddff);
-  color: #743b5c;
   min-height: 100vh;
   overflow-x: hidden;
+  font-family: "Trebuchet MS", sans-serif;
   text-align: center;
+  color: #81436b;
+  background: linear-gradient(135deg,#ffe1ef,#fff5fa,#e8ddff);
 }
 
 .screen {
   display: none;
   min-height: 100vh;
-  padding: 25px 16px;
-  flex-direction: column;
+  padding: 25px 15px;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  position: relative;
 }
 
 .screen.active {
   display: flex;
+  animation: appear .7s ease;
+}
+
+@keyframes appear {
+  from {opacity:0; transform:translateY(15px);}
+  to {opacity:1; transform:translateY(0);}
+}
+
+.card {
+  width: 100%;
+  max-width: 460px;
+  padding: 25px 18px;
+  border-radius: 28px;
+  background: #ffffffdf;
+  border: 2px solid #ffc3df;
+  box-shadow: 0 12px 35px #cf82ad33;
 }
 
 h1 {
-  color: #e05291;
-  font-size: 28px;
+  color: #e45398;
+  font-size: 29px;
   margin: 12px 0;
+}
+
+h2 {
+  color: #df5999;
 }
 
 p {
   font-size: 17px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 button {
-  border: none;
+  border: 0;
+  padding: 14px 22px;
   border-radius: 30px;
-  padding: 13px 23px;
   margin: 8px;
-  background: #ed75aa;
+  background: linear-gradient(135deg,#f47cb1,#d96ba8);
   color: white;
   font-size: 16px;
   font-weight: bold;
+  box-shadow: 0 5px 12px #d88bb355;
   cursor: pointer;
-  box-shadow: 0 5px 12px #d98bb455;
 }
 
 button:active {
-  transform: scale(.96);
+  transform: scale(.94);
 }
 
 .bunny {
-  font-size: 90px;
+  font-size: 100px;
+  display: inline-block;
+  filter: drop-shadow(0 5px 5px #e5a2c3);
+}
+
+.run {
+  animation: bunnyRun 2s ease-in-out;
+}
+
+@keyframes bunnyRun {
+  0% {transform:translateX(-120vw) rotate(-15deg);}
+  65% {transform:translateX(15px) rotate(10deg);}
+  80% {transform:translateX(-8px) rotate(-5deg);}
+  100% {transform:translateX(0) rotate(0);}
+}
+
+.hop {
   animation: hop 1s infinite alternate;
 }
 
 @keyframes hop {
-  from { transform: translateY(0) rotate(-5deg); }
-  to { transform: translateY(-15px) rotate(5deg); }
+  from {transform:translateY(0);}
+  to {transform:translateY(-13px);}
 }
 
-.run {
-  animation: runin 2s ease-out;
-}
-
-@keyframes runin {
-  0% { transform: translateX(-120vw); }
-  75% { transform: translateX(15px); }
-  100% { transform: translateX(0); }
-}
-
-.card {
-  background: #ffffffd9;
-  border: 2px solid #ffc4df;
-  border-radius: 25px;
-  padding: 22px;
-  width: 100%;
-  max-width: 440px;
-  box-shadow: 0 10px 35px #d68bb533;
+.bubble {
+  background: #fff1f8;
+  border: 2px solid #ffc5df;
+  border-radius: 22px;
+  padding: 13px;
+  margin: 15px auto;
+  max-width: 350px;
+  font-size: 18px;
+  line-height: 1.5;
 }
 
 .gifts {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
   gap: 12px;
-  margin: 20px 0;
+  flex-wrap: wrap;
+  margin: 18px 0;
 }
 
 .gift {
-  font-size: 58px;
-  padding: 13px;
-  background: #fff3fa;
-  border: 2px dashed #f2a6ca;
-  border-radius: 20px;
-  width: 90px;
+  width: 88px;
   height: 100px;
-  cursor: pointer;
-  animation: wiggle 2s infinite;
+  font-size: 55px;
+  background: #fff1f8;
+  border: 2px dashed #f3a8cb;
+  border-radius: 18px;
+  padding: 5px;
+  animation: giftWiggle 2s infinite;
 }
 
-.gift:nth-child(2) {
-  animation-delay: .3s;
-}
+.gift:nth-child(2) {animation-delay:.3s;}
+.gift:nth-child(3) {animation-delay:.6s;}
 
-.gift:nth-child(3) {
-  animation-delay: .6s;
-}
-
-@keyframes wiggle {
-  0%, 100% { transform: rotate(0); }
-  25% { transform: rotate(-4deg); }
-  75% { transform: rotate(4deg); }
+@keyframes giftWiggle {
+  0%,100% {transform:rotate(0);}
+  25% {transform:rotate(-5deg);}
+  75% {transform:rotate(5deg);}
 }
 
 .message {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: bold;
   color: #df4b91;
+  min-height: 58px;
+  line-height: 1.5;
   margin: 15px 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.cake {
+  font-size: 100px;
+  display: inline-block;
+  animation: cakeBounce 1s infinite alternate;
+}
+
+@keyframes cakeBounce {
+  from {transform:translateY(0);}
+  to {transform:translateY(-12px);}
+}
+
+.letter {
+  background: #fff7fb;
+  padding: 20px;
+  border-radius: 22px;
+  border: 1px solid #ffd1e6;
+  line-height: 1.9;
+  white-space: pre-line;
+  font-size: 17px;
 }
 
 .photos {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  width: 100%;
   max-width: 440px;
-  margin: 15px auto;
+  width: 100%;
+  margin: 18px auto;
 }
 
 .photos img {
   width: 100%;
   height: 175px;
   object-fit: cover;
+  border: 4px solid white;
   border-radius: 18px;
-  border: 3px solid white;
-  box-shadow: 0 5px 15px #c77da055;
-}
-
-.letter {
-  font-size: 17px;
-  line-height: 1.8;
-  white-space: pre-line;
-}
-
-.heart {
-  font-size: 38px;
-  animation: heartbeat 1s infinite;
-}
-
-@keyframes heartbeat {
-  50% { transform: scale(1.2); }
+  box-shadow: 0 5px 15px #cc8bb455;
 }
 
 .sparkle {
   position: fixed;
+  top: 100vh;
   pointer-events: none;
-  animation: floatup 3s linear forwards;
-  z-index: 5;
+  z-index: 10;
+  animation: sparkleUp 4s linear forwards;
 }
 
-@keyframes floatup {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-100vh);
-    opacity: 0;
-  }
+@keyframes sparkleUp {
+  0% {transform:translateY(0) rotate(0);opacity:1;}
+  100% {transform:translateY(-120vh) rotate(360deg);opacity:0;}
 }
 
 .small {
   font-size: 13px;
-  color: #a86d90;
+  color: #b07a9b;
 }
+
+#soundNotice {
+  font-size: 12px;
+  color: #b07a9b;
+  margin-top: 12px;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- MUSIC -->
-<audio id="music"
+<!-- FUNNY CARTOON MUSIC -->
+<audio id="funMusic"
 src="Oggy_And_The_Cockroaches_-_Main_Theme_(mp3.pm).mp3"
 loop preload="auto"></audio>
 
-<!-- SCREEN 1: BUNNY INTRO -->
+<!-- BIRTHDAY MUSIC -->
+<audio id="birthMusic"
+src="atlasaudio-birthday-606219.mp3"
+loop preload="auto"></audio>
+
+
+<!-- SCENE 1: BUNNY ENTRANCE -->
 <section id="intro" class="screen active">
 
   <div class="card">
-    <div class="bunny run">🐰</div>
 
-    <h1>Hey there!</h1>
+    <div id="introBunny" class="bunny run">🐰</div>
+
+    <h1>Hey there!!</h1>
+
+    <div class="bubble">
+      Wait! Wait! Don't go!<br>
+      I have something VERY important to tell you!
+    </div>
 
     <p>
-      There's something<br>
-      I need to tell you…
+      But first…<br>
+      You have to help me with a tiny little problem.
     </p>
 
-    <div class="heart">💗</div>
-
-    <button onclick="startSurprise()">
-      What is it? 👀
+    <button onclick="startAdventure()">
+      What happened, Bunny? 😂
     </button>
 
-    <p class="small">
-      A tiny bunny has a BIG secret!
+    <p id="soundNotice">
+      🎵 Tap to begin your adventure!
     </p>
+
   </div>
 
 </section>
 
-<!-- SCREEN 2: THREE GIFTS -->
+
+<!-- SCENE 2: BUNNY'S PROBLEM -->
+<section id="mission" class="screen">
+
+  <div class="card">
+
+    <div class="bunny hop">🐰</div>
+
+    <h1>Oh no!! 😭</h1>
+
+    <div class="bubble">
+      I was carrying a SUPER special birthday gift…
+    </div>
+
+    <p>
+      But three gift boxes fell out of my basket!<br>
+      And now I don't remember which one is the right one!
+    </p>
+
+    <div class="message">
+      Will you help me find it? 🥺
+    </div>
+
+    <button onclick="showScreen('gifts')">
+      Of course, Bunny! 🎁
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- SCENE 3: GIFT GAME -->
 <section id="gifts" class="screen">
 
   <div class="card">
 
-    <div class="bunny">🐰</div>
+    <div class="bunny hop">🐰</div>
 
-    <h1>Help me choose!</h1>
+    <h1>Choose carefully!</h1>
 
-    <p>
-      I brought you 3 gifts! 🎁<br>
-      But be careful while choosing…
-    </p>
+    <div class="bubble">
+      One of these gifts is REALLY special.<br>
+      The other two… well… 😂
+    </div>
+
+    <p>Which one should we open?</p>
 
     <div class="gifts">
 
-      <button class="gift" onclick="chooseGift(1)">🎁</button>
+      <button class="gift" onclick="chooseGift(1)">
+        🎁
+      </button>
 
-      <button class="gift" onclick="chooseGift(2)">🎁</button>
+      <button class="gift" onclick="chooseGift(2)">
+        🎁
+      </button>
 
-      <button class="gift" onclick="chooseGift(3)">🎁</button>
+      <button class="gift" onclick="chooseGift(3)">
+        🎁
+      </button>
 
     </div>
 
     <div id="giftMessage" class="message">
-      Which one will you choose? 🤭
+      Pick a gift, pick a gift! 🤭
     </div>
 
-    <button id="backButton"
-    style="display:none"
+    <button id="tryAgain"
+    class="hidden"
     onclick="resetGifts()">
       Go back and try again ↩️
     </button>
@@ -262,157 +349,303 @@ loop preload="auto"></audio>
 
 </section>
 
-<!-- SCREEN 3: BIRTHDAY SURPRISE -->
-<section id="birthday" class="screen">
+
+<!-- SCENE 4: CORRECT GIFT -->
+<section id="found" class="screen">
 
   <div class="card">
 
-    <div class="bunny">🐰🎉</div>
+    <div class="bunny hop">🐰🎉</div>
 
-    <h1>Yay! You found it!</h1>
+    <h1>YAAAAAY!!</h1>
 
-    <div class="heart">🎂💖🎂</div>
+    <div class="bubble">
+      YOU FOUND IT!!
+    </div>
 
-    <h1>Happy Birthday!</h1>
-
-    <p class="letter">
-      Today is all about YOU!
-
-      I hope your birthday is filled with
-      laughter, love, happiness, and
-      beautiful little moments.
-
-      You deserve all the wonderful things
-      this world has to offer.
-
-      Keep smiling, keep shining,
-      and never forget how special you are.
-
-      And remember…
-      someone took a little extra time
-      to make this surprise just for you. 💗
+    <p>
+      Finally!! My little bunny brain can rest! 😂
     </p>
+
+    <p>
+      Okay… this gift is REALLY special.
+    </p>
+
+    <div class="cake">🎁</div>
+
+    <button onclick="openBirthday()">
+      Open your special gift! 💗
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- SCENE 5: BIRTHDAY CELEBRATION -->
+<section id="celebration" class="screen">
+
+  <div class="card">
+
+    <div class="bunny hop">🐰🎉</div>
+
+    <h1>HAPPY BIRTHDAY!!</h1>
+
+    <div class="cake">🎂</div>
+
+    <div class="bubble">
+      Happy Birthday to youuu!<br>
+      Happy Birthday to youuu!<br>
+      Happy Birthday dear birthday star!<br>
+      Happy Birthday to youuu! 🎶
+    </div>
+
+    <p>
+      Wait… I forgot something!
+    </p>
+
+    <h2>Make a wish! ✨</h2>
+
+    <p>
+      Close your eyes…<br>
+      Make your biggest birthday wish…
+    </p>
+
+    <button onclick="blowCandles()">
+      Blow out the candles! 🕯️
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- SCENE 6: EMOTIONAL MESSAGE -->
+<section id="final" class="screen">
+
+  <div class="card">
+
+    <div class="bunny">🐰💗</div>
+
+    <h1>One last thing…</h1>
+
+    <div class="bubble">
+      Okay… jokes aside.<br>
+      There's something I really want you to know.
+    </div>
+
+    <div class="letter">
+
+      Happy Birthday to someone
+      who deserves so much happiness. ❤️
+
+      I hope this new year of your life
+      brings you endless smiles,
+      beautiful memories,
+      and all the love your heart can hold.
+
+      No matter how silly life gets,
+      never forget how special you are.
+
+      May your dreams come true,
+      may your heart always feel loved,
+      and may you always find
+      a reason to smile.
+
+      And if this little bunny
+      could give you one thing…
+
+      It would be a thousand more
+      happy moments just like this.
+
+      Happy Birthday! 🎂💖
+
+    </div>
 
     <h2>Our little memories 📸</h2>
 
     <div class="photos">
 
-      <img src="78db597aa35e18dd38055fe6ddcd544c.jpg"
+      <img
+      src="78db597aa35e18dd38055fe6ddcd544c.jpg"
       alt="Birthday memory 1">
 
-      <img src="5435bd09e80e96120d583fe81c5e212d.jpg"
+      <img
+      src="5435bd09e80e96120d583fe81c5e212d.jpg"
       alt="Birthday memory 2">
 
-      <img src="8b8cb5317fa2753aff9ff9ed60b859be.jpg"
+      <img
+      src="8b8cb5317fa2753aff9ff9ed60b859be.jpg"
       alt="Birthday memory 3">
 
-      <img src="927256f3b5fabac7e8d293b9cc8dbac6.jpg"
+      <img
+      src="927256f3b5fabac7e8d293b9cc8dbac6.jpg"
       alt="Birthday memory 4">
 
     </div>
 
-    <p class="letter">
-      May your new year bring you
-      endless reasons to smile.
+    <div class="bubble">
+      Made with lots of love,<br>
+      just for you. 💌
+    </div>
 
-      Happy Birthday, you wonderful human! 🥹❤️
-    </p>
-
-    <div class="heart">💗</div>
+    <div class="bunny hop">🐰❤️</div>
 
     <p class="small">
-      Made with love, just for you.
+      Bunny's Secret Birthday SurpriseStory
     </p>
 
   </div>
 
 </section>
 
+
 <script>
 
-const music = document.getElementById("music");
+const funnyMusic = document.getElementById("funMusic");
+const birthdayMusic = document.getElementById("birthMusic");
 
 function showScreen(id) {
+
   document.querySelectorAll(".screen").forEach(screen => {
     screen.classList.remove("active");
   });
 
   document.getElementById(id).classList.add("active");
-}
 
-function startSurprise() {
-
-  // Start music after the receiver taps.
-  // Mobile browsers require a user interaction.
-  music.play().catch(() => {
-    console.log("Music playback could not start.");
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
   });
-
-  showScreen("gifts");
 }
 
+
+// START THE ADVENTURE
+function startAdventure() {
+
+  funnyMusic.volume = 0.7;
+
+  funnyMusic.play().catch(() => {});
+
+  showScreen("mission");
+}
+
+
+// GIFT CHOICES
 function chooseGift(number) {
 
   const message = document.getElementById("giftMessage");
-  const backButton = document.getElementById("backButton");
+  const tryAgain = document.getElementById("tryAgain");
 
-  // Correct gift is gift number 2.
-  if (number === 2) {
+  if (number === 1) {
 
     message.innerHTML =
-      "YAY! You found the secret! 🎉";
+    "WHAT?! A CARROT?! 🥕😂<br>" +
+    "That's MY lunch! Give it back!";
 
-    setTimeout(() => {
-      showScreen("birthday");
-      makeSparkles();
-    }, 900);
+    tryAgain.classList.remove("hidden");
+
+  } else if (number === 3) {
+
+    message.innerHTML =
+    "WHO ORDERED THESE SOCKS?! 🧦😂<br>" +
+    "Do I look fabulous wearing them on my ears?";
+
+    tryAgain.classList.remove("hidden");
 
   } else {
 
-    if (number === 1) {
-      message.innerHTML =
-        "Oopsie! 😂 This gift is full of bunny socks! Try again!";
-    }
+    message.innerHTML =
+    "YAAAAAY! YOU FOUND IT!! 🎉";
 
-    if (number === 3) {
-      message.innerHTML =
-        "Hehe! Nope! This one has carrot cake crumbs! 🥕";
-    }
+    tryAgain.classList.add("hidden");
 
-    backButton.style.display = "inline-block";
+    setTimeout(() => {
+
+      // Stop funny music and start birthday music
+      funnyMusic.pause();
+      funnyMusic.currentTime = 0;
+
+      birthdayMusic.volume = 0.8;
+
+      birthdayMusic.play().catch(() => {});
+
+      showScreen("found");
+
+      confetti();
+
+    }, 1200);
+
   }
+
 }
 
+
+// TRY AGAIN
 function resetGifts() {
 
   document.getElementById("giftMessage").innerHTML =
-    "Choose carefully this time! 🤭";
+  "Pick a gift, pick a gift! 🤭";
 
-  document.getElementById("backButton").style.display =
-    "none";
+  document.getElementById("tryAgain").classList.add("hidden");
+
 }
 
-function makeSparkles() {
 
-  const symbols = ["💖", "✨", "🎉", "💕", "⭐"];
+// OPEN THE SPECIAL GIFT
+function openBirthday() {
 
-  for (let i = 0; i < 35; i++) {
+  showScreen("celebration");
+
+  confetti();
+
+}
+
+
+// BLOW OUT CANDLES
+function blowCandles() {
+
+  showScreen("final");
+
+  confetti();
+
+}
+
+
+// CONFETTI AND SPARKLES
+function confetti() {
+
+  const symbols = [
+    "💖","💕","✨","🎉","🎊",
+    "💗","⭐","🎀","🌸","💝"
+  ];
+
+  for (let i = 0; i < 45; i++) {
 
     const sparkle = document.createElement("div");
 
     sparkle.className = "sparkle";
 
-    sparkle.textContent =
-      symbols[Math.floor(Math.random() * symbols.length)];
+    sparkle.innerHTML =
+    symbols[Math.floor(Math.random() * symbols.length)];
 
-    sparkle.style.left = Math.random() * 100 + "vw";
-    sparkle.style.top = (60 + Math.random() * 40) + "vh";
-    sparkle.style.fontSize = (18 + Math.random() * 20) + "px";
+    sparkle.style.left =
+    Math.random() * 100 + "vw";
+
+    sparkle.style.fontSize =
+    (18 + Math.random() * 25) + "px";
+
+    sparkle.style.animationDuration =
+    (2 + Math.random() * 3) + "s";
 
     document.body.appendChild(sparkle);
 
-    setTimeout(() => sparkle.remove(), 3000);
+    setTimeout(() => {
+      sparkle.remove();
+    }, 5000);
+
   }
+
 }
 
 </script>
