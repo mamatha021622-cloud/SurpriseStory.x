@@ -41,8 +41,8 @@ h1{font-size:clamp(2rem,8vw,3.6rem);line-height:1.06;margin:8px 0 18px;color:var
   <h1>A tiny birthday mission…</h1>
   <p>Someone has a gift for you. But this little bunny may need your help. 🐰</p>
   <div class="videoWrap" id="videoWrap">
-   <video id="bunnyVideo" playsinline preload="metadata" poster="bunny-birthday-poster.jpg">
-    <source src="bunny-birthday.mp4" type="video/mp4">
+   <video id="bunnyVideo" playsinline preload="metadata" poster="">
+    <source src="White_bunny_falls_with_gift_1c3afcce.mp4" type="video/mp4">
    </video>
    <div class="videoFallback" id="videoFallback">Add your realistic bunny video as<br><b>bunny-birthday.mp4</b></div>
   </div>
@@ -124,7 +124,7 @@ Happy Birthday! 🎂💗</div>
  function show(id){screens.forEach(s=>$(s).classList.toggle('active',s===id));window.scrollTo({top:0,behavior:'smooth'});}
  function stopMusic(){[$('funMusic'),$('birthdayMusic')].forEach(a=>{a.pause();a.currentTime=0;});}
  async function playMusic(which){const other=which==='funMusic'?'birthdayMusic':'funMusic';$(other).pause();try{await $(which).play();}catch(e){/* Browser may require another tap; buttons below retry playback. */}}
- $('startBtn').addEventListener('click',async()=>{const video=$('bunnyVideo');await playMusic('funMusic');if(video.querySelector('source')&&video.querySelector('source').getAttribute('src')){try{await video.play();$('videoFallback').style.display='none';$('startBtn').textContent='Bunny video is playing…';$('startBtn').disabled=true;video.onended=()=>{show('giftGame');$('startBtn').disabled=false;$('startBtn').textContent='Play bunny surprise 🐰';};}catch(e){show('giftGame');}}else{show('giftGame');}});
+ $('startBtn').addEventListener('click',async()=>{const video=$('bunnyVideo');const source=video.querySelector('source');await playMusic('funMusic');if(source&&source.getAttribute('src')){try{video.currentTime=0;await video.play();$('videoFallback').style.display='none';$('startBtn').textContent='Bunny is on the way… 🐰';$('startBtn').disabled=true;video.onended=()=>{show('giftGame');$('startBtn').disabled=false;$('startBtn').textContent='Play bunny surprise 🐰';};return;}catch(e){$('videoFallback').style.display='grid';$('videoFallback').innerHTML='Bunny video could not load.<br><b>Upload White_bunny_falls_with_gift_1c3afcce.mp4 beside Birthday.html</b>';show('giftGame');return;}}show('giftGame');});
  $('giftChoices').addEventListener('click',async e=>{const btn=e.target.closest('.gift');if(!btn)return;const type=btn.dataset.gift;const msg=$('giftMessage');if(type==='correct'){
   msg.textContent='“Yay! You found it! That one was mine… but I brought a BIG surprise too!” 🐰';
   $('toCakeBtn').hidden=false;
@@ -154,5 +154,4 @@ Happy Birthday! 🎂💗</div>
 })();
 </script>
 </body>
-  </html>
-  
+</html>
