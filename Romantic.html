@@ -14,19 +14,20 @@ button{cursor:pointer;font-family:inherit}.hidden{display:none!important}.screen
 /* heart and bow */
 .heart-stage{position:relative;width:min(90vw,360px);height:min(90vw,360px);margin:5px 0 20px;touch-action:none;user-select:none;-webkit-user-select:none}.heart-glow{position:absolute;width:80%;height:80%;left:10%;top:10%;border-radius:50%;background:#ff003d;filter:blur(75px);opacity:.3;animation:glowPulse 3s ease-in-out infinite}@keyframes glowPulse{0%,100%{opacity:.18;transform:scale(.8)}50%{opacity:.4;transform:scale(1.1)}}
 /* realistic heart, bow and arrow */
-.heart-shape{position:absolute;width:220px;height:220px;left:50%;top:42%;transform:translate(-50%,-50%);transform-origin:center;z-index:2;overflow:visible;filter:drop-shadow(0 12px 20px #ff003d55);transition:filter .2s}
+.heart-shape{position:absolute;width:220px;height:220px;left:50%;top:42%;transform:translate(-50%,-50%);transform-origin:center;z-index:2;overflow:visible;filter:drop-shadow(0 12px 20px #ff003d66);transition:filter .2s;will-change:transform;}
 .heart-shape path{fill:url(#heartPaint);stroke:#ff6c8c;stroke-width:1.5;}
-.heart-stage.idle .heart-shape{animation:heartBeat 2.4s ease-in-out infinite}
-@keyframes heartBeat{0%,100%{transform:translate(-50%,-50%) scale(1)}15%{transform:translate(-50%,-50%) scale(1.06)}30%{transform:translate(-50%,-50%) scale(1)}45%{transform:translate(-50%,-50%) scale(1.04)}}
-.bow{display:none!important}
-.bow-limb{position:absolute;inset:0;width:112px;height:130px;overflow:visible}
-.bow-string{position:absolute;left:55px;top:7px;width:2px;height:116px;background:linear-gradient(90deg,#fff0d8,#b9a18a,#fff5df);transform:none;transform-origin:center;opacity:.95;box-shadow:0 0 2px #fff8}
-.arrow{position:absolute;left:24px;top:205px;width:105px;height:105px;z-index:10;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;font-size:88px;line-height:1;cursor:pointer;touch-action:pan-y;user-select:none;-webkit-user-select:none;transform-origin:center;will-change:transform;overflow:visible;border:0;background:transparent;color:#fff0d8;text-shadow:0 4px 7px #0008;filter:drop-shadow(0 0 8px #ffcc8a66)}.arrow:active{transform:scale(.94)}.arrow-shaft,.arrow-head,.arrow-tail-heart,.arrow-feather{display:none!important}
+.heart-stage.idle .heart-shape{animation:heartBeat 2.2s ease-in-out infinite}
+@keyframes heartBeat{0%,100%{transform:translate(-50%,-50%) scale(1)}12%{transform:translate(-50%,-50%) scale(1.045)}22%{transform:translate(-50%,-50%) scale(1)}36%{transform:translate(-50%,-50%) scale(1.075)}48%{transform:translate(-50%,-50%) scale(1)}}
+/* Smaller bow, kept visible beside the arrow */
+.bow{display:block!important;position:absolute;left:10px;bottom:42px;width:76px;height:96px;z-index:5;pointer-events:none;transform:scale(.78);transform-origin:bottom left}
+.bow-limb{position:absolute;inset:0;width:76px;height:96px;overflow:visible}
+.bow-string{position:absolute;left:38px;top:8px;width:1.5px;height:82px;background:linear-gradient(90deg,#fff0d8,#b9a18a,#fff5df);transform:none;transform-origin:center;opacity:.95;box-shadow:0 0 2px #fff8}
+.arrow{position:absolute;left:24px;top:205px;width:105px;height:105px;z-index:10;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;font-size:88px;line-height:1;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;transform-origin:center;will-change:transform;overflow:visible;border:0;background:transparent;color:#fff0d8;text-shadow:0 4px 7px #0008;filter:drop-shadow(0 0 8px #ffcc8a66)}.arrow:active{transform:scale(.94)}.arrow-shaft,.arrow-head,.arrow-tail-heart,.arrow-feather{display:none!important}
 .arrow-shaft{position:absolute;left:8px;top:15px;width:125px;height:4px;border-radius:5px;background:linear-gradient(180deg,#fff0c9 0%,#d7a15c 42%,#81512a 70%,#f5d59b 100%);box-shadow:0 1px 2px #170707,0 0 5px #ffe0ad66}
 .arrow-head{position:absolute;left:128px;top:8px;width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:23px solid #d8dce4;filter:drop-shadow(1px 1px 1px #27212a)}
 .arrow-tail-heart{position:absolute;left:-2px;top:5px;font-size:20px;color:#ff7c9d;text-shadow:0 0 10px #ff4d7a}
 .arrow-feather{position:absolute;left:17px;top:5px;width:22px;height:9px;background:linear-gradient(135deg,#f8e7d3,#b12c48);clip-path:polygon(0 0,100% 50%,0 100%);transform:rotate(180deg)}
-.heart-stage.pulling .bow-string{height:116px;transform:none}
+.heart-stage.pulling .bow-string{height:82px;transform:translate(-5px,0)}
 .arrow.shooting{transition:transform .42s cubic-bezier(.2,.7,.2,1);pointer-events:none}
 .heart-stage.hit .heart-shape{animation:heartImpact .65s ease-in forwards}
 @keyframes heartImpact{0%{transform:translate(-50%,-50%) scale(1);filter:drop-shadow(0 0 20px #ff003d66)}25%{transform:translate(-50%,-50%) scale(1.18);filter:drop-shadow(0 0 50px #ff003d)}45%{transform:translate(-50%,-50%) scale(.92)}65%{transform:translate(-50%,-50%) scale(1.08)}100%{transform:translate(-50%,-50%) scale(0);opacity:0}}
@@ -48,7 +49,7 @@ button{cursor:pointer;font-family:inherit}.hidden{display:none!important}.screen
 <div class="fall-layer" id="fallLayer"></div>
 <section class="screen active" id="screen0">
  <div class="eyebrow">A little surprise for my love</div>
- <div class="heart-stage idle" id="heartStage"><div class="heart-glow"></div><svg class="heart-shape" id="heartShape" viewBox="0 0 220 220" aria-hidden="true"><defs><linearGradient id="heartPaint" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b8c"/><stop offset=".35" stop-color="#f51e50"/><stop offset=".72" stop-color="#c90032"/><stop offset="1" stop-color="#650018"/></linearGradient><radialGradient id="heartShine" cx=".28" cy=".18" r=".65"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><path d="M110 198 C93 181 22 128 15 77 C8 30 65 7 103 25 C125 31 136 47 145 61 C161 31 181 18 202 24 C249 36 240 91 219 122 C194 160 145 183 110 198 Z" transform="translate(-18 0) scale(.92)"/><path d="M47 54 C60 35 82 33 101 44" fill="none" stroke="url(#heartShine)" stroke-width="12" stroke-linecap="round"/></svg>
+ <div class="heart-stage idle" id="heartStage"><div class="heart-glow"></div><svg class="heart-shape" id="heartShape" viewBox="0 0 220 220" aria-hidden="true"><defs><linearGradient id="heartPaint" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b8c"/><stop offset=".35" stop-color="#f51e50"/><stop offset=".72" stop-color="#c90032"/><stop offset="1" stop-color="#650018"/></linearGradient><radialGradient id="heartShine" cx=".28" cy=".18" r=".65"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs><path d="M110 198 C94 183 20 126 14 78 C8 35 47 12 83 22 C98 26 108 37 110 49 C122 29 139 20 158 20 C195 20 215 47 207 82 C198 126 126 166 110 198 Z"/><path d="M42 57 C51 34 75 27 96 38 C104 42 108 49 110 57 C121 38 138 31 155 34" fill="none" stroke="url(#heartShine)" stroke-width="10" stroke-linecap="round" opacity=".7"/></svg>
   <div class="bow" id="bow"><svg class="bow-limb" viewBox="0 0 112 130" aria-hidden="true"><defs><linearGradient id="wood" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#74421f"/><stop offset=".22" stop-color="#f0c17a"/><stop offset=".5" stop-color="#b8793e"/><stop offset=".78" stop-color="#f8d79a"/><stop offset="1" stop-color="#70401f"/></linearGradient></defs><path d="M58 7 C7 18 7 105 58 123" fill="none" stroke="#3a1b0d" stroke-width="12" stroke-linecap="round"/><path d="M58 7 C7 18 7 105 58 123" fill="none" stroke="url(#wood)" stroke-width="8" stroke-linecap="round"/><path d="M53 11 C12 26 13 96 53 119" fill="none" stroke="#ffe0a3" stroke-opacity=".55" stroke-width="1.4"/></svg><div class="bow-string" id="bowString"></div></div>
   <button class="arrow" id="arrow" type="button" aria-label="Tap the bow and arrow to shoot">🏹</button>
  </div>
@@ -72,21 +73,57 @@ const song=document.getElementById("song"),musicButton=document.getElementById("
 async function startMusic(){musicButton.hidden=false;try{await song.play();musicButton.textContent="♫ Music: On"}catch(e){musicButton.textContent="♫ Tap to play music"}}
 async function toggleMusic(){if(song.paused){try{await song.play();musicButton.textContent="♫ Music: On"}catch(e){musicButton.textContent="♫ Music unavailable"}}else{song.pause();musicButton.textContent="♫ Music: Off"}}
 function showScreen(n){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById("screen"+n).classList.add("active");window.scrollTo({top:0,behavior:"smooth"})}
-/* Robust drag/release: track movement from the initial touch/mouse point. */
+/* Robust Android touch + mouse drag/release. Tap OR drag to shoot. */
 const heartStage=document.getElementById("heartStage"),arrow=document.getElementById("arrow"),bowString=document.getElementById("bowString"),fallLayer=document.getElementById("fallLayer");
 let dragging=false,shot=false,pointerId=null,pullX=0,pullY=0,startClientX=0,startClientY=0;
 const maxPull=110;
 function setArrow(x,y){pullX=x;pullY=y;arrow.style.transform=`translate(${x}px,${y}px)`;}
-function onPointerDown(e){if(shot||dragging)return;e.preventDefault();dragging=true;pointerId=e.pointerId;startClientX=e.clientX;startClientY=e.clientY;try{arrow.setPointerCapture(pointerId)}catch(_){}heartStage.classList.add("pulling");}
-function onPointerMove(e){if(!dragging||shot||e.pointerId!==pointerId)return;e.preventDefault();let dx=e.clientX-startClientX,dy=e.clientY-startClientY;/* pull backward to the left */dx=Math.max(-maxPull,Math.min(0,dx));dy=Math.max(-40,Math.min(40,dy));setArrow(dx,dy);/* string follows the arrow's tail */bowString.style.transform=`translate(${dx}px,${dy}px)`;}
-function onPointerUp(e){if(!dragging||e.pointerId!==pointerId)return;dragging=false;pointerId=null;heartStage.classList.remove("pulling");if(Math.abs(pullX)>18){shootArrow()}else{arrow.style.transition="transform .28s ease";setArrow(0,0);bowString.style.transform="none";setTimeout(()=>arrow.style.transition="",300)}}
-arrow.addEventListener("pointerdown",onPointerDown);document.addEventListener("pointermove",onPointerMove,{passive:false});document.addEventListener("pointerup",onPointerUp);document.addEventListener("pointercancel",onPointerUp);
-/* Mobile-friendly fallback: a simple tap launches the arrow too. */
-arrow.addEventListener("click",()=>{if(!shot)shootArrow()});
+function onPointerDown(e){
+ if(shot||dragging)return;
+ e.preventDefault();dragging=true;pointerId=e.pointerId;startClientX=e.clientX;startClientY=e.clientY;
+ try{arrow.setPointerCapture(pointerId)}catch(_){}
+ heartStage.classList.add("pulling");
+}
+function onPointerMove(e){
+ if(!dragging||shot||e.pointerId!==pointerId)return;
+ e.preventDefault();
+ let dx=e.clientX-startClientX,dy=e.clientY-startClientY;
+ /* Pull the arrow backward to the left, with a little vertical movement. */
+ dx=Math.max(-maxPull,Math.min(0,dx));dy=Math.max(-45,Math.min(45,dy));
+ setArrow(dx,dy);
+ /* Bowstring follows the pull instead of remaining static. */
+ bowString.style.transform=`translate(${dx}px,${dy}px)`;
+}
+function onPointerUp(e){
+ if(!dragging||e.pointerId!==pointerId)return;
+ dragging=false;pointerId=null;
+ heartStage.classList.remove("pulling");
+ /* Releasing after a drag, or simply tapping, launches the arrow. */
+ shootArrow();
+}
+arrow.addEventListener("pointerdown",onPointerDown);
+document.addEventListener("pointermove",onPointerMove,{passive:false});
+document.addEventListener("pointerup",onPointerUp);
+document.addEventListener("pointercancel",onPointerUp);
 
-function shootArrow(){if(shot)return;shot=true;heartStage.classList.remove("idle");arrow.classList.add("shooting");/* target the heart's center rather than a fixed overshoot */const stageRect=heartStage.getBoundingClientRect(),heartRect=document.getElementById("heartShape").getBoundingClientRect(),arrowRect=arrow.getBoundingClientRect();const dx=(heartRect.left+heartRect.width*.68)-(arrowRect.left+arrowRect.width*.88);const dy=(heartRect.top+heartRect.height*.58)-(arrowRect.top+arrowRect.height*.5);arrow.style.transform=`translate(${pullX+dx}px,${pullY+dy}px) rotate(-4deg)`;setTimeout(()=>{heartStage.classList.add("hit");createBurst();celebrate();/* song begins after the impact/explosion */startMusic();setTimeout(()=>showScreen(1),2100)},430)}
+function shootArrow(){
+ if(shot)return;shot=true;
+ heartStage.classList.remove("idle");arrow.classList.add("shooting");
+ const heartRect=document.getElementById("heartShape").getBoundingClientRect();
+ const arrowRect=arrow.getBoundingClientRect();
+ const dx=(heartRect.left+heartRect.width*.68)-(arrowRect.left+arrowRect.width*.88);
+ const dy=(heartRect.top+heartRect.height*.58)-(arrowRect.top+arrowRect.height*.5);
+ arrow.style.transform=`translate(${pullX+dx}px,${pullY+dy}px) rotate(-4deg)`;
+ setTimeout(()=>{
+  heartStage.classList.add("hit");
+  createBurst();celebrate();
+  /* Start music only after the heart impact/explosion. */
+  startMusic();
+  setTimeout(()=>showScreen(1),2100);
+ },430);
+}
 function createBurst(){for(let i=0;i<22;i++){const h=document.createElement("span");h.className="burst-heart";h.textContent=Math.random()>.45?"♥":"✦";h.style.setProperty("--dx",`${(Math.random()-.5)*360}px`);h.style.setProperty("--dy",`${(Math.random()-.5)*340}px`);fallLayer.appendChild(h);setTimeout(()=>h.remove(),1500)}}
 function celebrate(){for(let i=0;i<16;i++){const b=document.createElement("div");b.className="balloon";b.style.left=`${Math.random()*100}%`;b.style.setProperty("--fall-duration",`${4+Math.random()*4}s`);b.style.animationDelay=`${Math.random()*1.8}s`;fallLayer.appendChild(b);setTimeout(()=>b.remove(),10000)}for(let i=0;i<45;i++){const p=document.createElement("div");p.className="petal";p.style.left=`${Math.random()*100}%`;p.style.setProperty("--fall-duration",`${3.5+Math.random()*4}s`);p.style.animationDelay=`${Math.random()*2}s`;fallLayer.appendChild(p);setTimeout(()=>p.remove(),9000)}}
 /* question accepts case-insensitive answer, allows two attempts */
 let attempts=0;const answerForm=document.getElementById("answerForm"),answerInput=document.getElementById("answerInput"),feedback=document.getElementById("feedback");
-answerForm.addEventListener("submit",e=>{e.preventDefault();const val=answerInput.value.trim().toLowerCase();if(val===correctAnswer.trim().toLowerCase()){
+answerForm.addEventListener("submit",e=>{e.prev
