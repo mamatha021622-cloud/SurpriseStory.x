@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#f9dce8">
-<title>SurpriseStory | Birthday Surprise</title>
+
+<title>SurpriseStory Birthday Surprise</title>
 
 <style>
 * {
@@ -25,6 +26,8 @@ body {
   padding: 20px;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 2;
 }
 
 .screen.active {
@@ -32,6 +35,8 @@ body {
 }
 
 .panel {
+  position: relative;
+  z-index: 2;
   width: 100%;
   max-width: 650px;
   background: #fffaf7;
@@ -68,16 +73,26 @@ button {
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 7px 18px #a92e6130;
+  position: relative;
+  z-index: 5;
 }
 
 button:disabled {
   opacity: .65;
 }
 
+button[hidden],
+p[hidden],
+div[hidden] {
+  display: none !important;
+}
+
 .small {
   font: .8rem Arial, sans-serif;
   color: #98617a;
 }
+
+/* Bunny video */
 
 .videoWrap {
   width: 100%;
@@ -97,6 +112,8 @@ video {
   display: block;
 }
 
+/* Gifts */
+
 .gifts {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -111,11 +128,13 @@ video {
   border-radius: 18px;
 }
 
+/* Balloons */
+
 #balloons {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 10;
+  z-index: 1;
   overflow: hidden;
   display: none;
 }
@@ -169,6 +188,8 @@ video {
   }
 }
 
+/* Confetti */
+
 .confetti {
   position: absolute;
   top: -20px;
@@ -184,6 +205,8 @@ video {
     transform: translateY(115vh) rotate(800deg);
   }
 }
+
+/* Cake */
 
 .cake {
   font-size: clamp(5rem, 22vw, 9rem);
@@ -217,6 +240,30 @@ video {
   }
 }
 
+/* Birthday message */
+
+.birthdayMessage {
+  background: #fff0f7;
+  border-radius: 18px;
+  padding: 20px;
+  margin: 20px 0;
+  line-height: 1.8;
+  animation: messageIn 1s ease;
+}
+
+@keyframes messageIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Memories */
+
 .photos {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -241,6 +288,8 @@ video {
   transform: rotate(1deg);
 }
 
+/* Envelope */
+
 .envelope {
   font-size: 100px;
   cursor: pointer;
@@ -249,8 +298,12 @@ video {
 }
 
 @keyframes envelopePulse {
-  from { transform: scale(1); }
-  to { transform: scale(1.08); }
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
 }
 
 .letter {
@@ -303,169 +356,199 @@ video {
 
 <!-- INTRO -->
 <section class="screen active" id="intro">
-  <div class="panel">
+<div class="panel">
 
-    <div class="small">SURPRISESTORY PRESENTS</div>
+<div class="small">SURPRISESTORY PRESENTS</div>
 
-    <h1>A tiny birthday mission…</h1>
+<h1>A tiny birthday mission…</h1>
 
-    <p>
-      Someone has a gift for you.
-      But this little bunny may need your help! 🐰
-    </p>
+<p>
+Someone has a gift for you.
+But this little bunny may need your help! 🐰
+</p>
 
-    <div class="videoWrap">
-      <video id="bunnyVideo" playsinline preload="auto">
-        <source
-          src="White_bunny_falls_with_gift_1c3afcce.mp4"
-          type="video/mp4">
-      </video>
-    </div>
+<div class="videoWrap">
+<video id="bunnyVideo" playsinline preload="auto">
+<source src="White_bunny_falls_with_gift_1c3afcce.mp4"
+type="video/mp4">
+</video>
+</div>
 
-    <!-- Dialogue is hidden until video ends -->
-    <p id="dialogue" hidden>
-      <b>
-        “Oops! I brought a gift for you…
-        but I think I lost it!
-        Help me find it first!” 😂
-      </b>
-    </p>
+<p id="dialogue" hidden>
+<b>
+Oops! I brought a gift for you…
+but I think I lost it!
+Help me find it first! 😂
+</b>
+</p>
 
-    <button id="playButton">
-      Play bunny surprise 🐰
-    </button>
+<button id="playButton">
+Play bunny surprise 🐰
+</button>
 
-    <p class="small">
-      Tap the button to start the bunny video.
-    </p>
+<p class="small">
+Tap the button to start the bunny video.
+</p>
 
-  </div>
+</div>
 </section>
 
 <!-- GIFT GAME -->
 <section class="screen" id="giftGame">
-  <div class="panel">
+<div class="panel">
 
-    <div class="small">BUNNY'S LOST GIFT</div>
+<div class="small">BUNNY'S LOST GIFT</div>
 
-    <h2>Which gift is mine? 🎁</h2>
+<h2>Which gift is mine? 🎁</h2>
 
-    <p>Tap a gift to help the bunny find it!</p>
+<p>Tap a gift to help the bunny find it!</p>
 
-    <div class="gifts">
-      <button class="gift" data-gift="wrong1">🎁</button>
-      <button class="gift" data-gift="wrong2">🎁</button>
-      <button class="gift" data-gift="correct">🎁</button>
-    </div>
+<div class="gifts">
+<button class="gift" data-gift="wrong1">🎁</button>
+<button class="gift" data-gift="wrong2">🎁</button>
+<button class="gift" data-gift="correct">🎁</button>
+</div>
 
-    <p id="giftMessage">
-      Choose carefully… the bunny is watching! 👀
-    </p>
+<p id="giftMessage">
+Choose carefully… the bunny is watching! 👀
+</p>
 
-    <button id="cakeContinue" hidden>
-      Continue to birthday cake 🎂
-    </button>
+<button id="cakeContinue" hidden>
+Continue to birthday cake 🎂
+</button>
 
-  </div>
+</div>
 </section>
 
 <!-- BALLOONS -->
 <section class="screen" id="balloonScreen">
-  <div class="panel">
+<div class="panel">
 
-    <h1>Surprise! 🎉</h1>
+<h1>Surprise! 🎉</h1>
 
-    <p>You found the right gift!</p>
+<p>You found the right gift!</p>
 
-    <button id="cakeButton">
-      Meet the bunny's cake 🎂
-    </button>
+<button id="cakeButton">
+Meet the bunny's cake 🎂
+</button>
 
-  </div>
+</div>
 </section>
 
 <!-- CAKE -->
 <section class="screen" id="cakeScreen">
-  <div class="panel">
+<div class="panel">
 
-    <div class="small">A BIRTHDAY WISH JUST FOR YOU</div>
+<div class="small">A BIRTHDAY WISH JUST FOR YOU</div>
 
-    <h2>Make a wish…</h2>
+<h2>Make a wish…</h2>
 
-    <div class="cake">
-      🎂
-      <div class="flames" id="flames">🕯️🕯️🕯️</div>
-    </div>
+<div class="cake">
+🎂
+<div class="flames" id="flames">🕯️🕯️🕯️</div>
+</div>
 
-    <p id="cakeText">
-      Take a deep breath… and blow out the candles!
-    </p>
+<p id="cakeText">
+Take a deep breath… and blow out the candles!
+</p>
 
-    <button id="blowButton">
-      Blow out candles ✨
-    </button>
+<button id="blowButton">
+Blow out candles ✨
+</button>
 
-    <button id="memoriesButton" hidden>
-      There's another gift! 🎁
-    </button>
+<!-- Birthday message appears after blowing candles -->
+<div class="birthdayMessage" id="birthdayMessage" hidden>
 
-  </div>
+<h2>Happy Birthday! ❤️</h2>
+
+<p>
+Happy Birthday, my dear friend! 🎂
+</p>
+
+<p>
+I hope your life is always filled with
+happiness, love, laughter, and beautiful memories.
+</p>
+
+<p>
+You deserve all the wonderful things
+this world has to offer.
+</p>
+
+<p>
+Never stop smiling, never stop shining,
+and always remember how special you are.
+</p>
+
+<p>
+I'm so lucky to have you as my friend.
+Happy Birthday! ❤️
+</p>
+
+</div>
+
+<button id="memoriesButton" hidden>
+There's another gift! 🎁
+</button>
+
+</div>
 </section>
 
 <!-- MEMORIES -->
 <section class="screen" id="memoryScreen">
-  <div class="panel">
+<div class="panel">
 
-    <div class="small">A LITTLE TRIP DOWN MEMORY LANE</div>
+<div class="small">A LITTLE TRIP DOWN MEMORY LANE</div>
 
-    <h2>Our memories 📸</h2>
+<h2>Our memories 📸</h2>
 
-    <p>Tap to open your memory card.</p>
+<p>Tap to open your memory card.</p>
 
-    <button id="openMemories">
-      Open memories 💗
-    </button>
+<button id="openMemories">
+Open memories 💗
+</button>
 
-    <div class="photos" id="photos" hidden>
+<div class="photos" id="photos" hidden>
 
-      <img src="78db597aa35e18dd38055fe6ddcd544c.jpg"
-           alt="Memory 1">
+<img src="78db597aa35e18dd38055fe6ddcd544c.jpg"
+alt="Memory 1">
 
-      <img src="5435bd09e80e96120d583fe81c5e212d.jpg"
-           alt="Memory 2">
+<img src="5435bd09e80e96120d583fe81c5e212d.jpg"
+alt="Memory 2">
 
-      <img src="8b8cb5317fa2753aff9ff9ed60b859be.jpg"
-           alt="Memory 3">
+<img src="8b8cb5317fa2753aff9ff9ed60b859be.jpg"
+alt="Memory 3">
 
-      <img src="927256f3b5fabac7e8d293b9cc8dbac6.jpg"
-           alt="Memory 4">
+<img src="927256f3b5fabac7e8d293b9cc8dbac6.jpg"
+alt="Memory 4">
 
-    </div>
+</div>
 
-    <button id="envelopeButton" hidden>
-      Oh! One more gift 💌
-    </button>
+<button id="envelopeButton" hidden>
+Oh! One more gift 💌
+</button>
 
-  </div>
+</div>
 </section>
 
 <!-- FINAL LETTER -->
 <section class="screen" id="letterScreen">
-  <div class="panel">
+<div class="panel">
 
-    <div class="small">ONE LAST LITTLE SURPRISE</div>
+<div class="small">ONE LAST LITTLE SURPRISE</div>
 
-    <h2>A gift from the heart 💝</h2>
+<h2>A gift from the heart 💝</h2>
 
-    <div class="envelope" id="envelope">
-      💌
-    </div>
+<div class="envelope" id="envelope">
+💌
+</div>
 
-    <p id="envelopePrompt">
-      Tap the pink envelope to open your gift.
-    </p>
+<p id="envelopePrompt">
+Tap the pink envelope to open your gift.
+</p>
 
-    <div class="letter" id="letter">
+<div class="letter" id="letter">
+
 Happy Birthday, my dear friend! ❤️
 
 I may tease you and make fun of you,
@@ -484,462 +567,474 @@ Keep smiling, keep shining,
 and never forget how special you are.
 
 Happy Birthday! 🎂💗
-    </div>
 
-    <button id="restartButton">
-      Replay the surprise ↻
-    </button>
+</div>
 
-  </div>
+<button id="restartButton">
+Replay the surprise ↻
+</button>
+
+</div>
 </section>
 
 <!-- FIRST MUSIC -->
 <audio id="funMusic"
-  src="Oggy_And_The_Cockroaches_-Main_Theme(mp3.pm).mp3"
-  preload="auto"
-  loop>
+src="Oggy_And_The_Cockroaches_-Main_Theme(mp3.pm).mp3"
+preload="auto"
+loop>
 </audio>
 
 <!-- SECOND MUSIC -->
 <audio id="birthdayMusic"
-  src="atlasaudio-birthday-606219.mp3"
-  preload="auto"
-  loop>
+src="atlasaudio-birthday-606219.mp3"
+preload="auto"
+loop>
 </audio>
 
 <script>
 (() => {
 
-  const $ = id => document.getElementById(id);
+const $ = id => document.getElementById(id);
 
-  const screens = [
-    "intro",
-    "giftGame",
-    "balloonScreen",
-    "cakeScreen",
-    "memoryScreen",
-    "letterScreen"
-  ];
+const screens = [
+"intro",
+"giftGame",
+"balloonScreen",
+"cakeScreen",
+"memoryScreen",
+"letterScreen"
+];
 
-  let videoEnded = false;
-  let videoStarted = false;
+let videoEnded = false;
+let videoStarted = false;
 
-  /*
-   * Show a selected screen.
-   */
-  function showScreen(id) {
+/* SCREEN CONTROL */
 
-    screens.forEach(screen => {
-      $(screen).classList.toggle(
-        "active",
-        screen === id
-      );
-    });
+function showScreen(id) {
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+screens.forEach(screen => {
+$(screen).classList.toggle(
+"active",
+screen === id
+);
+});
 
-  }
+window.scrollTo({
+top: 0,
+behavior: "smooth"
+});
 
-  /*
-   * Music:
-   * Video and music start independently.
-   * Music failure does not block the video.
-   */
-  function playFunMusic() {
+}
 
-    $("funMusic").currentTime = 0;
+/* MUSIC */
 
-    $("funMusic").play().catch(error => {
-      console.log("First music could not start:", error);
-    });
+function playFunMusic() {
 
-  }
+$("funMusic").currentTime = 0;
 
-  function playBirthdayMusic() {
+$("funMusic").play().catch(error => {
+console.log("First music could not start:", error);
+});
 
-    $("funMusic").pause();
+}
 
-    $("birthdayMusic").currentTime = 0;
+function playBirthdayMusic() {
 
-    $("birthdayMusic").play().catch(error => {
-      console.log("Birthday music could not start:", error);
-    });
+$("funMusic").pause();
 
-  }
+$("birthdayMusic").currentTime = 0;
 
-  /*
-   * Play bunny surprise button.
-   */
-  $("playButton").addEventListener("click", async () => {
+$("birthdayMusic").play().catch(error => {
+console.log("Birthday music could not start:", error);
+});
 
-    // If the video finished, button continues to gift game.
-    if (videoEnded) {
-      showScreen("giftGame");
-      return;
-    }
+}
 
-    // Prevent double-taps while starting.
-    if (videoStarted) {
-      return;
-    }
+/* BUNNY VIDEO */
 
-    videoStarted = true;
+$("playButton").addEventListener("click", async () => {
 
-    $("playButton").disabled = true;
+if (videoEnded) {
+showScreen("giftGame");
+return;
+}
 
-    // Start music separately.
-    playFunMusic();
+if (videoStarted) {
+return;
+}
 
-    // Start video separately.
-    const video = $("bunnyVideo");
+videoStarted = true;
 
-    video.currentTime = 0;
+$("playButton").disabled = true;
 
-    try {
+/* Start first music independently */
 
-      await video.play();
+playFunMusic();
 
-      $("playButton").textContent =
-        "Bunny is running… 🐰";
+/* Start bunny video independently */
 
-    } catch (error) {
+const video = $("bunnyVideo");
 
-      videoStarted = false;
+video.currentTime = 0;
 
-      $("playButton").disabled = false;
+try {
 
-      $("playButton").textContent =
-        "Try playing bunny again 🐰";
+await video.play();
 
-      console.log("Bunny video playback error:", error);
+$("playButton").textContent =
+"Bunny is running… 🐰";
 
-    }
+} catch (error) {
 
-  });
+videoStarted = false;
 
-  /*
-   * Show dialogue only after video finishes.
-   */
-  $("bunnyVideo").addEventListener("ended", () => {
+$("playButton").disabled = false;
 
-    videoEnded = true;
+$("playButton").textContent =
+"Try playing bunny again 🐰";
 
-    videoStarted = false;
+console.log("Bunny video playback error:", error);
 
-    $("dialogue").hidden = false;
+}
 
-    $("playButton").disabled = false;
+});
 
-    $("playButton").textContent =
-      "Help bunny find the gift 🎁";
+/* AFTER VIDEO ENDS */
 
-  });
+$("bunnyVideo").addEventListener("ended", () => {
 
-  /*
-   * Gift game.
-   */
-  document.querySelectorAll(".gift").forEach(gift => {
+videoEnded = true;
 
-    gift.addEventListener("click", () => {
+videoStarted = false;
 
-      const type = gift.dataset.gift;
+$("dialogue").hidden = false;
 
-      if (type === "correct") {
+$("playButton").disabled = false;
 
-        $("giftMessage").textContent =
-          "Yay! You found it! 🎉 " +
-          "But wait… the bunny has another surprise!";
+$("playButton").textContent =
+"Help bunny find the gift 🎁";
 
-        $("cakeContinue").hidden = false;
+});
 
-        document.querySelectorAll(".gift").forEach(button => {
-          button.disabled = true;
-        });
+/* GIFT GAME */
 
-      } else {
+document.querySelectorAll(".gift").forEach(gift => {
 
-        if (type === "wrong1") {
+gift.addEventListener("click", () => {
 
-          gift.textContent = "🍌";
+const type = gift.dataset.gift;
 
-          $("giftMessage").textContent =
-            "A banana?! Hey, that's MY snack! 😂 " +
-            "Try another gift!";
+if (type === "correct") {
 
-        } else {
+$("giftMessage").textContent =
+"Yay! You found it! 🎉 " +
+"But wait… the bunny has another surprise!";
 
-          gift.textContent = "🧦";
+$("cakeContinue").hidden = false;
 
-          $("giftMessage").textContent =
-            "A sock?! That's my laundry! 😂 " +
-            "Try another gift!";
+document.querySelectorAll(".gift").forEach(button => {
+button.disabled = true;
+});
 
-        }
+} else {
 
-      }
+if (type === "wrong1") {
 
-    });
+gift.textContent = "🍌";
 
-  });
+$("giftMessage").textContent =
+"A banana?! Hey, that's MY snack! 😂 " +
+"Try another gift!";
 
-  /*
-   * Correct gift opens balloon shower.
-   */
-  $("cakeContinue").addEventListener("click", () => {
+} else {
 
-    showScreen("balloonScreen");
+gift.textContent = "🧦";
 
-    createBalloons();
+$("giftMessage").textContent =
+"A sock?! That's my laundry! 😂 " +
+"Try another gift!";
 
-  });
+}
 
-  /*
-   * Balloon shower.
-   */
-  function createBalloons() {
+}
 
-    const layer = $("balloons");
+});
 
-    layer.innerHTML = "";
+});
 
-    layer.classList.add("show");
+/* RIGHT GIFT */
 
-    const colors = [
-      "#ff4d8d",
-      "#ffc83d",
-      "#9c7cf5",
-      "#4fc7d8",
-      "#ff8b4a",
-      "#ff7eb6",
-      "#7ccf9b"
-    ];
+$("cakeContinue").addEventListener("click", () => {
 
-    // Lots of balloons cover the screen.
-    for (let i = 0; i < 75; i++) {
+showScreen("balloonScreen");
 
-      const balloon = document.createElement("div");
+createBalloons();
 
-      balloon.className = "balloon";
+});
 
-      balloon.style.left =
-        Math.random() * 100 + "%";
+/* BALLOONS AND CONFETTI */
 
-      balloon.style.setProperty(
-        "--color",
-        colors[i % colors.length]
-      );
+function createBalloons() {
 
-      balloon.style.setProperty(
-        "--delay",
-        Math.random() * 1.8 + "s"
-      );
+const layer = $("balloons");
 
-      balloon.style.setProperty(
-        "--duration",
-        (3 + Math.random() * 2) + "s"
-      );
+layer.innerHTML = "";
 
-      balloon.style.setProperty(
-        "--tilt",
-        (Math.random() * 20 - 10) + "deg"
-      );
+layer.classList.add("show");
 
-      balloon.style.setProperty(
-        "--height",
-        (10 + Math.random() * 25) + "vh"
-      );
+const colors = [
+"#ff4d8d",
+"#ffc83d",
+"#9c7cf5",
+"#4fc7d8",
+"#ff8b4a",
+"#ff7eb6",
+"#7ccf9b"
+];
 
-      const thread = document.createElement("span");
+/* Balloon shower */
 
-      thread.className = "thread";
+for (let i = 0; i < 75; i++) {
 
-      balloon.appendChild(thread);
+const balloon = document.createElement("div");
 
-      layer.appendChild(balloon);
+balloon.className = "balloon";
 
-    }
+balloon.style.left =
+Math.random() * 100 + "%";
 
-    // Confetti.
-    for (let i = 0; i < 150; i++) {
+balloon.style.setProperty(
+"--color",
+colors[i % colors.length]
+);
 
-      const confetti = document.createElement("i");
+balloon.style.setProperty(
+"--delay",
+Math.random() * 1.8 + "s"
+);
 
-      confetti.className = "confetti";
+balloon.style.setProperty(
+"--duration",
+(3 + Math.random() * 2) + "s"
+);
 
-      confetti.style.left =
-        Math.random() * 100 + "%";
+balloon.style.setProperty(
+"--tilt",
+(Math.random() * 20 - 10) + "deg"
+);
 
-      confetti.style.setProperty(
-        "--color",
-        colors[i % colors.length]
-      );
+balloon.style.setProperty(
+"--height",
+(10 + Math.random() * 25) + "vh"
+);
 
-      confetti.style.setProperty(
-        "--delay",
-        Math.random() * 2 + "s"
-      );
+const thread = document.createElement("span");
 
-      confetti.style.setProperty(
-        "--duration",
-        (3 + Math.random() * 2) + "s"
-      );
+thread.className = "thread";
 
-      layer.appendChild(confetti);
+balloon.appendChild(thread);
 
-    }
+layer.appendChild(balloon);
 
-  }
+}
 
-  /*
-   * Birthday cake.
-   * Second music starts here.
-   */
-  $("cakeButton").addEventListener("click", () => {
+/* Confetti shower */
 
-    showScreen("cakeScreen");
+for (let i = 0; i < 150; i++) {
 
-    playBirthdayMusic();
+const confetti = document.createElement("i");
 
-  });
+confetti.className = "confetti";
 
-  /*
-   * Blow candles.
-   */
-  $("blowButton").addEventListener("click", () => {
+confetti.style.left =
+Math.random() * 100 + "%";
 
-    $("flames").classList.add("off");
+confetti.style.setProperty(
+"--color",
+colors[i % colors.length]
+);
 
-    $("cakeText").textContent =
-      "Wish made! The candles are out! ✨";
+confetti.style.setProperty(
+"--delay",
+Math.random() * 2 + "s"
+);
 
-    $("blowButton").hidden = true;
+confetti.style.setProperty(
+"--duration",
+(3 + Math.random() * 2) + "s"
+);
 
-    $("memoriesButton").hidden = false;
+layer.appendChild(confetti);
 
-  });
+}
 
-  /*
-   * Memories.
-   */
-  $("memoriesButton").addEventListener("click", () => {
+}
 
-    showScreen("memoryScreen");
+/* CAKE */
 
-  });
+$("cakeButton").addEventListener("click", () => {
 
-  $("openMemories").addEventListener("click", () => {
+showScreen("cakeScreen");
 
-    $("photos").hidden = false;
+playBirthdayMusic();
 
-    $("openMemories").hidden = true;
+});
 
-    $("envelopeButton").hidden = false;
+/* BLOW CANDLES */
 
-  });
+$("blowButton").addEventListener("click", () => {
 
-  /*
-   * Envelope.
-   */
-  $("envelopeButton").addEventListener("click", () => {
+/* Turn candles off */
 
-    showScreen("letterScreen");
+$("flames").classList.add("off");
 
-  });
+/* Show birthday message */
 
-  $("envelope").addEventListener("click", () => {
+$("cakeText").textContent =
+"Wish made! The candles are out! ✨";
 
-    $("letter").classList.add("show");
+$("birthdayMessage").hidden = false;
 
-    $("envelopePrompt").textContent =
-      "A little message, just for you. ❤️";
+/* Hide blow button */
 
-  });
+$("blowButton").hidden = true;
 
-  /*
-   * Replay.
-   */
-  $("restartButton").addEventListener("click", () => {
+/* Show next gift button */
 
-    // Stop music.
-    $("funMusic").pause();
-    $("birthdayMusic").pause();
+$("memoriesButton").hidden = false;
 
-    $("funMusic").currentTime = 0;
-    $("birthdayMusic").currentTime = 0;
+});
 
-    // Reset bunny video.
-    $("bunnyVideo").pause();
-    $("bunnyVideo").currentTime = 0;
+/* MEMORIES */
 
-    videoEnded = false;
-    videoStarted = false;
+$("memoriesButton").addEventListener("click", () => {
 
-    // Reset dialogue.
-    $("dialogue").hidden = true;
+showScreen("memoryScreen");
 
-    $("playButton").disabled = false;
+});
 
-    $("playButton").textContent =
-      "Play bunny surprise 🐰";
+$("openMemories").addEventListener("click", () => {
 
-    // Reset gifts.
-    $("giftMessage").textContent =
-      "Choose carefully… the bunny is watching! 👀";
+$("photos").hidden = false;
 
-    document.querySelectorAll(".gift").forEach((button, index) => {
+$("openMemories").hidden = true;
 
-      button.disabled = false;
+$("envelopeButton").hidden = false;
 
-      button.textContent = "🎁";
+});
 
-      button.dataset.gift =
-        index === 2
-          ? "correct"
-          : index === 0
-            ? "wrong1"
-            : "wrong2";
+/* ENVELOPE */
 
-    });
+$("envelopeButton").addEventListener("click", () => {
 
-    $("cakeContinue").hidden = true;
+showScreen("letterScreen");
 
-    // Reset cake.
-    $("flames").classList.remove("off");
+});
 
-    $("cakeText").textContent =
-      "Take a deep breath… and blow out the candles!";
+$("envelope").addEventListener("click", () => {
 
-    $("blowButton").hidden = false;
+$("letter").classList.add("show");
 
-    $("memoriesButton").hidden = true;
+$("envelopePrompt").textContent =
+"A little message, just for you. ❤️";
 
-    // Reset memories.
-    $("photos").hidden = true;
+});
 
-    $("openMemories").hidden = false;
+/* REPLAY */
 
-    $("envelopeButton").hidden = true;
+$("restartButton").addEventListener("click", () => {
 
-    // Reset letter.
-    $("letter").classList.remove("show");
+/* Stop music */
 
-    $("envelopePrompt").textContent =
-      "Tap the pink envelope to open your gift.";
+$("funMusic").pause();
+$("birthdayMusic").pause();
 
-    // Reset balloons.
-    $("balloons").innerHTML = "";
+$("funMusic").currentTime = 0;
+$("birthdayMusic").currentTime = 0;
 
-    $("balloons").classList.remove("show");
+/* Reset video */
 
-    showScreen("intro");
+$("bunnyVideo").pause();
+$("bunnyVideo").currentTime = 0;
 
-  });
+videoEnded = false;
+videoStarted = false;
+
+/* Reset dialogue */
+
+$("dialogue").hidden = true;
+
+$("playButton").disabled = false;
+
+$("playButton").textContent =
+"Play bunny surprise 🐰";
+
+/* Reset gifts */
+
+$("giftMessage").textContent =
+"Choose carefully… the bunny is watching! 👀";
+
+document.querySelectorAll(".gift").forEach((button, index) => {
+
+button.disabled = false;
+
+button.textContent = "🎁";
+
+button.dataset.gift =
+index === 2
+? "correct"
+: index === 0
+? "wrong1"
+: "wrong2";
+
+});
+
+/* Reset game button */
+
+$("cakeContinue").hidden = true;
+
+/* Reset cake */
+
+$("flames").classList.remove("off");
+
+$("cakeText").textContent =
+"Take a deep breath… and blow out the candles!";
+
+$("blowButton").hidden = false;
+
+$("birthdayMessage").hidden = true;
+
+$("memoriesButton").hidden = true;
+
+/* Reset memories */
+
+$("photos").hidden = true;
+
+$("openMemories").hidden = false;
+
+$("envelopeButton").hidden = true;
+
+/* Reset letter */
+
+$("letter").classList.remove("show");
+
+$("envelopePrompt").textContent =
+"Tap the pink envelope to open your gift.";
+
+/* Reset balloons */
+
+$("balloons").innerHTML = "";
+
+$("balloons").classList.remove("show");
+
+/* Return to start */
+
+showScreen("intro");
+
+});
 
 })();
 </script>
 
 </body>
-        </html>
+</html>
