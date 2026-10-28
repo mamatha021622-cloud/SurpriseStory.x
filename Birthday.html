@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f9dce8">
+<title>SurpriseStory | Birthday Surprise</title>
+<style>
+:root{--pink:#f9dce8;--rose:#d94f83;--deep:#8b2450;--cream:#fffaf6;--ink:#56243a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Georgia,'Times New Roman',serif;color:var(--ink)}
+body{background:radial-gradient(circle at top,#fff8fb 0,#f9dce8 48%,#f1bfd4 100%);overflow-x:hidden}
+button{font:inherit;cursor:pointer;border:0} .screen{min-height:100svh;display:none;align-items:center;justify-content:center;padding:22px;position:relative;overflow:hidden}.screen.active{display:flex}
+.panel{width:min(100%,650px);padding:clamp(20px,5vw,38px);border:1px solid #ffffffb8;border-radius:28px;background:#fffaf6eF;box-shadow:0 18px 55px #8b24502a;text-align:center;position:relative;z-index:2}
+h1{font-size:clamp(2rem,8vw,3.6rem);line-height:1.06;margin:8px 0 18px;color:var(--deep)}h2{font-size:clamp(1.55rem,6vw,2.5rem);margin:8px 0 14px;color:var(--deep)}p{font-size:clamp(1.05rem,4vw,1.25rem);line-height:1.6;margin:12px 0}.eyebrow{letter-spacing:.15em;text-transform:uppercase;font:700 .72rem Arial,sans-serif;color:#a34a70}.btn{padding:13px 23px;border-radius:999px;background:linear-gradient(135deg,#d94f83,#a72e60);color:#fff;font:700 1rem Arial,sans-serif;box-shadow:0 8px 22px #b53b6b40;margin:10px 5px}.btn.secondary{background:#fff;color:#9d2e5d;border:1px solid #edb6ca;box-shadow:none}.small{font: .82rem Arial,sans-serif;color:#98617a}
+/* intro video */
+.videoWrap{width:min(100%,560px);margin:15px auto 18px;aspect-ratio:9/16;max-height:62svh;background:#311c28;border-radius:22px;overflow:hidden;box-shadow:0 15px 35px #57263b30;position:relative}
+.videoWrap video{width:100%;height:100%;object-fit:cover;display:block}.videoFallback{position:absolute;inset:0;display:grid;place-items:center;color:#fff;background:linear-gradient(#281b27a8,#281b2750),url('bunny-birthday-poster.jpg') center/cover;font:700 1rem Arial,sans-serif;padding:20px}
+/* gift game */
+.gifts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:24px 0}.gift{min-height:112px;border-radius:18px;background:linear-gradient(135deg,#ffedf4,#e9a7c3);box-shadow:inset 0 0 0 1px #fff9;display:grid;place-items:center;font-size:3rem;position:relative;transition:transform .2s}.gift:active{transform:scale(.96)}.gift:before{content:'';position:absolute;width:14px;height:100%;background:#fff8}.gift:after{content:'';position:absolute;width:100%;height:13px;background:#fff8}.gift span{position:relative;z-index:1}.gift.correct{background:linear-gradient(135deg,#ffeaa9,#f4a8bd)}
+/* balloon shower fills screen */
+#balloonLayer{position:fixed;inset:0;z-index:20;pointer-events:none;overflow:hidden;display:none}#balloonLayer.show{display:block}.balloon{position:absolute;top:-24vh;width:clamp(48px,12vw,105px);height:clamp(64px,16vw,135px);border-radius:50% 50% 46% 46%;background:radial-gradient(ellipse at 28% 22%,#ffffffd9 0 7%,transparent 24%),radial-gradient(ellipse at 35% 28%,#ffffff8c 0 10%,transparent 31%),var(--balloon-color);box-shadow:inset -9px -13px 18px #0002,0 5px 12px #0001;animation:balloonFall var(--fall) cubic-bezier(.15,.65,.3,1) forwards;animation-delay:var(--delay);transform:rotate(var(--tilt))}
+.balloon:after{content:'';position:absolute;bottom:-8px;left:45%;width:10px;height:9px;background:var(--balloon-color);clip-path:polygon(0 0,100% 0,50% 100%)}.balloon .thread{position:absolute;top:100%;left:50%;height:var(--thread);border-left:1px solid #8c7780a6}
+@keyframes balloonFall{0%{top:-25vh;transform:translateY(0) rotate(var(--tilt))}75%{top:calc(100vh - var(--height));transform:translateY(0) rotate(calc(var(--tilt)*-1))}100%{top:calc(100vh - var(--height));transform:translateY(0) rotate(var(--tilt))}}
+.confetti{position:absolute;top:-15px;width:9px;height:15px;background:var(--c);animation:confettiFall var(--fall) linear forwards;animation-delay:var(--delay)}@keyframes confettiFall{to{transform:translateY(115vh) rotate(800deg)}}
+/* cake */
+.cake{font-size:clamp(5rem,22vw,9rem);filter:drop-shadow(0 8px 8px #8b245033);margin:10px auto;position:relative}.flames{position:absolute;top:12%;left:0;right:0;font-size:1.1em;letter-spacing:.18em;animation:flicker .6s infinite alternate}.flames.off{display:none}@keyframes flicker{from{opacity:.75;transform:scale(.98)}to{opacity:1;transform:scale(1.04)}}
+/* memories */
+.photoGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0}.photo{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:14px;background:#f3d4e1;box-shadow:0 8px 20px #7b345021}.photo:nth-child(odd){transform:rotate(-1.5deg)}.photo:nth-child(even){transform:rotate(1.5deg)}
+/* envelope */
+.envelopeArea{height:210px;display:grid;place-items:center;margin:20px auto}.envelope{width:min(80%,360px);height:180px;position:relative;background:#f4a8c7;border-radius:8px;box-shadow:0 15px 28px #8b245033;cursor:pointer;perspective:600px}.envelope:before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#f9c6d9,#ed8db5);clip-path:polygon(0 0,50% 55%,100% 0)}.envelope:after{content:'💝';position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);font-size:2rem}.flowers{font-size:2rem;position:absolute;top:-32px;left:0;right:0;letter-spacing:.15em}
+.letter{display:none;text-align:left;background:#fffdf8;padding:24px;border-radius:10px;border:1px solid #f1d9df;box-shadow:0 8px 22px #8b245022;line-height:1.8;white-space:pre-wrap}.letter.open{display:block;animation:letterIn .6s ease}@keyframes letterIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media(max-width:420px){.gifts{gap:8px}.gift{min-height:88px}.panel{border-radius:22px}.photoGrid{gap:8px}}
+</style>
+</head>
+<body>
+<div id="balloonLayer" aria-hidden="true"></div>
+
+<section class="screen active" id="intro">
+ <div class="panel">
+  <div class="eyebrow">SurpriseStory presents</div>
+  <h1>A tiny birthday mission…</h1>
+  <p>Someone has a gift for you. But this little bunny may need your help. 🐰</p>
+  <div class="videoWrap" id="videoWrap">
+   <video id="bunnyVideo" playsinline preload="metadata" poster="bunny-birthday-poster.jpg">
+    <source src="bunny-birthday.mp4" type="video/mp4">
+   </video>
+   <div class="videoFallback" id="videoFallback">Add your realistic bunny video as<br><b>bunny-birthday.mp4</b></div>
+  </div>
+  <p id="introDialogue"><b>“Oops! I brought a gift for you… but I think I lost it! Help me find it first!”</b></p>
+  <button class="btn" id="startBtn">Play bunny surprise 🐰</button>
+  <p class="small">Tip: the bunny video plays with the first music track.</p>
+ </div>
+</section>
+
+<section class="screen" id="giftGame">
+ <div class="panel">
+  <div class="eyebrow">Bunny's lost gift</div><h2>Which gift is mine? 🎁</h2>
+  <p>Tap a gift to help the bunny find the right one.</p>
+  <div class="gifts" id="giftChoices">
+   <button class="gift" data-gift="wrong1" aria-label="Gift one"><span>🎁</span></button>
+   <button class="gift" data-gift="wrong2" aria-label="Gift two"><span>🎁</span></button>
+   <button class="gift correct" data-gift="correct" aria-label="Gift three"><span>🎁</span></button>
+  </div>
+  <p id="giftMessage" aria-live="polite">Choose carefully… the bunny is watching! 👀</p>
+  <button class="btn" id="toCakeBtn" hidden>Continue to birthday cake 🎂</button>
+ </div>
+</section>
+
+<section class="screen" id="balloonScreen">
+ <div class="panel"><div class="eyebrow">You found it!</div><h2>Surprise! 🎉</h2><p>Look at all the balloons!</p><button class="btn" id="cakeBtn">Meet the bunny's cake 🎂</button></div>
+</section>
+
+<section class="screen" id="cakeScreen">
+ <div class="panel">
+  <div class="eyebrow">A birthday wish just for you</div><h2>Make a wish…</h2>
+  <div class="cake" aria-label="Birthday cake">🎂<div class="flames" id="flames">🕯️🕯️🕯️</div></div>
+  <p id="cakeText">Take a deep breath… and blow out the candles!</p>
+  <button class="btn" id="blowBtn">Blow out candles ✨</button>
+  <button class="btn" id="memoryBtn" hidden>There's another gift! 🎁</button>
+ </div>
+</section>
+
+<section class="screen" id="memoryScreen">
+ <div class="panel">
+  <div class="eyebrow">A little trip down memory lane</div><h2>Our memories 📸</h2>
+  <p>Tap to open your memory card.</p>
+  <button class="btn" id="openMemories">Open memories 💗</button>
+  <div class="photoGrid" id="photoGrid" hidden>
+   <img class="photo" src="78db597aa35e18dd38055fe6ddcd544c.jpg" alt="Birthday memory photo 1">
+   <img class="photo" src="5435bd09e80e96120d583fe81c5e212d.jpg" alt="Birthday memory photo 2">
+   <img class="photo" src="8b8cb5317fa2753aff9ff9ed60b859be.jpg" alt="Birthday memory photo 3">
+   <img class="photo" src="927256f3b5fabac7e8d293b9cc8dbac6.jpg" alt="Birthday memory photo 4">
+  </div>
+  <button class="btn" id="envelopeBtn" hidden>Oh! One more gift 💌</button>
+ </div>
+</section>
+
+<section class="screen" id="letterScreen">
+ <div class="panel">
+  <div class="eyebrow">One last little surprise</div><h2>A gift from the heart 💝</h2>
+  <div class="envelopeArea"><div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open pink envelope"><div class="flowers">🌹🌸🌹</div></div></div>
+  <p id="envelopePrompt">Tap the pink envelope to open your gift.</p>
+  <div class="letter" id="letter">Happy Birthday, my dear friend! ❤️
+
+I may tease you and make fun of you, but honestly, I’m so lucky to have you in my life.
+
+Thank you for all the laughs, the memories, and the little moments that mean so much.
+
+I hope your new year is filled with happiness, love, good health, and beautiful surprises.
+
+Keep smiling, keep shining, and never forget how special you are.
+
+Happy Birthday! 🎂💗</div>
+  <button class="btn secondary" id="restartBtn">Replay the surprise ↻</button>
+ </div>
+</section>
+
+<audio id="funMusic" src="Oggy_And_The_Cockroaches_-Main_Theme(mp3.pm).mp3" preload="auto" loop></audio>
+<audio id="birthdayMusic" src="atlasaudio-birthday-606219.mp3" preload="auto" loop></audio>
+<script>
+(()=>{
+ const $=id=>document.getElementById(id);
+ const screens=['intro','giftGame','balloonScreen','cakeScreen','memoryScreen','letterScreen'];
+ function show(id){screens.forEach(s=>$(s).classList.toggle('active',s===id));window.scrollTo({top:0,behavior:'smooth'});}
+ function stopMusic(){[$('funMusic'),$('birthdayMusic')].forEach(a=>{a.pause();a.currentTime=0;});}
+ async function playMusic(which){const other=which==='funMusic'?'birthdayMusic':'funMusic';$(other).pause();try{await $(which).play();}catch(e){/* Browser may require another tap; buttons below retry playback. */}}
+ $('startBtn').addEventListener('click',async()=>{const video=$('bunnyVideo');await playMusic('funMusic');if(video.querySelector('source')&&video.querySelector('source').getAttribute('src')){try{await video.play();$('videoFallback').style.display='none';$('startBtn').textContent='Bunny video is playing…';$('startBtn').disabled=true;video.onended=()=>{show('giftGame');$('startBtn').disabled=false;$('startBtn').textContent='Play bunny surprise 🐰';};}catch(e){show('giftGame');}}else{show('giftGame');}});
+ $('giftChoices').addEventListener('click',async e=>{const btn=e.target.closest('.gift');if(!btn)return;const type=btn.dataset.gift;const msg=$('giftMessage');if(type==='correct'){
+  msg.textContent='“Yay! You found it! That one was mine… but I brought a BIG surprise too!” 🐰';
+  $('toCakeBtn').hidden=false;
+  [...$('giftChoices').children].forEach(b=>b.disabled=true);
+ }else{
+  const silly=type==='wrong1'?'A tiny banana?! Hey, that’s MY snack! 🍌':'A sock?! I can’t give you my laundry! 🧦';
+  msg.textContent='“Oops, not that one! '+silly+' Try another gift!”';
+  btn.querySelector('span').textContent=type==='wrong1'?'🍌':'🧦';
+ }
+ });
+ $('toCakeBtn').addEventListener('click',()=>{show('balloonScreen');makeBalloonShower();});
+ $('cakeBtn').addEventListener('click',async()=>{show('cakeScreen');await playMusic('birthdayMusic');});
+ $('blowBtn').addEventListener('click',()=>{$('flames').classList.add('off');$('cakeText').textContent='Wish made! The candles are out. ✨';$('blowBtn').hidden=true;$('memoryBtn').hidden=false;});
+ $('memoryBtn').addEventListener('click',()=>show('memoryScreen'));
+ $('openMemories').addEventListener('click',()=>{$('photoGrid').hidden=false;$('openMemories').hidden=true;$('envelopeBtn').hidden=false;});
+ $('envelopeBtn').addEventListener('click',()=>show('letterScreen'));
+ function openEnvelope(){ $('letter').classList.add('open');$('envelopePrompt').textContent='A little message, just for you. ❤️';$('envelope').style.transform='scale(.92)';$('envelope').style.opacity='.45'; }
+ $('envelope').addEventListener('click',openEnvelope);$('envelope').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openEnvelope();}});
+ $('restartBtn').addEventListener('click',()=>{stopMusic();$('flames').classList.remove('off');$('blowBtn').hidden=false;$('memoryBtn').hidden=true;$('photoGrid').hidden=true;$('openMemories').hidden=false;$('envelopeBtn').hidden=true;$('letter').classList.remove('open');$('envelope').style.transform='';$('envelope').style.opacity='';$('giftMessage').textContent='Choose carefully… the bunny is watching! 👀';[...$('giftChoices').children].forEach((b,i)=>{b.disabled=false;b.querySelector('span').textContent='🎁';b.dataset.gift=i===2?'correct':i===0?'wrong1':'wrong2';});$('toCakeBtn').hidden=true;clearBalloons();show('intro');});
+ function clearBalloons(){$('balloonLayer').innerHTML='';$('balloonLayer').classList.remove('show');}
+ function makeBalloonShower(){const layer=$('balloonLayer');clearBalloons();layer.classList.add('show');const colors=['#f64f83','#ffca4b','#9c7cf5','#4fc7d8','#ff8b4a','#ff7eb6','#7ccf9b'];
+  // Dense overlapping balloons cascade down and remain settled across the viewport.
+  const cols=11,rows=5;for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){const b=document.createElement('div');b.className='balloon';b.style.left=(c*(100/(cols-1))-4+((Math.random()*8)-4))+'%';b.style.setProperty('--balloon-color',colors[(r*cols+c)%colors.length]);b.style.setProperty('--delay',(r*.22+Math.random()*.35)+'s');b.style.setProperty('--fall',(2.8+Math.random()*1.6)+'s');b.style.setProperty('--tilt',((Math.random()*24)-12)+'deg');b.style.setProperty('--height',(r*13+15)+'vh');b.style.setProperty('--thread',(10+Math.random()*30)+'px');layer.appendChild(b);}}
+  for(let i=0;i<160;i++){const p=document.createElement('i');p.className='confetti';p.style.left=Math.random()*100+'%';p.style.setProperty('--c',colors[i%colors.length]);p.style.setProperty('--delay',(Math.random()*1.2)+'s');p.style.setProperty('--fall',(2.5+Math.random()*2)+'s');p.style.transform='rotate('+Math.random()*360+'deg)';layer.appendChild(p);}
+  setTimeout(()=>{layer.classList.remove('show');},6500);
+ }
+})();
+</script>
+</body>
+  </html>
+  
