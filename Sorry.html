@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>For My Angry Bird ❤️</title>
 
 <style>
@@ -15,17 +16,20 @@
 
 body {
   font-family: Georgia, serif;
-  background: radial-gradient(circle at top, #ffedf2, #f9c9d6, #eaa5b8);
+  background: radial-gradient(circle at top, #fff0f5, #f9c9d6, #eaa5b8);
   color: #7b1835;
-  overflow: hidden;
-  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 100vh;
 }
+
+/* SCREENS */
 
 .screen {
   display: none;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-  padding: 24px;
+  padding: 30px 20px;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -38,6 +42,8 @@ body {
   animation: fadeIn 1s ease;
 }
 
+/* TEXT */
+
 h1 {
   font-size: clamp(28px, 7vw, 44px);
   margin-bottom: 18px;
@@ -48,6 +54,8 @@ p {
   line-height: 1.8;
   max-width: 500px;
 }
+
+/* BUTTON */
 
 button {
   border: none;
@@ -60,11 +68,14 @@ button {
   box-shadow: 0 8px 20px #a52b4a40;
   cursor: pointer;
   transition: 0.3s;
+  font-family: Georgia, serif;
 }
 
 button:active {
   transform: scale(0.95);
 }
+
+/* HEART */
 
 .heart {
   font-size: 100px;
@@ -79,7 +90,7 @@ button:active {
   opacity: 0.8;
 }
 
-/* Floating hearts */
+/* FLOATING HEARTS */
 
 .floating-heart {
   position: fixed;
@@ -90,19 +101,33 @@ button:active {
   z-index: 0;
 }
 
-/* Envelope */
+/* ENVELOPE */
 
 .envelope {
-  width: 270px;
-  height: 175px;
+  width: min(300px, 85vw);
+  height: 190px;
   position: relative;
   background: #f8dce5;
   border-radius: 5px;
   box-shadow: 0 18px 35px #8a294b40;
-  margin: 35px 0;
+  margin: 35px auto;
   cursor: pointer;
   perspective: 800px;
+  flex-shrink: 0;
+  overflow: visible;
 }
+
+/* ENVELOPE FRONT */
+
+.envelope-front {
+  position: absolute;
+  inset: 0;
+  background: #f3c6d5;
+  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+  z-index: 2;
+}
+
+/* ENVELOPE FLAP */
 
 .envelope:before {
   content: "";
@@ -115,15 +140,20 @@ button:active {
   z-index: 3;
 }
 
+/* ENVELOPE OPEN */
+
 .envelope.open:before {
   transform: rotateX(180deg);
 }
+
+/* HEART SEAL */
 
 .envelope:after {
   content: "♥";
   position: absolute;
   top: 65px;
-  left: 115px;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 42px;
   color: #be2555;
   z-index: 4;
@@ -133,6 +163,8 @@ button:active {
 .envelope.open:after {
   opacity: 0;
 }
+
+/* LETTER */
 
 .letter {
   background: #fffaf2;
@@ -148,6 +180,7 @@ button:active {
   transition: 1s;
   position: relative;
   z-index: 5;
+  margin: 20px auto;
 }
 
 .letter.show {
@@ -161,27 +194,55 @@ button:active {
   color: #b72c59;
 }
 
+.letter p {
+  margin-bottom: 15px;
+}
+
 .signature {
   text-align: right;
   margin-top: 20px;
   font-style: italic;
 }
 
-/* Final screen */
+/* ENVELOPE SCREEN SCROLL */
+
+#screen2 {
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+  padding: 40px 20px;
+  justify-content: flex-start;
+}
+
+/* FINAL SCREEN */
 
 .big-heart {
   font-size: 90px;
   animation: heartbeat 1.4s infinite;
 }
 
+/* ANIMATIONS */
+
 @keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes floatUp {
@@ -189,18 +250,24 @@ button:active {
     transform: translateY(0) rotate(0deg);
     opacity: 0;
   }
-  15% { opacity: 1; }
+
+  15% {
+    opacity: 1;
+  }
+
   100% {
     transform: translateY(-110vh) rotate(35deg);
     opacity: 0;
   }
 }
+
 </style>
 </head>
 
 <body>
 
 <!-- SCREEN 1 -->
+
 <section class="screen active" id="screen1">
 
   <div class="heart">❤️</div>
@@ -217,11 +284,15 @@ button:active {
     Open your surprise 💌
   </button>
 
-  <div class="small">Made with love, just for you</div>
+  <div class="small">
+    Made with love, just for you
+  </div>
 
 </section>
 
+
 <!-- SCREEN 2 -->
+
 <section class="screen" id="screen2">
 
   <h1>A little something for you 💗</h1>
@@ -236,10 +307,21 @@ button:active {
     But please… open this little letter.
   </p>
 
-  <div class="envelope" id="envelope"
-       onclick="openLetter()"></div>
+  <!-- ENVELOPE -->
 
-  <p class="small">Tap the envelope to open it</p>
+  <div class="envelope"
+       id="envelope"
+       onclick="openLetter()">
+
+    <div class="envelope-front"></div>
+
+  </div>
+
+  <p class="small">
+    Tap the envelope to open it
+  </p>
+
+  <!-- LETTER -->
 
   <div class="letter" id="letter">
 
@@ -251,13 +333,16 @@ button:active {
 
     <p>
       I know you're upset with me,
-      and I hate knowing that I made you feel this way.
+      and I hate knowing that I made
+      you feel this way.
     </p>
 
     <p>
-      If I could go back and change that moment,
-      I would. But since I can't,
-      I want you to know how truly sorry I am.
+      If I could go back and change
+      that moment, I would.
+      But since I can't,
+      I want you to know how
+      truly sorry I am.
     </p>
 
     <p>
@@ -268,9 +353,12 @@ button:active {
     </p>
 
     <p>
-      I may not always say the right things,
-      and sometimes I make silly mistakes…
-      but hurting you was never what I wanted.
+      I may not always say
+      the right things,
+      and sometimes I make
+      silly mistakes…
+      but hurting you was never
+      what I wanted.
     </p>
 
     <p>
@@ -287,15 +375,21 @@ button:active {
 
   </div>
 
+  <!-- NEXT BUTTON -->
+
   <button id="nextButton"
           style="display:none"
           onclick="goTo('screen3')">
+
     One last thing… 💗
+
   </button>
 
 </section>
 
+
 <!-- SCREEN 3 -->
+
 <section class="screen" id="screen3">
 
   <div class="big-heart">💗</div>
@@ -317,37 +411,70 @@ button:active {
 
 </section>
 
+
 <script>
 
+/* CHANGE SCREENS */
+
 function goTo(id) {
+
   document.querySelectorAll(".screen").forEach(screen => {
     screen.classList.remove("active");
   });
 
   document.getElementById(id).classList.add("active");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
 }
 
-/* Open the envelope */
+
+/* OPEN ENVELOPE */
 
 function openLetter() {
 
   const envelope = document.getElementById("envelope");
+
   const letter = document.getElementById("letter");
+
   const nextButton = document.getElementById("nextButton");
+
+  /* Prevent repeated clicking */
+
+  if (envelope.classList.contains("open")) {
+    return;
+  }
 
   envelope.classList.add("open");
 
+  /* Reveal the letter */
+
   setTimeout(() => {
+
     letter.classList.add("show");
 
-    setTimeout(() => {
-      nextButton.style.display = "inline-block";
-    }, 1000);
+    nextButton.style.display = "inline-block";
 
-  }, 700);
+    /* Scroll down to letter */
+
+    setTimeout(() => {
+
+      letter.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+    }, 300);
+
+  }, 800);
+
 }
 
-/* Final button */
+
+/* FORGIVENESS BUTTON */
 
 function forgiveMe() {
 
@@ -355,13 +482,21 @@ function forgiveMe() {
     "You just made my heart so happy! ❤️🥹";
 
   createHearts();
+
 }
 
-/* Floating hearts */
+
+/* CREATE FLOATING HEARTS */
 
 function createHearts() {
 
-  const symbols = ["❤️", "💗", "💕", "💖", "🥹"];
+  const symbols = [
+    "❤️",
+    "💗",
+    "💕",
+    "💖",
+    "🥹"
+  ];
 
   for (let i = 0; i < 35; i++) {
 
@@ -374,7 +509,8 @@ function createHearts() {
       heart.innerHTML =
         symbols[Math.floor(Math.random() * symbols.length)];
 
-      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.left =
+        Math.random() * 100 + "vw";
 
       heart.style.animationDuration =
         (4 + Math.random() * 4) + "s";
@@ -388,28 +524,35 @@ function createHearts() {
     }, i * 120);
 
   }
+
 }
 
-/* Background floating hearts */
+
+/* BACKGROUND FLOATING HEARTS */
 
 setInterval(() => {
 
   const heart = document.createElement("div");
 
   heart.className = "floating-heart";
+
   heart.innerHTML = "💗";
 
-  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.left =
+    Math.random() * 100 + "vw";
+
   heart.style.animationDuration = "7s";
 
   document.body.appendChild(heart);
 
-  setTimeout(() => heart.remove(), 7000);
+  setTimeout(() => {
+    heart.remove();
+  }, 7000);
 
 }, 1300);
+
 
 </script>
 
 </body>
-  </html>
-  
+</html>
