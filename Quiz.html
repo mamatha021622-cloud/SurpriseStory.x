@@ -1,0 +1,842 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuizzyHeart ♡</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Georgia, 'Times New Roman', serif;
+  background: linear-gradient(145deg, #fff0f5, #fce1eb, #fff7f3);
+  color: #763b55;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  content: "♡";
+  position: fixed;
+  color: rgba(216, 91, 138, 0.13);
+  font-size: 150px;
+  z-index: -1;
+  animation: float 6s ease-in-out infinite;
+}
+
+body::before {
+  top: 5%;
+  left: 5%;
+}
+
+body::after {
+  bottom: 4%;
+  right: 5%;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+
+.container {
+  width: 100%;
+  max-width: 460px;
+  background: rgba(255, 250, 247, 0.96);
+  border: 1px solid #f2d4e0;
+  border-radius: 25px;
+  padding: 30px 23px;
+  box-shadow: 0 15px 45px rgba(160, 76, 113, 0.13);
+  text-align: center;
+  position: relative;
+  animation: appear 0.6s ease;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.brand {
+  color: #c34f80;
+  font-size: 13px;
+  letter-spacing: 4px;
+  margin-bottom: 22px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 1.3;
+  margin-bottom: 15px;
+  font-weight: normal;
+}
+
+.subtitle {
+  color: #a16c82;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.heart {
+  font-size: 44px;
+  color: #d85b8a;
+  margin-bottom: 18px;
+  animation: heartbeat 1.8s infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+button {
+  border: none;
+  border-radius: 15px;
+  padding: 15px 20px;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.25s;
+  width: 100%;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.primary {
+  background: linear-gradient(135deg, #d85b8a, #b93e72);
+  color: white;
+  box-shadow: 0 6px 15px rgba(190, 67, 119, 0.2);
+}
+
+.primary:hover {
+  transform: translateY(-2px);
+}
+
+.secondary {
+  background: #f8e5ed;
+  color: #9e426c;
+  border: 1px solid #edc8d8;
+}
+
+.small-note {
+  color: #b58a9d;
+  font-size: 12px;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.progress-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #b05b7f;
+  font-family: Arial, sans-serif;
+  margin-bottom: 10px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background: #f3dce6;
+  border-radius: 20px;
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #d85b8a;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.question {
+  font-size: 24px;
+  line-height: 1.4;
+  margin-bottom: 25px;
+  font-weight: normal;
+}
+
+.options {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.option {
+  background: #fffaf7;
+  border: 1px solid #edc8d8;
+  color: #763b55;
+  text-align: left;
+  border-radius: 13px;
+  padding: 15px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+.option.selected {
+  background: #f7dce8;
+  border: 1px solid #d85b8a;
+}
+
+.option.correct {
+  background: #e5f4e8;
+  border-color: #75b78a;
+  color: #306a40;
+}
+
+.option.wrong {
+  background: #fde8e8;
+  border-color: #d98686;
+  color: #9b4141;
+}
+
+.feedback {
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  margin: 12px 0 18px;
+  line-height: 1.5;
+}
+
+.result-score {
+  font-size: 54px;
+  color: #c34f80;
+  margin: 15px 0;
+}
+
+.result-message {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+
+.result-buttons {
+  display: grid;
+  gap: 12px;
+}
+
+.answers-list {
+  text-align: left;
+  margin: 20px 0;
+}
+
+.answer-item {
+  border-bottom: 1px solid #f1dce5;
+  padding: 13px 0;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.answer-item strong {
+  display: block;
+  color: #9e426c;
+  margin-bottom: 4px;
+}
+
+.hidden {
+  display: none;
+}
+
+.signature {
+  font-size: 12px;
+  color: #b58a9d;
+  margin-top: 22px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="brand">QUIZZYHEART ♡</div>
+
+  <!-- WELCOME SCREEN -->
+  <section id="welcome">
+    <div class="heart">♡</div>
+
+    <h1>A little quiz,<br>just for you</h1>
+
+    <p class="subtitle">
+      How well do you know your best friend?
+      <br>
+      Let's find out!
+    </p>
+
+    <button class="primary" onclick="startQuiz()">
+      Start Quiz ♡
+    </button>
+
+    <p class="small-note">
+      Made with love, just for you
+    </p>
+  </section>
+
+  <!-- QUIZ SCREEN -->
+  <section id="quiz" class="hidden">
+
+    <div class="progress-area">
+      <span id="questionNumber">Question 1 of 10</span>
+      <span id="progressPercent">10%</span>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <h2 class="question" id="questionText"></h2>
+
+    <div class="options" id="options"></div>
+
+    <p class="feedback hidden" id="feedback"></p>
+
+    <button class="primary" id="nextButton" onclick="nextQuestion()" disabled>
+      Next Question →
+    </button>
+
+  </section>
+
+  <!-- RESULT SCREEN -->
+  <section id="result" class="hidden">
+
+    <div class="heart">♡</div>
+
+    <h1>Your result</h1>
+
+    <div class="result-score" id="scoreText">0/10</div>
+
+    <p class="result-message" id="resultMessage"></p>
+
+    <div class="result-buttons">
+
+      <button class="primary" onclick="shareResult()">
+        Share My Result 💌
+      </button>
+
+      <button class="secondary" onclick="showAnswers()">
+        View Answers
+      </button>
+
+      <button class="secondary" onclick="retakeQuiz()">
+        Retake Quiz ↻
+      </button>
+
+    </div>
+
+    <p class="signature">A little quiz made with love ♡</p>
+
+  </section>
+
+  <!-- ANSWERS SCREEN -->
+  <section id="answers" class="hidden">
+
+    <div class="heart">♡</div>
+
+    <h1>Your answers</h1>
+
+    <div class="answers-list" id="answersList"></div>
+
+    <button class="primary" onclick="showResult()">
+      Back to Result
+    </button>
+
+  </section>
+
+</div>
+
+<script>
+
+// =====================================
+// QUIZ QUESTIONS
+// =====================================
+
+const questions = [
+  {
+    question: "What is my favourite colour?",
+    options: ["Pink", "Black", "Blue", "White"],
+    answer: 0
+  },
+  {
+    question: "What is my dream travel destination?",
+    options: ["Paris", "Maldives", "London", "Japan"],
+    answer: 1
+  },
+  {
+    question: "What is my favourite food?",
+    options: ["Pizza", "Biryani", "Burger", "Ice cream"],
+    answer: 1
+  },
+  {
+    question: "What do I usually do when I'm sad?",
+    options: [
+      "Listen to music",
+      "Sleep",
+      "Talk to my bestie",
+      "Eat something"
+    ],
+    answer: 2
+  },
+  {
+    question: "What is my biggest fear?",
+    options: [
+      "Losing loved ones",
+      "Heights",
+      "Darkness",
+      "Spiders"
+    ],
+    answer: 0
+  },
+  {
+    question: "Which type of movie do I love most?",
+    options: ["Romance", "Comedy", "Horror", "Action"],
+    answer: 0
+  },
+  {
+    question: "What is my dream job?",
+    options: [
+      "Doctor",
+      "Teacher",
+      "Business owner",
+      "Actor"
+    ],
+    answer: 2
+  },
+  {
+    question: "What makes me happiest?",
+    options: [
+      "Gifts",
+      "Spending time with loved ones",
+      "Shopping",
+      "Travelling"
+    ],
+    answer: 1
+  },
+  {
+    question: "What is my favourite season?",
+    options: ["Summer", "Winter", "Rainy", "Spring"],
+    answer: 2
+  },
+  {
+    question: "What would I choose for a perfect day?",
+    options: [
+      "Shopping",
+      "A trip with friends",
+      "Staying home alone",
+      "A fancy dinner"
+    ],
+    answer: 1
+  }
+];
+
+// =====================================
+// QUIZ STATE
+// =====================================
+
+let currentQuestion = 0;
+let score = 0;
+let selectedAnswer = null;
+let userAnswers = [];
+let completed = false;
+
+const storageKey = "quizzyheart_demo_result";
+
+// =====================================
+// SCREEN CONTROLS
+// =====================================
+
+function showScreen(screenId) {
+  document.getElementById("welcome").classList.add("hidden");
+  document.getElementById("quiz").classList.add("hidden");
+  document.getElementById("result").classList.add("hidden");
+  document.getElementById("answers").classList.add("hidden");
+
+  document.getElementById(screenId).classList.remove("hidden");
+}
+
+// =====================================
+// START QUIZ
+// =====================================
+
+function startQuiz() {
+
+  // If previously completed, show saved result
+  const savedResult = localStorage.getItem(storageKey);
+
+  if (savedResult) {
+    showResult();
+    return;
+  }
+
+  currentQuestion = 0;
+  score = 0;
+  selectedAnswer = null;
+  userAnswers = [];
+  completed = false;
+
+  showScreen("quiz");
+  loadQuestion();
+}
+
+// =====================================
+// LOAD QUESTION
+// =====================================
+
+function loadQuestion() {
+
+  selectedAnswer = null;
+
+  const q = questions[currentQuestion];
+
+  document.getElementById("questionNumber").textContent =
+    `Question ${currentQuestion + 1} of ${questions.length}`;
+
+  const percent = Math.round(
+    ((currentQuestion + 1) / questions.length) * 100
+  );
+
+  document.getElementById("progressPercent").textContent = percent + "%";
+
+  document.getElementById("progressFill").style.width = percent + "%";
+
+  document.getElementById("questionText").textContent = q.question;
+
+  document.getElementById("feedback").classList.add("hidden");
+
+  const optionsContainer = document.getElementById("options");
+
+  optionsContainer.innerHTML = "";
+
+  q.options.forEach((option, index) => {
+
+    const button = document.createElement("button");
+
+    button.className = "option";
+
+    button.textContent =
+      String.fromCharCode(65 + index) + ". " + option;
+
+    button.onclick = () => selectAnswer(index, button);
+
+    optionsContainer.appendChild(button);
+
+  });
+
+  document.getElementById("nextButton").disabled = true;
+
+  document.getElementById("nextButton").textContent =
+    currentQuestion === questions.length - 1
+      ? "See My Result ♡"
+      : "Next Question →";
+}
+
+// =====================================
+// SELECT ANSWER
+// =====================================
+
+function selectAnswer(index, button) {
+
+  if (selectedAnswer !== null) return;
+
+  selectedAnswer = index;
+
+  const q = questions[currentQuestion];
+
+  const allOptions = document.querySelectorAll(".option");
+
+  allOptions.forEach(option => {
+    option.disabled = true;
+  });
+
+  if (index === q.answer) {
+
+    score++;
+
+    button.classList.add("correct");
+
+    document.getElementById("feedback").textContent =
+      "That's right! You know your bestie well. ♡";
+
+  } else {
+
+    button.classList.add("wrong");
+
+    allOptions[q.answer].classList.add("correct");
+
+    document.getElementById("feedback").textContent =
+      "Not quite! The correct answer is " + q.options[q.answer] + ".";
+
+  }
+
+  document.getElementById("feedback").classList.remove("hidden");
+
+  userAnswers[currentQuestion] = index;
+
+  document.getElementById("nextButton").disabled = false;
+}
+
+// =====================================
+// NEXT QUESTION
+// =====================================
+
+function nextQuestion() {
+
+  if (selectedAnswer === null) return;
+
+  currentQuestion++;
+
+  if (currentQuestion < questions.length) {
+
+    loadQuestion();
+
+  } else {
+
+    finishQuiz();
+
+  }
+}
+
+// =====================================
+// FINISH QUIZ & SAVE RESULT
+// =====================================
+
+function finishQuiz() {
+
+  completed = true;
+
+  const result = {
+    score: score,
+    total: questions.length,
+    answers: userAnswers,
+    completedAt: new Date().toISOString()
+  };
+
+  localStorage.setItem(storageKey, JSON.stringify(result));
+
+  showResult();
+}
+
+// =====================================
+// RESULT SCREEN
+// =====================================
+
+function showResult() {
+
+  const saved = localStorage.getItem(storageKey);
+
+  if (!saved) {
+    showScreen("welcome");
+    return;
+  }
+
+  const result = JSON.parse(saved);
+
+  document.getElementById("scoreText").textContent =
+    result.score + "/" + result.total;
+
+  let message = "";
+
+  const percentage = result.score / result.total;
+
+  if (percentage === 1) {
+    message = "Perfect! You know your bestie inside out! 💗";
+  } else if (percentage >= 0.8) {
+    message = "Amazing! You know your bestie pretty well! 💕";
+  } else if (percentage >= 0.5) {
+    message = "Not bad! You still have a few things to discover! ♡";
+  } else {
+    message = "Looks like you need more bestie time! 💌";
+  }
+
+  document.getElementById("resultMessage").textContent = message;
+
+  showScreen("result");
+}
+
+// =====================================
+// VIEW ANSWERS
+// =====================================
+
+function showAnswers() {
+
+  const saved = localStorage.getItem(storageKey);
+
+  if (!saved) return;
+
+  const result = JSON.parse(saved);
+
+  const list = document.getElementById("answersList");
+
+  list.innerHTML = "";
+
+  questions.forEach((q, index) => {
+
+    const item = document.createElement("div");
+
+    item.className = "answer-item";
+
+    const userAnswer = result.answers[index];
+
+    item.innerHTML = `
+      <strong>${index + 1}. ${q.question}</strong>
+      Your answer: ${q.options[userAnswer]}<br>
+      Correct answer: ${q.options[q.answer]}
+    `;
+
+    list.appendChild(item);
+
+  });
+
+  showScreen("answers");
+}
+
+// =====================================
+// BACK TO RESULT
+// =====================================
+
+function showResult() {
+  const saved = localStorage.getItem(storageKey);
+
+  if (!saved) {
+    showScreen("welcome");
+    return;
+  }
+
+  const result = JSON.parse(saved);
+
+  document.getElementById("scoreText").textContent =
+    result.score + "/" + result.total;
+
+  const percentage = result.score / result.total;
+
+  let message;
+
+  if (percentage === 1) {
+    message = "Perfect! You know your bestie inside out! 💗";
+  } else if (percentage >= 0.8) {
+    message = "Amazing! You know your bestie pretty well! 💕";
+  } else if (percentage >= 0.5) {
+    message = "Not bad! You still have a few things to discover! ♡";
+  } else {
+    message = "Looks like you need more bestie time! 💌";
+  }
+
+  document.getElementById("resultMessage").textContent = message;
+
+  showScreen("result");
+}
+
+// =====================================
+// SHARE RESULT
+// =====================================
+
+async function shareResult() {
+
+  const saved = localStorage.getItem(storageKey);
+
+  if (!saved) return;
+
+  const result = JSON.parse(saved);
+
+  let message =
+    "💕 My QuizzyHeart Result 💕\n\n" +
+    "I scored " + result.score + "/" + result.total + "!\n\n" +
+    "How well do you know your best friend?\n" +
+    "Try this quiz and share your result! ♡";
+
+  if (navigator.share) {
+
+    try {
+
+      await navigator.share({
+        title: "My QuizzyHeart Result",
+        text: message
+      });
+
+    } catch (error) {
+      // User cancelled the share menu
+    }
+
+  } else {
+
+    try {
+
+      await navigator.clipboard.writeText(message);
+
+      alert("Your result was copied! You can paste it into WhatsApp.");
+
+    } catch (error) {
+
+      prompt("Copy your result below:", message);
+
+    }
+
+  }
+}
+
+// =====================================
+// RETAKE QUIZ
+// =====================================
+
+function retakeQuiz() {
+
+  localStorage.removeItem(storageKey);
+
+  currentQuestion = 0;
+  score = 0;
+  selectedAnswer = null;
+  userAnswers = [];
+  completed = false;
+
+  showScreen("welcome");
+}
+
+// =====================================
+// CHECK PREVIOUS RESULT ON OPEN
+// =====================================
+
+window.addEventListener("load", function() {
+
+  const savedResult = localStorage.getItem(storageKey);
+
+  if (savedResult) {
+
+    showResult();
+
+  } else {
+
+    showScreen("welcome");
+
+  }
+
+});
+
+</script>
+
+</body>
+  </html>
+  
