@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Angry Bird ❤️</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Georgia, serif;
+  background: radial-gradient(circle at top, #ffedf2, #f9c9d6, #eaa5b8);
+  color: #7b1835;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.screen {
+  display: none;
+  height: 100vh;
+  width: 100%;
+  padding: 24px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.screen.active {
+  display: flex;
+  animation: fadeIn 1s ease;
+}
+
+h1 {
+  font-size: clamp(28px, 7vw, 44px);
+  margin-bottom: 18px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 1.8;
+  max-width: 500px;
+}
+
+button {
+  border: none;
+  background: linear-gradient(135deg, #d82d62, #9d1743);
+  color: white;
+  padding: 15px 28px;
+  border-radius: 35px;
+  font-size: 17px;
+  margin-top: 28px;
+  box-shadow: 0 8px 20px #a52b4a40;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+.heart {
+  font-size: 100px;
+  animation: heartbeat 1.5s infinite;
+  filter: drop-shadow(0 0 15px #ff789f);
+  margin-bottom: 20px;
+}
+
+.small {
+  font-size: 15px;
+  margin-top: 14px;
+  opacity: 0.8;
+}
+
+/* Floating hearts */
+
+.floating-heart {
+  position: fixed;
+  bottom: -40px;
+  font-size: 22px;
+  animation: floatUp 7s linear forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Envelope */
+
+.envelope {
+  width: 270px;
+  height: 175px;
+  position: relative;
+  background: #f8dce5;
+  border-radius: 5px;
+  box-shadow: 0 18px 35px #8a294b40;
+  margin: 35px 0;
+  cursor: pointer;
+  perspective: 800px;
+}
+
+.envelope:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #eeb9cb;
+  clip-path: polygon(0 0, 50% 55%, 100% 0);
+  transform-origin: top;
+  transition: transform 1s;
+  z-index: 3;
+}
+
+.envelope.open:before {
+  transform: rotateX(180deg);
+}
+
+.envelope:after {
+  content: "♥";
+  position: absolute;
+  top: 65px;
+  left: 115px;
+  font-size: 42px;
+  color: #be2555;
+  z-index: 4;
+  transition: 0.5s;
+}
+
+.envelope.open:after {
+  opacity: 0;
+}
+
+.letter {
+  background: #fffaf2;
+  color: #71354a;
+  width: min(90vw, 420px);
+  padding: 30px 24px;
+  border-radius: 5px;
+  box-shadow: 0 15px 40px #92304d30;
+  line-height: 1.9;
+  text-align: left;
+  transform: translateY(40px);
+  opacity: 0;
+  transition: 1s;
+  position: relative;
+  z-index: 5;
+}
+
+.letter.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.letter h2 {
+  text-align: center;
+  margin-bottom: 18px;
+  color: #b72c59;
+}
+
+.signature {
+  text-align: right;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+/* Final screen */
+
+.big-heart {
+  font-size: 90px;
+  animation: heartbeat 1.4s infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% { opacity: 1; }
+  100% {
+    transform: translateY(-110vh) rotate(35deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- SCREEN 1 -->
+<section class="screen active" id="screen1">
+
+  <div class="heart">❤️</div>
+
+  <h1>Hey, my Angry Bird…</h1>
+
+  <p>
+    This is for you. 🥺<br>
+    I know you're angry with me…
+    but there's something I really want to tell you.
+  </p>
+
+  <button onclick="goTo('screen2')">
+    Open your surprise 💌
+  </button>
+
+  <div class="small">Made with love, just for you</div>
+
+</section>
+
+<!-- SCREEN 2 -->
+<section class="screen" id="screen2">
+
+  <h1>A little something for you 💗</h1>
+
+  <p>
+    I know I messed up.<br>
+    And I know a simple sorry
+    might not fix everything.
+  </p>
+
+  <p style="margin-top:15px">
+    But please… open this little letter.
+  </p>
+
+  <div class="envelope" id="envelope"
+       onclick="openLetter()"></div>
+
+  <p class="small">Tap the envelope to open it</p>
+
+  <div class="letter" id="letter">
+
+    <h2>I'm Sorry ❤️</h2>
+
+    <p>
+      Hey, my Angry Bird…
+    </p>
+
+    <p>
+      I know you're upset with me,
+      and I hate knowing that I made you feel this way.
+    </p>
+
+    <p>
+      If I could go back and change that moment,
+      I would. But since I can't,
+      I want you to know how truly sorry I am.
+    </p>
+
+    <p>
+      You mean so much to me.
+      Your smile, your happiness,
+      and the little moments we share
+      are more precious than you know.
+    </p>
+
+    <p>
+      I may not always say the right things,
+      and sometimes I make silly mistakes…
+      but hurting you was never what I wanted.
+    </p>
+
+    <p>
+      So here's my little request:
+      whenever you're ready,
+      please forgive this silly person
+      who cares about you a lot. 🥺
+    </p>
+
+    <p class="signature">
+      With all my love,<br>
+      Your silly person ❤️
+    </p>
+
+  </div>
+
+  <button id="nextButton"
+          style="display:none"
+          onclick="goTo('screen3')">
+    One last thing… 💗
+  </button>
+
+</section>
+
+<!-- SCREEN 3 -->
+<section class="screen" id="screen3">
+
+  <div class="big-heart">💗</div>
+
+  <h1>Can you forgive me?</h1>
+
+  <p>
+    I promise I'll try to be better.<br>
+    And until that angry face turns
+    into a smile…
+    I'll be right here. ❤️
+  </p>
+
+  <button onclick="forgiveMe()">
+    Okay, I forgive you 🥹
+  </button>
+
+  <p class="small" id="finalMessage"></p>
+
+</section>
+
+<script>
+
+function goTo(id) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+
+  document.getElementById(id).classList.add("active");
+}
+
+/* Open the envelope */
+
+function openLetter() {
+
+  const envelope = document.getElementById("envelope");
+  const letter = document.getElementById("letter");
+  const nextButton = document.getElementById("nextButton");
+
+  envelope.classList.add("open");
+
+  setTimeout(() => {
+    letter.classList.add("show");
+
+    setTimeout(() => {
+      nextButton.style.display = "inline-block";
+    }, 1000);
+
+  }, 700);
+}
+
+/* Final button */
+
+function forgiveMe() {
+
+  document.getElementById("finalMessage").innerHTML =
+    "You just made my heart so happy! ❤️🥹";
+
+  createHearts();
+}
+
+/* Floating hearts */
+
+function createHearts() {
+
+  const symbols = ["❤️", "💗", "💕", "💖", "🥹"];
+
+  for (let i = 0; i < 35; i++) {
+
+    setTimeout(() => {
+
+      const heart = document.createElement("div");
+
+      heart.className = "floating-heart";
+
+      heart.innerHTML =
+        symbols[Math.floor(Math.random() * symbols.length)];
+
+      heart.style.left = Math.random() * 100 + "vw";
+
+      heart.style.animationDuration =
+        (4 + Math.random() * 4) + "s";
+
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+
+    }, i * 120);
+
+  }
+}
+
+/* Background floating hearts */
+
+setInterval(() => {
+
+  const heart = document.createElement("div");
+
+  heart.className = "floating-heart";
+  heart.innerHTML = "💗";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = "7s";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 7000);
+
+}, 1300);
+
+</script>
+
+</body>
+  </html>
+  
