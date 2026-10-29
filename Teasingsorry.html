@@ -1,723 +1,192 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Angry Bird ❤️</title>
-
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Georgia,serif;background:linear-gradient(160deg,#fff2f7,#ffc9df,#f5a7ca);color:#8c2453;overflow-x:hidden;min-height:100vh}
+.screen{display:none;min-height:100vh;width:100%;padding:35px 20px;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative}
+.screen.active{display:flex;animation:fadeIn .8s ease}
+h1{font-size:clamp(27px,7vw,42px);line-height:1.3;margin-bottom:18px}
+p{font-size:18px;line-height:1.8;max-width:500px}
+button{border:none;border-radius:35px;padding:15px 25px;margin-top:25px;font-size:16px;font-family:Georgia,serif;color:white;background:linear-gradient(135deg,#f04f91,#c31f65);box-shadow:0 8px 22px #a42d6035;cursor:pointer;transition:transform .3s}
+button:active{transform:scale(.95)}
+.small{font-size:14px;margin-top:15px;opacity:.8}
+.background-heart{position:fixed;bottom:-50px;left:0;pointer-events:none;z-index:0;animation:floatUp 8s linear forwards}
 
-body {
-  font-family: Georgia, serif;
-  background: linear-gradient(160deg, #fff2f7, #ffc9df, #f5a7ca);
-  color: #8c2453;
-  overflow-x: hidden;
-  min-height: 100vh;
-}
+/* Cartoon bunny suddenly pops up */
+#screen1{overflow:hidden}
+.pop-bunny-wrap{position:relative;width:230px;height:245px;margin-bottom:8px;animation:bunnyPop 1.05s cubic-bezier(.2,1.6,.4,1) both}
+.cartoon-bunny{position:absolute;width:170px;height:160px;left:30px;bottom:0;animation:bunnyWiggle 2.8s ease-in-out infinite}
+.bunny-ear{position:absolute;width:48px;height:105px;top:0;border:5px solid #8d9ba8;border-radius:55% 55% 45% 45%;background:#fff;transform-origin:bottom center;z-index:1}
+.bunny-ear.left{left:32px;transform:rotate(-13deg)}
+.bunny-ear.right{right:32px;transform:rotate(13deg)}
+.bunny-ear:after{content:"";position:absolute;inset:12px 10px;border-radius:50%;background:#ff9fbe}
+.bunny-head{position:absolute;width:170px;height:132px;bottom:0;left:0;border:5px solid #8d9ba8;border-radius:48% 48% 43% 43%;background:linear-gradient(145deg,#fff,#edf2f5);z-index:2;box-shadow:0 12px 0 #d4dce2,0 18px 24px #9f477b25}
+.bunny-eye{position:absolute;top:49px;width:12px;height:18px;border-radius:50%;background:#36404a}
+.bunny-eye.left{left:42px}.bunny-eye.right{right:42px}
+.bunny-cheek{position:absolute;top:73px;width:25px;height:15px;border-radius:50%;background:#ffb6cd;opacity:.8}
+.bunny-cheek.left{left:22px}.bunny-cheek.right{right:22px}
+.bunny-muzzle{position:absolute;width:50px;height:38px;left:55px;top:70px;background:#fff;border-radius:50%}
+.bunny-nose{position:absolute;left:73px;top:73px;width:14px;height:10px;background:#e66e98;border-radius:50% 50% 60% 60%;z-index:3}
+.bunny-mouth{position:absolute;left:78px;top:82px;width:2px;height:13px;background:#4a3941;z-index:3}
+.bunny-mouth:before,.bunny-mouth:after{content:"";position:absolute;top:5px;width:10px;height:7px;border-bottom:2px solid #4a3941}
+.bunny-mouth:before{right:0;border-left:2px solid #4a3941;border-radius:0 0 0 8px}
+.bunny-mouth:after{left:0;border-right:2px solid #4a3941;border-radius:0 0 8px 0}
+.bunny-paw{position:absolute;width:43px;height:32px;bottom:3px;background:#fff;border:4px solid #8d9ba8;border-radius:50%;z-index:4}
+.bunny-paw.left{left:20px;transform:rotate(-18deg)}.bunny-paw.right{right:20px;transform:rotate(18deg)}
+.bunny-speech{position:relative;background:#fff9fc;border:2px solid #ffd2e5;border-radius:25px;padding:20px;max-width:450px;box-shadow:0 10px 30px #b33d7130;line-height:1.8;animation:bubbleAppear .55s .65s both}
+.bunny-speech:before{content:"";position:absolute;top:-11px;left:50%;width:20px;height:20px;background:#fff9fc;border-top:2px solid #ffd2e5;border-left:2px solid #ffd2e5;transform:translateX(-50%) rotate(45deg)}
+.bunny-speech h1{position:relative;font-size:clamp(25px,6.5vw,38px)}.bunny-speech p{position:relative}
+.bunny-sparkle{position:absolute;font-size:28px;animation:sparkle 2s ease-in-out infinite}
+.bunny-sparkle.one{top:35px;left:4px}.bunny-sparkle.two{top:60px;right:2px}
 
-.screen {
-  display: none;
-  min-height: 100vh;
-  width: 100%;
-  padding: 35px 20px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-}
-
-.screen.active {
-  display: flex;
-  animation: fadeIn 0.8s ease;
-}
-
-h1 {
-  font-size: clamp(27px, 7vw, 42px);
-  line-height: 1.3;
-  margin-bottom: 18px;
-}
-
-p {
-  font-size: 18px;
-  line-height: 1.8;
-  max-width: 500px;
-}
-
-button {
-  border: none;
-  border-radius: 35px;
-  padding: 15px 25px;
-  margin-top: 25px;
-  font-size: 16px;
-  font-family: Georgia, serif;
-  color: white;
-  background: linear-gradient(135deg, #f04f91, #c31f65);
-  box-shadow: 0 8px 22px #a42d6035;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-
-button:active {
-  transform: scale(0.95);
-}
-
-button:disabled {
-  opacity: 0.65;
-  cursor: default;
-}
-
-.small {
-  font-size: 14px;
-  margin-top: 15px;
-  opacity: 0.8;
-}
-
-/* Floating background hearts */
-
-.background-heart {
-  position: fixed;
-  bottom: -50px;
-  left: 0;
-  pointer-events: none;
-  z-index: 0;
-  animation: floatUp 8s linear forwards;
-}
-
-/* Bunny */
-
-.bunny {
-  font-size: 100px;
-  line-height: 1.3;
-  filter: drop-shadow(0 10px 12px #9f477b35);
-  animation: bunnyHop 1.4s ease-in-out infinite;
-  margin-bottom: 20px;
-}
-
-.bunny-small {
-  font-size: 75px;
-  animation: bunnyHop 1.4s ease-in-out infinite;
-  margin: 20px 0;
-}
-
-.bunny-dialogue {
-  background: #fff8fc;
-  border: 2px solid #ffd2e5;
-  border-radius: 25px;
-  padding: 20px;
-  max-width: 450px;
-  box-shadow: 0 10px 30px #b33d7130;
-  line-height: 1.8;
-}
-
-/* Envelope screen */
-
-#screen3 {
-  justify-content: flex-start;
-  padding-top: 45px;
-}
-
-.envelope {
-  width: min(300px, 85vw);
-  height: 190px;
-  margin: 35px auto;
-  position: relative;
-  background: #f6c3d8;
-  border-radius: 5px;
-  box-shadow: 0 18px 35px #8a294b40;
-  cursor: pointer;
-  perspective: 800px;
-  flex-shrink: 0;
-}
-
-.envelope-back {
-  position: absolute;
-  inset: 0;
-  background: #f9dce9;
-  border-radius: 5px;
-}
-
-.envelope-front {
-  position: absolute;
-  inset: 0;
-  background: #efb2cd;
-  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
-  z-index: 2;
-}
-
-.envelope-flap {
-  position: absolute;
-  inset: 0;
-  background: #e89cbd;
-  clip-path: polygon(0 0, 50% 55%, 100% 0);
-  transform-origin: top center;
-  transition: transform 1s ease;
-  z-index: 4;
-}
-
-.envelope-seal {
-  position: absolute;
-  top: 65px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 42px;
-  color: #c12e6d;
-  z-index: 5;
-  transition: opacity 0.5s;
-}
-
-.envelope.open .envelope-flap {
-  transform: rotateX(180deg);
-}
-
-.envelope.open .envelope-seal {
-  opacity: 0;
-}
-
-/* Letter */
-
-.letter {
-  width: min(92vw, 430px);
-  background: #fffaf5;
-  color: #71354a;
-  padding: 30px 25px;
-  border-radius: 7px;
-  box-shadow: 0 15px 40px #92304d30;
-  text-align: left;
-  line-height: 1.9;
-  margin: 20px auto;
-  opacity: 0;
-  transform: translateY(25px);
-  transition: opacity 1s, transform 1s;
-  display: none;
-}
-
-.letter.show {
-  display: block;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.letter h2 {
-  text-align: center;
-  color: #c12e6d;
-  margin-bottom: 20px;
-  font-size: 28px;
-}
-
-.letter p {
-  margin-bottom: 15px;
-}
-
-.letter .signature {
-  text-align: right;
-  font-style: italic;
-  margin-top: 25px;
-}
-
-/* Status choices */
-
-.status-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 360px;
-}
-
-.status-buttons button {
-  width: 100%;
-  margin-top: 14px;
-}
-
-/* Final bunny */
-
-.final-bunny {
-  font-size: 100px;
-  animation: bunnyHop 1s ease-in-out infinite;
-  margin-bottom: 20px;
-}
-
-.final-message {
-  font-size: 20px;
-  line-height: 1.8;
-  margin-top: 20px;
-}
-
-/* Falling emojis */
-
-.falling-emoji {
-  position: fixed;
-  top: -60px;
-  z-index: 100;
-  pointer-events: none;
-  animation: emojiFall 5s linear forwards;
-}
-
-/* Animations */
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes bunnyHop {
-  0%, 100% {
-    transform: translateY(0) rotate(0);
-  }
-
-  50% {
-    transform: translateY(-15px) rotate(-4deg);
-  }
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) rotate(0);
-    opacity: 0;
-  }
-
-  15% {
-    opacity: 0.8;
-  }
-
-  100% {
-    transform: translateY(-110vh) rotate(35deg);
-    opacity: 0;
-  }
-}
-
-@keyframes emojiFall {
-  0% {
-    transform: translateY(-10vh) rotate(0deg);
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateY(115vh) rotate(360deg);
-    opacity: 0;
-  }
-}
-
+/* Remaining screens */
+.bunny{font-size:100px;line-height:1.3;filter:drop-shadow(0 10px 12px #9f477b35);animation:bunnyHop 1.4s ease-in-out infinite;margin-bottom:20px}
+.bunny-small{font-size:75px;animation:bunnyHop 1.4s ease-in-out infinite;margin:20px 0}
+.bunny-dialogue{background:#fff8fc;border:2px solid #ffd2e5;border-radius:25px;padding:20px;max-width:450px;box-shadow:0 10px 30px #b33d7130;line-height:1.8}
+#screen3{justify-content:flex-start;padding-top:45px}
+.envelope{width:min(300px,85vw);height:190px;margin:35px auto;position:relative;background:#f6c3d8;border-radius:5px;box-shadow:0 18px 35px #8a294b40;cursor:pointer;perspective:800px;flex-shrink:0}
+.envelope-back{position:absolute;inset:0;background:#f9dce9;border-radius:5px}
+.envelope-front{position:absolute;inset:0;background:#efb2cd;clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%);z-index:2}
+.envelope-flap{position:absolute;inset:0;background:#e89cbd;clip-path:polygon(0 0,50% 55%,100% 0);transform-origin:top center;transition:transform 1s ease;z-index:4}
+.envelope-seal{position:absolute;top:65px;left:50%;transform:translateX(-50%);font-size:42px;color:#c12e6d;z-index:5;transition:opacity .5s}
+.envelope.open .envelope-flap{transform:rotateX(180deg)}.envelope.open .envelope-seal{opacity:0}
+.letter{width:min(92vw,430px);background:#fffaf5;color:#71354a;padding:30px 25px;border-radius:7px;box-shadow:0 15px 40px #92304d30;text-align:left;line-height:1.9;margin:20px auto;opacity:0;transform:translateY(25px);transition:opacity 1s,transform 1s;display:none}
+.letter.show{display:block;opacity:1;transform:translateY(0)}
+.letter h2{text-align:center;color:#c12e6d;margin-bottom:20px;font-size:28px}.letter p{margin-bottom:15px}.letter .signature{text-align:right;font-style:italic;margin-top:25px}
+.status-buttons{display:flex;flex-direction:column;align-items:center;width:100%;max-width:360px}.status-buttons button{width:100%;margin-top:14px}
+.final-bunny{font-size:100px;animation:bunnyHop 1s ease-in-out infinite;margin-bottom:20px}
+.final-message{font-size:20px;line-height:1.8;margin-top:20px}
+.falling-emoji{position:fixed;top:-60px;z-index:100;pointer-events:none;animation:emojiFall 5s linear forwards}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bunnyHop{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-15px) rotate(-4deg)}}
+@keyframes bunnyPop{0%{transform:translateY(180px) scale(.35);opacity:0}65%{transform:translateY(-18px) scale(1.08);opacity:1}82%{transform:translateY(8px) scale(.97)}100%{transform:translateY(0) scale(1);opacity:1}}
+@keyframes bunnyWiggle{0%,100%{transform:rotate(0)}20%{transform:rotate(-3deg)}40%{transform:rotate(3deg)}60%{transform:rotate(-2deg)}80%{transform:rotate(2deg)}}
+@keyframes bubbleAppear{from{opacity:0;transform:translateY(16px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes sparkle{0%,100%{transform:scale(.7) rotate(-10deg);opacity:.45}50%{transform:scale(1.2) rotate(10deg);opacity:1}}
+@keyframes floatUp{0%{transform:translateY(0) rotate(0);opacity:0}15%{opacity:.8}100%{transform:translateY(-110vh) rotate(35deg);opacity:0}}
+@keyframes emojiFall{0%{transform:translateY(-10vh) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(115vh) rotate(360deg);opacity:0}}
 </style>
 </head>
-
 <body>
 
-<!-- SCREEN 1: BUNNY ARRIVES -->
-
 <section class="screen active" id="screen1">
-
-  <div class="bunny">🐰</div>
-
-  <div class="bunny-dialogue">
-    <h1>Angry Bird! Angry Bird!</h1>
-
-    <p>
-      Where are you? 🐰
-    </p>
+  <div class="pop-bunny-wrap" aria-label="A cute cartoon bunny pops up">
+    <span class="bunny-sparkle one">✨</span><span class="bunny-sparkle two">💗</span>
+    <div class="cartoon-bunny">
+      <div class="bunny-ear left"></div><div class="bunny-ear right"></div>
+      <div class="bunny-head">
+        <div class="bunny-eye left"></div><div class="bunny-eye right"></div>
+        <div class="bunny-cheek left"></div><div class="bunny-cheek right"></div>
+        <div class="bunny-muzzle"></div><div class="bunny-nose"></div><div class="bunny-mouth"></div>
+        <div class="bunny-paw left"></div><div class="bunny-paw right"></div>
+      </div>
+    </div>
   </div>
-
-  <button onclick="goToScreen('screen2')">
-    Who's calling me? 🤭
-  </button>
-
+  <div class="bunny-speech"><h1>Angry Bird! Angry Bird!</h1><p>Where are you? 🐰</p></div>
+  <button onclick="goToScreen('screen2')">Who's calling me? 🤭</button>
 </section>
-
-
-<!-- SCREEN 2: BUNNY TEASES -->
 
 <section class="screen" id="screen2">
-
-  <div class="bunny-small">🐰</div>
-
-  <h1>Ahhh! There you are!</h1>
-
-  <p>
-    Hey, my Angry Bird…<br><br>
-
-    How long are you planning to stay angry?
-    Should I book an appointment to see your smile? 😂❤️
-  </p>
-
-  <button onclick="goToScreen('screen3')">
-    What do you want, little bunny? 🐰
-  </button>
-
+  <div class="bunny-small">🐰</div><h1>Ahhh! There you are!</h1>
+  <p>Hey, my Angry Bird…<br><br>How long are you planning to stay angry? Should I book an appointment to see your smile? 😂❤️</p>
+  <button onclick="goToScreen('screen3')">What do you want, little bunny? 🐰</button>
 </section>
-
-
-<!-- SCREEN 3: ENVELOPE -->
 
 <section class="screen" id="screen3">
-
-  <div class="bunny-small">🐰</div>
-
-  <h1>I have a little something for you! 🤭</h1>
-
-  <p>
-    Okay, okay… don't roll your eyes.<br>
-    I have a tiny message for you.
-  </p>
-
-  <div class="envelope"
-       id="envelope"
-       onclick="openLetter()">
-
-    <div class="envelope-back"></div>
-
-    <div class="envelope-front"></div>
-
-    <div class="envelope-flap"></div>
-
-    <div class="envelope-seal">♥</div>
-
+  <div class="bunny-small">🐰</div><h1>I have a little something for you! 🤭</h1>
+  <p>Okay, okay… don't roll your eyes.<br>I have a tiny message for you.</p>
+  <div class="envelope" id="envelope" onclick="openLetter()">
+    <div class="envelope-back"></div><div class="envelope-front"></div><div class="envelope-flap"></div><div class="envelope-seal">♥</div>
   </div>
-
-  <p class="small" id="envelopeHint">
-    Tap the envelope to open it 💌
-  </p>
-
-  <!-- LETTER -->
-
+  <p class="small" id="envelopeHint">Tap the envelope to open it 💌</p>
   <div class="letter" id="letter">
-
     <h2>Hey, my Angry Bird… 😂❤️</h2>
-
-    <p>
-      How long are you planning to stay angry with me?
-    </p>
-
-    <p>
-      Should I book an appointment to see your smile?
-      Or do I need to submit a special application
-      for forgiveness? 🤭
-    </p>
-
-    <p>
-      Okay, okay… I know I messed up.
-    </p>
-
-    <p>
-      But don't you think you've enjoyed being angry
-      long enough? Your poor silly person is waiting
-      here, missing that cute little smile of yours.
-    </p>
-
-    <p>
-      And honestly… how can someone look this adorable
-      while being this angry? It's unfair! 😂
-    </p>
-
-    <p>
-      So here's my tiny request…
-      Put that angry face away for a moment,
-      give me one little smile,
-      and let this silly person feel happy again.
-    </p>
-
-    <p>
-      I'm sorry, my Angry Bird.
-    </p>
-
-    <p>
-      Now tell me…
-      Are you still angry,
-      or did I finally make you smile? 🤭❤️
-    </p>
-
-    <p class="signature">
-      Your silly person ❤️
-    </p>
-
+    <p>How long are you planning to stay angry with me?</p>
+    <p>Should I book an appointment to see your smile? Or do I need to submit a special application for forgiveness? 🤭</p>
+    <p>Okay, okay… I know I messed up.</p>
+    <p>But don't you think you've enjoyed being angry long enough? Your poor silly person is waiting here, missing that cute little smile of yours.</p>
+    <p>And honestly… how can someone look this adorable while being this angry? It's unfair! 😂</p>
+    <p>So here's my tiny request… Put that angry face away for a moment, give me one little smile, and let this silly person feel happy again.</p>
+    <p>I'm sorry, my Angry Bird.</p>
+    <p>Now tell me… Are you still angry, or did I finally make you smile? 🤭❤️</p>
+    <p class="signature">Your silly person ❤️</p>
   </div>
-
-  <button id="nextButton"
-          style="display:none"
-          onclick="goToScreen('screen4')">
-
-    Okay, let me check my Angry Bird status 😂
-
-  </button>
-
+  <button id="nextButton" style="display:none" onclick="goToScreen('screen4')">Okay, let me check my Angry Bird status 😂</button>
 </section>
-
-
-<!-- SCREEN 4: STATUS -->
 
 <section class="screen" id="screen4">
-
-  <div class="bunny-small">🐰</div>
-
-  <h1>Angry Bird Status? ❤️</h1>
-
-  <p>
-    Sooo… tell me!<br>
-    Are you still angry,
-    or did this silly person finally make you smile? 🤭
-  </p>
-
+  <div class="bunny-small">🐰</div><h1>Angry Bird Status? ❤️</h1>
+  <p>Sooo… tell me!<br>Are you still angry, or did this silly person finally make you smile? 🤭</p>
   <div class="status-buttons">
-
-    <button onclick="stillAngry()">
-      Still angry 😒
-    </button>
-
-    <button onclick="lessAngry()">
-      A little less angry 🤭
-    </button>
-
-    <button onclick="youSmiled()">
-      You made me smile 😂
-    </button>
-
-    <button onclick="forgiveMe()">
-      I forgive you ❤️
-    </button>
-
+    <button onclick="stillAngry()">Still angry 😒</button>
+    <button onclick="lessAngry()">A little less angry 🤭</button>
+    <button onclick="youSmiled()">You made me smile 😂</button>
+    <button onclick="forgiveMe()">I forgive you ❤️</button>
   </div>
-
   <p id="statusMessage" class="final-message"></p>
-
 </section>
-
-
-<!-- SCREEN 5: HAPPY ENDING -->
 
 <section class="screen" id="screen5">
-
-  <div class="final-bunny">🐰</div>
-
-  <h1>YAYYYY! ❤️</h1>
-
-  <p>
-    My Angry Bird finally forgave you!
-  </p>
-
-  <p class="final-message">
-    Now please don't get angry again…<br>
-    At least not for the next five minutes! 😂🤭
-  </p>
-
-  <button onclick="celebrateAgain()">
-    One more bunny celebration! 🐰
-  </button>
-
+  <div class="final-bunny">🐰</div><h1>YAYYYY! ❤️</h1><p>My Angry Bird finally forgave you!</p>
+  <p class="final-message">Now please don't get angry again…<br>At least not for the next five minutes! 😂🤭</p>
+  <button onclick="celebrateAgain()">One more bunny celebration! 🐰</button>
 </section>
 
-
 <script>
-
-/* SCREEN NAVIGATION */
-
-function goToScreen(screenId) {
-
-  document.querySelectorAll(".screen").forEach(screen => {
-    screen.classList.remove("active");
-  });
-
-  const nextScreen = document.getElementById(screenId);
-
-  nextScreen.classList.add("active");
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
+function goToScreen(screenId){
+  document.querySelectorAll(".screen").forEach(screen=>screen.classList.remove("active"));
+  document.getElementById(screenId).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
 }
-
-
-/* OPEN ENVELOPE */
-
-function openLetter() {
-
-  const envelope = document.getElementById("envelope");
-  const letter = document.getElementById("letter");
-  const nextButton = document.getElementById("nextButton");
-  const hint = document.getElementById("envelopeHint");
-
-  if (envelope.classList.contains("open")) {
-    return;
-  }
-
-  envelope.classList.add("open");
-
-  hint.textContent = "Your little letter is opening… ❤️";
-
-  setTimeout(() => {
-
-    letter.classList.add("show");
-
-    nextButton.style.display = "inline-block";
-
-    hint.textContent = "A little message, just for you 💌";
-
-    setTimeout(() => {
-
-      letter.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-
-    }, 300);
-
-  }, 900);
-
+function openLetter(){
+  const envelope=document.getElementById("envelope"),letter=document.getElementById("letter"),nextButton=document.getElementById("nextButton"),hint=document.getElementById("envelopeHint");
+  if(envelope.classList.contains("open"))return;
+  envelope.classList.add("open");hint.textContent="Your little letter is opening… ❤️";
+  setTimeout(()=>{
+    letter.classList.add("show");nextButton.style.display="inline-block";hint.textContent="A little message, just for you 💌";
+    setTimeout(()=>letter.scrollIntoView({behavior:"smooth",block:"start"}),300);
+  },900);
 }
-
-
-/* STATUS: STILL ANGRY */
-
-function stillAngry() {
-
-  document.getElementById("statusMessage").innerHTML =
-    "Oh nooo! 😭<br><br>" +
-    "My Angry Bird is still angry!<br>" +
-    "Should I book another appointment? 😂";
-
-  makeEmojis(["😒", "🐰", "😂", "💗"]);
-
+function stillAngry(){
+  document.getElementById("statusMessage").innerHTML="Oh nooo! 😭<br><br>My Angry Bird is still angry!<br>Should I book another appointment? 😂";
+  makeEmojis(["😒","🐰","😂","💗"]);
 }
-
-
-/* STATUS: LESS ANGRY */
-
-function lessAngry() {
-
-  document.getElementById("statusMessage").innerHTML =
-    "Hehehe! 🤭<br><br>" +
-    "Progress! My Angry Bird is slowly melting!<br>" +
-    "One tiny smile, please? ❤️";
-
-  makeEmojis(["🤭", "💕", "🐰", "❤️"]);
-
+function lessAngry(){
+  document.getElementById("statusMessage").innerHTML="Hehehe! 🤭<br><br>Progress! My Angry Bird is slowly melting!<br>One tiny smile, please? ❤️";
+  makeEmojis(["🤭","💕","🐰","❤️"]);
 }
-
-
-/* STATUS: YOU MADE ME SMILE */
-
-function youSmiled() {
-
-  document.getElementById("statusMessage").innerHTML =
-    "Ahaaa! I knew it! 😂❤️<br><br>" +
-    "That cute little smile finally appeared!";
-
-  makeEmojis(["😂", "💗", "😘", "🐰"]);
-
+function youSmiled(){
+  document.getElementById("statusMessage").innerHTML="Ahaaa! I knew it! 😂❤️<br><br>That cute little smile finally appeared!";
+  makeEmojis(["😂","💗","😘","🐰"]);
 }
-
-
-/* STATUS: FORGIVEN */
-
-function forgiveMe() {
-
+function forgiveMe(){
   goToScreen("screen5");
-
-  makeEmojis([
-    "❤️", "💕", "💖", "😘", "😂",
-    "🥰", "💋", "🐰", "💗", "🤭"
-  ]);
-
+  makeEmojis(["❤️","💕","💖","😘","😂","🥰","💋","🐰","💗","🤭"]);
 }
-
-
-/* FALLING EMOJI CELEBRATION */
-
-function makeEmojis(symbols) {
-
-  for (let i = 0; i < 45; i++) {
-
-    setTimeout(() => {
-
-      const emoji = document.createElement("div");
-
-      emoji.className = "falling-emoji";
-
-      emoji.textContent =
-        symbols[Math.floor(Math.random() * symbols.length)];
-
-      emoji.style.left =
-        Math.random() * 100 + "vw";
-
-      emoji.style.fontSize =
-        (20 + Math.random() * 25) + "px";
-
-      emoji.style.animationDuration =
-        (3 + Math.random() * 3) + "s";
-
-      document.body.appendChild(emoji);
-
-      setTimeout(() => {
-        emoji.remove();
-      }, 6500);
-
-    }, i * 100);
-
+function makeEmojis(symbols){
+  for(let i=0;i<45;i++){
+    setTimeout(()=>{
+      const emoji=document.createElement("div");emoji.className="falling-emoji";
+      emoji.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+      emoji.style.left=Math.random()*100+"vw";emoji.style.fontSize=(20+Math.random()*25)+"px";
+      emoji.style.animationDuration=(3+Math.random()*3)+"s";document.body.appendChild(emoji);
+      setTimeout(()=>emoji.remove(),6500);
+    },i*100);
   }
-
 }
-
-
-/* REPEAT CELEBRATION */
-
-function celebrateAgain() {
-
-  makeEmojis([
-    "❤️", "💕", "💖", "😘", "😂",
-    "🥰", "💋", "🐰", "💗", "🤭"
-  ]);
-
-}
-
-
-/* BACKGROUND FLOATING HEARTS */
-
-setInterval(() => {
-
-  const heart = document.createElement("div");
-
-  heart.className = "background-heart";
-
-  heart.textContent = ["💗", "💕", "❤️"][
-    Math.floor(Math.random() * 3)
-  ];
-
-  heart.style.left = Math.random() * 100 + "vw";
-
-  heart.style.fontSize =
-    (15 + Math.random() * 18) + "px";
-
-  heart.style.animationDuration =
-    (6 + Math.random() * 4) + "s";
-
-  document.body.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 10000);
-
-}, 1400);
-
+function celebrateAgain(){makeEmojis(["❤️","💕","💖","😘","😂","🥰","💋","🐰","💗","🤭"]);}
+setInterval(()=>{
+  const heart=document.createElement("div");heart.className="background-heart";
+  heart.textContent=["💗","💕","❤️"][Math.floor(Math.random()*3)];
+  heart.style.left=Math.random()*100+"vw";heart.style.fontSize=(15+Math.random()*18)+"px";
+  heart.style.animationDuration=(6+Math.random()*4)+"s";document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),10000);
+},1400);
 </script>
-
 </body>
   </html>
-    
+  
